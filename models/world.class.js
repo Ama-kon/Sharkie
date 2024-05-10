@@ -6,6 +6,7 @@ class World {
     new enemyJellyfishLila(),
     new enemyJellyfishYellow(),
   ];
+
   clouds = [new clouds()];
   background = [
     new BackgroundObjects("img/3. Background/Layers/5. Water/D1.png"),
@@ -14,11 +15,14 @@ class World {
     new BackgroundObjects("img/3. Background/Layers/3.Fondo 1/D1.png"),
     new BackgroundObjects("img/3. Background/Layers/2. Floor/D1.png"),
   ];
+
   ctx;
   canvas;
+  keyboard;
 
-  constructor(canvas) {
+  constructor(canvas, keyboard) {
     this.canvas = canvas;
+    this.keyboard = keyboard;
     this.ctx = canvas.getContext("2d");
     this.draw();
   }
