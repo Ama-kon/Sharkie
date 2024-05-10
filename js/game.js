@@ -8,7 +8,6 @@ function init() {
 }
 
 window.addEventListener("keydown", (event) => {
-  console.log(event);
   if (event.keyCode == 32) {
     keyboard.space = true;
   }
@@ -24,11 +23,9 @@ window.addEventListener("keydown", (event) => {
   if (event.keyCode == 39) {
     keyboard.right = true;
   }
-  console.log(keyboard);
 });
 
 window.addEventListener("keyup", (event) => {
-  console.log(event);
   if (event.keyCode == 32) {
     keyboard.space = false;
   }
@@ -44,5 +41,4 @@ window.addEventListener("keyup", (event) => {
   if (event.keyCode == 39) {
     keyboard.right = false;
   }
-  console.log(keyboard);
 });
