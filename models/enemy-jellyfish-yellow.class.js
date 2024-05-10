@@ -12,9 +12,11 @@ class enemyJellyfishYellow extends movableObject {
     super().loadIMG("img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png");
     this.x = 200 + Math.random() * 400;
     this.loadImages(this.images_yellow);
-    this.animate_red();
+    this.speed = 0.3 + Math.random() * 0.4;
+    this.swimUp();
+    this.animate();
   }
-  animate_red() {
+  animate() {
     setInterval(() => {
       let i = this.currentIMG % this.images_yellow.length;
       let path = this.images_yellow[i];

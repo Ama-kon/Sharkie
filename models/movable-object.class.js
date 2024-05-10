@@ -21,7 +21,11 @@ class movableObject {
     });
   }
 
-  swimUp() {}
+  swimUp() {
+    setInterval(() => {
+      this.y -= this.speed;
+    }, 1000 / 60);
+  }
 
   swimDown() {}
   swimLeft() {
