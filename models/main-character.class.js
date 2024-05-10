@@ -3,6 +3,8 @@ class mainCharacter extends movableObject {
   width = 200;
   x = 0;
   y = 80;
+  world;
+  speed = 7;
   images_standard = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -31,6 +33,26 @@ class mainCharacter extends movableObject {
   }
 
   animate() {
+    setInterval(() => {
+      if (this.world.keyboard.right) {
+        this.x += this.speed;
+        this.otherDirection = false;
+      }
+      if (this.world.keyboard.left) {
+        this.x -= this.speed;
+        this.otherDirection = true;
+      }
+      if (this.world.keyboard.up) {
+        this.y -= this.speed;
+        this.otherDirection = false;
+      }
+      if (this.world.keyboard.down) {
+        this.y += this.speed;
+        this.otherDirection = false;
+      }
+      this.world.camera_x = -this.x;
+    }, 1000 / 20);
+
     setInterval(() => {
       let i = this.currentIMG % this.images_standard.length;
       let path = this.images_standard[i];
