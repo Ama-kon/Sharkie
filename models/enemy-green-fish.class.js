@@ -15,11 +15,11 @@ class enemyGreenFish extends movableObject {
     );
     this.x = 200 + Math.random() * 500;
     this.loadImages(this.images_green);
-    this.animate_green();
+    this.animate();
     this.speed = 0.55 + Math.random() * 1.5;
     this.swimLeft();
   }
-  animate_green() {
+  animate() {
     setInterval(() => {
       let i = this.currentIMG % this.images_green.length;
       let path = this.images_green[i];

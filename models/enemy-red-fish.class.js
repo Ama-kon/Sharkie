@@ -15,11 +15,11 @@ class enemyRedFish extends movableObject {
     );
     this.x = 200 + Math.random() * 500;
     this.loadImages(this.images_red);
-    this.animate_red();
-    this.speed = 0.33 + Math.random() * 5;
+    this.animate();
+    this.speed = 0.33 + Math.random() * 1;
     this.swimLeft();
   }
-  animate_red() {
+  animate() {
     setInterval(() => {
       let i = this.currentIMG % this.images_red.length;
       let path = this.images_red[i];
