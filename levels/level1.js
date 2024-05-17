@@ -1,6 +1,8 @@
 const level1 = new Level(
   [
     new enemyGreenFish(),
+    new enemyGreenFish(),
+    new enemyRedFish(),
     new enemyRedFish(),
     new enemyJellyfishLila(),
     new enemyJellyfishYellow(),
@@ -52,6 +54,8 @@ const level1 = new Level(
       0
     ),
 
+    //////////////////////////////////////////////////////////////
+
     new BackgroundObjects(
       "img/3. Background/Layers/5. Water/D2.png",
       720 * 3,
@@ -77,5 +81,43 @@ const level1 = new Level(
       720 * 3,
       0
     ),
+
+    ////////////////////////////////////////////
+
+    new BackgroundObjects(
+      "img/3. Background/Layers/5. Water/D1.png",
+      720 * 4,
+      0
+    ),
+    new BackgroundObjects(
+      "img/3. Background/Layers/1. Light/1.png",
+      720 * 4,
+      0
+    ),
+    new BackgroundObjects(
+      "img/3. Background/Layers/4.Fondo 2/D1.png",
+      720 * 4,
+      0
+    ),
+    new BackgroundObjects(
+      "img/3. Background/Layers/3.Fondo 1/D1.png",
+      720 * 4,
+      0
+    ),
+    new BackgroundObjects(
+      "img/3. Background/Layers/2. Floor/D1.png",
+      720 * 4,
+      0
+    ),
+  ],
+  [
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
+    new Coins(),
   ]
 );
