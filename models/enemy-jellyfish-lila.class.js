@@ -9,16 +9,17 @@ class enemyJellyfishLila extends movableObject {
   ];
 
   constructor() {
-    super().loadIMG("img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png");
-    this.x = 200 + Math.random() * 400;
+    super().loadIMG("img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png");
+    this.x = 1000;
     this.loadImages(this.images_move);
+    this.speed = 0.3 + Math.random() * 0.5;
+    this.checkSwimDirectionJelly(190);
+
     this.animate();
-    this.speed = 0.3 + Math.random() * 0.4;
-    this.swimUp();
   }
   animate() {
     setInterval(() => {
       this.playAnimation(this.images_move);
-    }, 240);
+    }, 150);
   }
 }

@@ -10,15 +10,16 @@ class enemyJellyfishYellow extends movableObject {
 
   constructor() {
     super().loadIMG("img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png");
-    this.x = 200 + Math.random() * 400;
+    this.x = 250 + Math.random() * 400;
     this.loadImages(this.images_move);
-    this.speed = 0.3 + Math.random() * 0.4;
-    this.swimUp();
+    this.speed = 0.2 + Math.random() * 0.2;
+    this.checkSwimDirectionJelly(150);
+
     this.animate();
   }
   animate() {
     setInterval(() => {
       this.playAnimation(this.images_move);
-    }, 190);
+    }, 150);
   }
 }
