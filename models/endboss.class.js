@@ -2,7 +2,7 @@ class Endboss extends movableObject {
   height = 400;
   width = 400;
   y = 0;
-  x = 400;
+  x = 3130;
   images_move = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
