@@ -1,95 +1,107 @@
-class movableObject {
-  x = 80;
-  y = 250;
-  img;
-  height = 150;
-  width = 100;
-  imageCache = {};
-  currentIMG = 0;
+class movableObject extends DrawableObject {
   speed = 0.33;
   otherDirection = false;
   energy = 100;
+  coins = 0;
+  lastHit = 0;
+  lastCoin = 0;
 
-  loadIMG(path) {
-    this.img = new Image();
-    this.img.src = path;
+  checkSwimDirectionFish(smaller, larger) {
+    setInterval(() => {
+      if (this.x < smaller) {
+        this.swimRight();
+        setTimeout(() => {
+          this.otherDirection = true;
+        }, 1400);
+      } else if (this.x >= larger) {
+        this.swimLeft();
+        setTimeout(() => {
+          this.otherDirection = false;
+        }, 1400);
+      }
+    }, 190);
   }
 
-  loadImages(array) {
-    array.forEach((path) => {
-      this.img = new Image();
-      this.img.src = path;
-      this.imageCache[path] = this.img;
-    });
+  checkSwimDirectionJelly(number) {
+    setInterval(() => {
+      if (this.y < number) {
+        this.swimDown();
+      } else {
+        this.swimUp();
+      }
+    }, 250);
   }
 
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  }
-
-  drawRectangle(ctx) {
-    // zum berechnen des zusammenstoßens, kann danach raus
-
-    if (
-      this instanceof mainCharacter ||
-      this instanceof enemyGreenFish ||
-      this instanceof enemyRedFish ||
-      this instanceof enemyJellyfishLila ||
-      this instanceof enemyJellyfishYellow ||
-      this instanceof Endboss
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = "7";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-    }
-  }
-
-  flipImage(ctx) {
-    ctx.save();
-    ctx.translate(this.width, 0);
-    ctx.scale(-1, 1);
-    this.x = this.x * -1;
-  }
-
-  flipImageBack(ctx) {
-    this.x = this.x * -1;
-    ctx.restore();
-  }
   swimUp() {
     setInterval(() => {
       this.y -= this.speed;
     }, 1000 / 60);
   }
 
-  // swimDown() {}
+  swimDown() {
+    setInterval(() => {
+      this.y += this.speed;
+    }, 1000 / 60);
+  }
   swimLeft() {
     setInterval(() => {
       this.x -= this.speed;
     }, 1000 / 60);
   }
 
-  // swimRight() {}
+  swimRight() {
+    setInterval(() => {
+      this.x += this.speed;
+    }, 1000 / 60);
+  }
 
   isColliding(object) {
     return (
-      this.x + this.width >= object.x &&
-      this.y + this.height > object.y &&
-      this.x < object.x &&
-      this.y < object.y + object.height
+      this.x + 40 + (this.width - 80) >= object.x &&
+      this.x + 40 < object.x + object.width &&
+      this.y + 160 + (this.height - 240) > object.y &&
+      this.y + 160 < object.y + object.height
     );
   }
 
-  playAnimation(image) {
-    let i = this.currentIMG % this.images_move.length;
-    let path = image[i];
-    this.img = this.imageCache[path];
-    this.currentIMG++;
+  hit() {
+    this.energy -= 20;
+    if (this.energy <= 0) {
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();
+    }
   }
 
-  playAnimationAttack(image) {
-    let i = this.currentIMG % this.images_attack_fin_lap.length;
+  isDead() {
+    return this.energy == 0;
+  }
+
+  isHurt() {
+    let timePassed = new Date().getTime() - this.lastHit;
+    timePassed = timePassed / 1000;
+    return timePassed < 1;
+  }
+
+  gotCoin() {
+    this.coins += 20;
+    if (this.coins <= 0) {
+      this.coins = 0;
+    } else if (this.coins >= 100) {
+      this.coins = 100;
+    } else {
+      this.lastCoin = new Date().getTime();
+    }
+  }
+
+  lastCoinTime() {
+    let timePassed = new Date().getTime() - this.lastCoin;
+    timePassed = timePassed / 1000;
+    return timePassed < 5;
+  }
+
+  playAnimation(image) {
+    let i = this.currentIMG % image.length;
     let path = image[i];
     this.img = this.imageCache[path];
     this.currentIMG++;
