@@ -4,7 +4,8 @@ class mainCharacter extends movableObject {
   x = 0;
   y = 80;
   world;
-  speed = 7;
+  speed = 10;
+
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -37,15 +38,46 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Fin slap/8.png",
   ];
 
+  images_hurt = [
+    "img/1.Sharkie/6.dead/2.Electro_shock/1.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/2.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/3.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/4.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/5.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/6.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/7.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/8.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/9.png",
+    "img/1.Sharkie/6.dead/2.Electro_shock/10.png",
+  ];
+
+  images_dead = [
+    "img/1.Sharkie/6.dead/1.Poisoned/1.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/2.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/3.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/4.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/5.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/6.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/7.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/8.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/9.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/10.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/11.png",
+    "img/1.Sharkie/6.dead/1.Poisoned/12.png",
+  ];
+
   constructor() {
     super().loadIMG("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.images_move);
     this.loadImages(this.images_attack_fin_lap);
+    this.loadImages(this.images_dead);
+    this.loadImages(this.images_hurt);
     this.animate();
   }
 
   animate() {
     setInterval(() => {
+      // nur keyboard //
       if (this.world.keyboard.right && this.x <= this.world.level.level_end_x) {
         this.x += this.speed;
         this.otherDirection = false;
@@ -63,9 +95,18 @@ class mainCharacter extends movableObject {
         this.otherDirection = false;
       }
       if (this.world.keyboard.space) {
-        console.log("space");
-        this.playAnimationAttack(this.images_attack_fin_lap);
+        this.playAnimation(this.images_attack_fin_lap);
       }
+
+      // zum character //
+      if (this.isDead()) {
+        this.playAnimation(this.images_dead);
+      } else if (this.isHurt()) {
+        this.playAnimation(this.images_hurt);
+      }
+      // if (this.lastCoinTime()) {
+      //   console.log("lastCoinTime CHECKED"); /// nur test
+      // }
       this.world.camera_x = -this.x;
     }, 1000 / 20);
 
