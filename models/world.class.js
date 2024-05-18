@@ -1,7 +1,6 @@
 class World {
   character = new mainCharacter();
   level = level1;
-
   ctx;
   canvas;
   keyboard;
@@ -31,12 +30,17 @@ class World {
     this.addObjects(this.level.background);
     this.addObjects(this.level.enemies);
     this.addObjects(this.level.coins);
-    this.addToCanvas(this.character);
+
     this.addObjects(this.level.clouds);
+    this.addObjects(this.level.poison_ground);
+    this.addObjects(this.level.poison_up);
+    this.addToCanvas(this.character);
+    /// everything under here follows camera on screen //
     this.ctx.translate(-this.camera_x, 0);
     this.addToCanvas(this.status_bar);
     this.addToCanvas(this.coins_bar);
     this.addToCanvas(this.poison_bar);
+
     this.ctx.translate(this.camera_x, 0);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
@@ -65,8 +69,15 @@ class World {
     setInterval(() => {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
-          this.character.hit();
-          this.status_bar.setPercent(this.character.energy);
+          console.log(enemy);
+          if (
+            enemy == this.level.enemies.enemyJellyfishYellow ||
+            enemy == this.level.enemies.enemyJellyfishLila
+          ) {
+            this.character.hit();
+            this.status_bar.setPercent(this.character.energy);
+          }
+
           if (this.character.energy <= 0) {
             /////hier tot .... weitermachen ////
           }
