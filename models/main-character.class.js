@@ -38,7 +38,7 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Fin slap/8.png",
   ];
 
-  images_hurt = [
+  images_hurt_electric = [
     "img/1.Sharkie/6.dead/2.Electro_shock/1.png",
     "img/1.Sharkie/6.dead/2.Electro_shock/2.png",
     "img/1.Sharkie/6.dead/2.Electro_shock/3.png",
@@ -71,7 +71,7 @@ class mainCharacter extends movableObject {
     this.loadImages(this.images_move);
     this.loadImages(this.images_attack_fin_lap);
     this.loadImages(this.images_dead);
-    this.loadImages(this.images_hurt);
+    this.loadImages(this.images_hurt_electric);
     this.animate();
   }
 
@@ -102,16 +102,17 @@ class mainCharacter extends movableObject {
       if (this.isDead()) {
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
-        this.playAnimation(this.images_hurt);
+        this.playAnimation(this.images_hurt_electric);
       }
-      // if (this.lastCoinTime()) {
-      //   console.log("lastCoinTime CHECKED"); /// nur test
-      // }
-      this.world.camera_x = -this.x;
+      this.followCamera();
     }, 1000 / 20);
 
     setInterval(() => {
       this.playAnimation(this.images_move);
     }, 150);
+  }
+
+  followCamera() {
+    this.world.camera_x = -this.x;
   }
 }
