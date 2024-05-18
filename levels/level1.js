@@ -119,5 +119,19 @@ const level1 = new Level(
     new Coins(),
     new Coins(),
     new Coins(),
+  ],
+  [
+    new PoisonGround(),
+    new PoisonGround(),
+    new PoisonGround(),
+    new PoisonGround(),
+    new PoisonGround(),
+  ],
+  [
+    new PoisonUp(),
+    new PoisonUp(),
+    new PoisonUp(),
+    new PoisonUp(),
+    new PoisonUp(),
   ]
 );
