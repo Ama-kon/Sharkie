@@ -113,8 +113,6 @@ class mainCharacter extends movableObject {
       if (this.world.keyboard.space) {
         this.playAnimation(this.images_attack_fin_lap);
       }
-
-      // zum character //
       if (this.isDead()) {
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
@@ -124,7 +122,6 @@ class mainCharacter extends movableObject {
         } else if (this.isHittedBy == "poison") {
           this.playAnimation(this.images_hurt_poisoned);
         }
-        // console.log("HURT!!");
       }
     }, 150);
   }
