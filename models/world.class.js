@@ -18,6 +18,7 @@ class World {
     this.setWorld();
     this.checkForCollision();
     this.checkForCoins();
+    this.checkForPoison();
     // this.background_music.play(); // funktioniert - erst wieder öffnen wenn fertig
   }
 
@@ -28,19 +29,17 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjects(this.level.background);
-    this.addObjects(this.level.enemies);
     this.addObjects(this.level.coins);
-
     this.addObjects(this.level.clouds);
     this.addObjects(this.level.poison_ground);
     this.addObjects(this.level.poison_up);
+    this.addObjects(this.level.enemies);
     this.addToCanvas(this.character);
-    /// everything under here follows camera on screen //
     this.ctx.translate(-this.camera_x, 0);
+    /// everything under here follows camera on screen //
     this.addToCanvas(this.status_bar);
     this.addToCanvas(this.coins_bar);
     this.addToCanvas(this.poison_bar);
-
     this.ctx.translate(this.camera_x, 0);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
@@ -69,15 +68,10 @@ class World {
     setInterval(() => {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
-          console.log(enemy);
-          if (
-            enemy == this.level.enemies.enemyJellyfishYellow ||
-            enemy == this.level.enemies.enemyJellyfishLila
-          ) {
-            this.character.hit();
-            this.status_bar.setPercent(this.character.energy);
-          }
-
+          this.status_bar.setPercent(this.character.energy);
+          this.character.hit();
+          this.character.isHittedBy = enemy.damageType;
+          console.log("1. hit by", this.character.isHittedBy);
           if (this.character.energy <= 0) {
             /////hier tot .... weitermachen ////
           }
@@ -96,6 +90,24 @@ class World {
             this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
           }
           this.coins_bar.setCoinsBar(this.character.coins);
+        }
+      });
+    }, 1000);
+  }
+
+  checkForPoison() {
+    setInterval(() => {
+      this.level.poison_ground.forEach((poison) => {
+        if (this.character.isColliding(poison)) {
+          this.character.gotPoison();
+          if (this.character.poison < 100) {
+            this.level.poison_ground.splice(
+              this.level.poison_ground.indexOf(poison),
+              1
+            );
+            this.ctx.clearRect(poison.x, poison.y, poison.width, poison.height);
+          }
+          this.poison_bar.setPoisonBar(this.character.poison);
         }
       });
     }, 1000);
