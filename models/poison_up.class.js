@@ -1,4 +1,5 @@
 class PoisonUp extends movableObject {
+  x = 100;
   images_poison_up = [
     "img/4. Marcadores/Posión/Animada/1.png",
     "img/4. Marcadores/Posión/Animada/2.png",
@@ -13,8 +14,8 @@ class PoisonUp extends movableObject {
   constructor() {
     super();
     this.loadImages(this.images_poison_up);
-    this.x = 600 + Math.random() * 2700;
-    this.y = 200 + Math.random() * 2600;
+    this.x = this.x + Math.random() * 2500;
+    this.y = 50 + Math.random() * 200;
     this.width = 50;
     this.height = 50;
     this.animate();

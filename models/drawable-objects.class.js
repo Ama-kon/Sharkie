@@ -60,6 +60,13 @@ class DrawableObject {
       ctx.rect(this.x, this.y, this.width, this.height);
       ctx.stroke();
     }
+    if (this instanceof PoisonGround || this instanceof PoisonUp) {
+      ctx.beginPath();
+      ctx.lineWidth = "7";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
+    }
   }
 
   flipImage(ctx) {

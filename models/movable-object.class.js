@@ -3,9 +3,11 @@ class movableObject extends DrawableObject {
   otherDirection = false;
   energy = 100;
   coins = 0;
+  poison = 0;
   lastHit = 0;
   lastCoin = 0;
-
+  lastPoison = 0;
+  damageType;
   checkSwimDirectionFish(smaller, larger) {
     setInterval(() => {
       if (this.x < smaller) {
@@ -91,6 +93,17 @@ class movableObject extends DrawableObject {
       this.coins = 100;
     } else {
       this.lastCoin = new Date().getTime();
+    }
+  }
+
+  gotPoison() {
+    this.poison += 20;
+    if (this.poison <= 0) {
+      this.poison = 0;
+    } else if (this.poison >= 100) {
+      this.poison = 100;
+    } else {
+      this.lastPoison = new Date().getTime();
     }
   }
 
