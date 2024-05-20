@@ -10,6 +10,7 @@ class enemyJellyfishLila extends movableObject {
 
   constructor() {
     super().loadIMG("img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png");
+    this.damageType = "electric";
     this.x = 1000;
     this.loadImages(this.images_move);
     this.speed = 0.3 + Math.random() * 0.5;

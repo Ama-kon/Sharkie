@@ -13,6 +13,7 @@ class enemyRedFish extends movableObject {
     super().loadIMG(
       "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png"
     );
+    this.damageType = "poison";
     this.x = 1000 + Math.random() * 1000;
     this.y = 50 + Math.random() * 300;
     this.loadImages(this.images_move);
@@ -22,6 +23,6 @@ class enemyRedFish extends movableObject {
   animate() {
     setInterval(() => {
       this.playAnimation(this.images_move);
-    }, 190);
+    }, 150);
   }
 }

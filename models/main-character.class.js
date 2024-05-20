@@ -5,6 +5,7 @@ class mainCharacter extends movableObject {
   y = 80;
   world;
   speed = 10;
+  isHittedBy = "";
 
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
@@ -51,6 +52,14 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/6.dead/2.Electro_shock/10.png",
   ];
 
+  images_hurt_poisoned = [
+    "img/1.Sharkie/5.Hurt/1.Poisoned/1.png",
+    "img/1.Sharkie/5.Hurt/1.Poisoned/2.png",
+    "img/1.Sharkie/5.Hurt/1.Poisoned/3.png",
+    "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
+    // "img/1.Sharkie/5.Hurt/1.Poisoned/5.png",
+  ];
+
   images_dead = [
     "img/1.Sharkie/6.dead/1.Poisoned/1.png",
     "img/1.Sharkie/6.dead/1.Poisoned/2.png",
@@ -72,6 +81,7 @@ class mainCharacter extends movableObject {
     this.loadImages(this.images_attack_fin_lap);
     this.loadImages(this.images_dead);
     this.loadImages(this.images_hurt_electric);
+    this.loadImages(this.images_hurt_poisoned);
     this.animate();
   }
 
@@ -94,6 +104,12 @@ class mainCharacter extends movableObject {
         this.y += this.speed;
         this.otherDirection = false;
       }
+      this.followCamera();
+    }, 1000 / 20);
+
+    setInterval(() => {
+      this.playAnimation(this.images_move);
+
       if (this.world.keyboard.space) {
         this.playAnimation(this.images_attack_fin_lap);
       }
@@ -102,13 +118,14 @@ class mainCharacter extends movableObject {
       if (this.isDead()) {
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
-        this.playAnimation(this.images_hurt_electric);
+        console.log("2.!!!");
+        if (this.isHittedBy == "electric") {
+          this.playAnimation(this.images_hurt_electric);
+        } else if (this.isHittedBy == "poison") {
+          this.playAnimation(this.images_hurt_poisoned);
+        }
+        // console.log("HURT!!");
       }
-      this.followCamera();
-    }, 1000 / 20);
-
-    setInterval(() => {
-      this.playAnimation(this.images_move);
     }, 150);
   }
 
