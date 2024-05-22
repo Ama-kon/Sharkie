@@ -4,6 +4,8 @@ const level1 = new Level(
     new enemyGreenFish(),
     new enemyRedFish(),
     new enemyRedFish(),
+    new enemyLilaFish(),
+    new enemyLilaFish(),
     new enemyJellyfishLila(),
     new enemyJellyfishYellow(),
     new Endboss(),
