@@ -6,6 +6,7 @@ class mainCharacter extends movableObject {
   world;
   speed = 10;
   isHittedBy = "";
+  strikedEnemy = "";
 
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
@@ -57,7 +58,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/5.Hurt/1.Poisoned/2.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/3.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
-    // "img/1.Sharkie/5.Hurt/1.Poisoned/5.png",
   ];
 
   images_dead = [
@@ -75,6 +75,8 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/6.dead/1.Poisoned/12.png",
   ];
 
+  images_fish_hitted = [];
+
   constructor() {
     super().loadIMG("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.images_move);
@@ -87,7 +89,7 @@ class mainCharacter extends movableObject {
 
   animate() {
     setInterval(() => {
-      // nur keyboard //
+      // only keyboard //
       if (this.world.keyboard.right && this.x <= this.world.level.level_end_x) {
         this.x += this.speed;
         this.otherDirection = false;
@@ -116,17 +118,25 @@ class mainCharacter extends movableObject {
       if (this.isDead()) {
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
-        console.log("2.!!!");
         if (this.isHittedBy == "electric") {
           this.playAnimation(this.images_hurt_electric);
         } else if (this.isHittedBy == "poison") {
           this.playAnimation(this.images_hurt_poisoned);
+        }
+        if (this.strikesEnemy()) {
+          if (
+            this.strikedEnemy instanceof enemyGreenFish ||
+            this.strikedEnemy instanceof enemyLilaFish ||
+            this.strikedEnemy instanceof enemyRedFish
+          ) {
+            this.strikedEnemy.enemyDying = true;
+          }
         }
       }
     }, 150);
   }
 
   followCamera() {
-    this.world.camera_x = -this.x;
+    this.world.camera_x = -this.x + 50;
   }
 }
