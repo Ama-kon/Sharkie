@@ -43,6 +43,7 @@ class DrawableObject {
     }
     if (
       this instanceof enemyGreenFish ||
+      this instanceof enemyLilaFish ||
       this instanceof enemyRedFish ||
       this instanceof enemyJellyfishLila ||
       this instanceof enemyJellyfishYellow
@@ -50,7 +51,7 @@ class DrawableObject {
       ctx.beginPath();
       ctx.lineWidth = "7";
       ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.rect(this.x, this.y, this.width - 10, this.height - 20);
       ctx.stroke();
     }
     if (this instanceof Coins) {
