@@ -19,6 +19,8 @@ class World {
     this.checkForCollision();
     this.checkForCoins();
     this.checkForPoison();
+
+    // this.checkForDyingEnemy();
     // this.background_music.play(); // funktioniert - erst wieder öffnen wenn fertig
   }
 
@@ -68,12 +70,23 @@ class World {
     setInterval(() => {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
-          this.status_bar.setPercent(this.character.energy);
-          this.character.hit();
-          this.character.isHittedBy = enemy.damageType;
-          console.log("1. hit by", this.character.isHittedBy);
-          if (this.character.energy <= 0) {
-            /////hier tot .... weitermachen ////
+          if (this.keyboard.space == true) {
+            this.character.lastAttack();
+            this.character.strikedEnemy = enemy;
+            // console.log("sharkie hat getroffen", enemy);
+            enemy.enemyDying = true;
+            // this.checkForDyingEnemy();
+          } else {
+            this.character.hit();
+            this.status_bar.setPercent(this.character.energy);
+            this.character.isHittedBy = enemy.damageType;
+            // console.log("1. hit by", this.character.isHittedBy);
+
+            if (this.character.energy <= 0) {
+              /////hier tot .... weitermachen ////
+
+              console.log("TOOOOOT");
+            }
           }
         }
       });
@@ -97,19 +110,25 @@ class World {
 
   checkForPoison() {
     setInterval(() => {
-      this.level.poison_ground.forEach((poison) => {
-        if (this.character.isColliding(poison)) {
-          this.character.gotPoison();
-          if (this.character.poison < 100) {
-            this.level.poison_ground.splice(
-              this.level.poison_ground.indexOf(poison),
-              1
-            );
-            this.ctx.clearRect(poison.x, poison.y, poison.width, poison.height);
+      const checkPoison = (array) => {
+        array.forEach((poison) => {
+          if (this.character.isColliding(poison)) {
+            this.character.gotPoison();
+            if (this.character.poison < 100) {
+              array.splice(array.indexOf(poison), 1);
+              this.ctx.clearRect(
+                poison.x,
+                poison.y,
+                poison.width,
+                poison.height
+              );
+            }
+            this.poison_bar.setPoisonBar(this.character.poison);
           }
-          this.poison_bar.setPoisonBar(this.character.poison);
-        }
-      });
+        });
+      };
+      checkPoison(this.level.poison_ground);
+      checkPoison(this.level.poison_up);
     }, 1000);
   }
-}
+} //ende constructor
