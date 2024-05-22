@@ -1,6 +1,7 @@
 class movableObject extends DrawableObject {
   speed = 0.33;
   otherDirection = false;
+  movingUp = false;
   energy = 100;
   coins = 0;
   poison = 0;
@@ -8,61 +9,71 @@ class movableObject extends DrawableObject {
   lastCoin = 0;
   lastPoison = 0;
   damageType;
+  lastStrike = 0;
+  enemyDying = false;
   checkSwimDirectionFish(smaller, larger) {
     setInterval(() => {
       if (this.x < smaller) {
-        this.swimRight();
-        setTimeout(() => {
-          this.otherDirection = true;
-        }, 1400);
+        this.otherDirection = true;
       } else if (this.x >= larger) {
-        this.swimLeft();
-        setTimeout(() => {
-          this.otherDirection = false;
-        }, 1400);
+        this.otherDirection = false;
       }
-    }, 190);
+
+      if (this.otherDirection) {
+        this.swimRight();
+      } else {
+        this.swimLeft();
+      }
+    }, 1000 / 60);
   }
 
-  checkSwimDirectionJelly(number) {
+  checkSwimDirectionJelly(limit) {
     setInterval(() => {
-      if (this.y < number) {
-        this.swimDown();
-      } else {
+      if (!this.movingUp) {
         this.swimUp();
+        if (this.y <= limit) {
+          this.movingUp = false;
+        }
+      } else {
+        this.swimDown();
+        if (this.y >= limit) {
+          this.movingUp = true;
+        }
       }
-    }, 250);
+    }, 1000 / 60);
   }
 
   swimUp() {
-    setInterval(() => {
-      this.y -= this.speed;
-    }, 1000 / 60);
+    this.y -= this.speed;
   }
 
   swimDown() {
-    setInterval(() => {
-      this.y += this.speed;
-    }, 1000 / 60);
+    this.y += this.speed;
   }
   swimLeft() {
-    setInterval(() => {
-      this.x -= this.speed;
-    }, 1000 / 60);
+    this.x -= this.speed;
   }
 
   swimRight() {
-    setInterval(() => {
-      this.x += this.speed;
-    }, 1000 / 60);
+    this.x += this.speed;
+  }
+
+  lastAttack() {
+    this.lastStrike = new Date().getTime();
+  }
+
+  strikesEnemy() {
+    let timePassed = new Date().getTime() - this.lastStrike;
+    timePassed = timePassed / 100;
+    return timePassed < 1;
   }
 
   isColliding(object) {
     return (
       this.x + 40 + (this.width - 80) >= object.x &&
-      this.x + 40 < object.x + object.width &&
+      this.x + 40 < object.x + object.width - 10 &&
       this.y + 160 + (this.height - 240) > object.y &&
-      this.y + 160 < object.y + object.height
+      this.y + 160 < object.y + object.height - 20
     );
   }
 
