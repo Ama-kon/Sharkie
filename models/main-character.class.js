@@ -7,7 +7,11 @@ class mainCharacter extends movableObject {
   speed = 10;
   isHittedBy = "";
   strikedEnemy = "";
-
+  hit_by_fish = new Audio("audio/hit_by_fish.wav");
+  hit_by_jelly = new Audio("audio/electric_shock.mp3");
+  striked_fish = new Audio("audio/striked_fish.mp3");
+  striked_jelly = new Audio("audio/electric_shock.mp3");
+  game_over = new Audio("audio/game_over.wav");
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -75,12 +79,22 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/6.dead/1.Poisoned/12.png",
   ];
 
-  images_fish_hitted = [];
+  images_bubble = [
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
+  ];
 
   constructor() {
     super().loadIMG("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.images_move);
     this.loadImages(this.images_attack_fin_lap);
+    this.loadImages(this.images_bubble);
     this.loadImages(this.images_dead);
     this.loadImages(this.images_hurt_electric);
     this.loadImages(this.images_hurt_poisoned);
@@ -106,6 +120,7 @@ class mainCharacter extends movableObject {
         this.y += this.speed;
         this.otherDirection = false;
       }
+
       this.followCamera();
     }, 1000 / 20);
 
@@ -115,22 +130,25 @@ class mainCharacter extends movableObject {
       if (this.world.keyboard.space) {
         this.playAnimation(this.images_attack_fin_lap);
       }
+
+      if (this.world.keyboard.d) {
+        this.playAnimation(this.images_bubble);
+      }
+
       if (this.isDead()) {
+        this.game_over.play();
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
         if (this.isHittedBy == "electric") {
+          this.hit_by_jelly.play();
           this.playAnimation(this.images_hurt_electric);
         } else if (this.isHittedBy == "poison") {
+          this.hit_by_fish.play();
           this.playAnimation(this.images_hurt_poisoned);
         }
+
         if (this.strikesEnemy()) {
-          if (
-            this.strikedEnemy instanceof enemyGreenFish ||
-            this.strikedEnemy instanceof enemyLilaFish ||
-            this.strikedEnemy instanceof enemyRedFish
-          ) {
-            this.strikedEnemy.enemyDying = true;
-          }
+          this.strikedEnemy.enemyDying = true;
         }
       }
     }, 150);

@@ -6,6 +6,8 @@ class World {
   keyboard;
   camera_x = 0;
   background_music = new Audio("audio/background_music.mp3");
+  got_coin_music = new Audio("audio/got_coin.wav");
+  got_poison_music = new Audio("audio/got_poison.wav");
   status_bar = new StatusBar();
   coins_bar = new CoinsBar();
   poison_bar = new PoisonBar();
@@ -19,9 +21,7 @@ class World {
     this.checkForCollision();
     this.checkForCoins();
     this.checkForPoison();
-
-    // this.checkForDyingEnemy();
-    // this.background_music.play(); // funktioniert - erst wieder öffnen wenn fertig
+    this.background_music.play(); // funktioniert - erst wieder öffnen wenn fertig
   }
 
   setWorld() {
@@ -73,18 +73,18 @@ class World {
           if (this.keyboard.space == true) {
             this.character.lastAttack();
             this.character.strikedEnemy = enemy;
-            // console.log("sharkie hat getroffen", enemy);
             enemy.enemyDying = true;
-            // this.checkForDyingEnemy();
+          } else if (this.keyboard.d == true) {
+            this.character.lastAttack();
+            this.character.strikedEnemy = enemy;
+            enemy.enemyDying = true;
           } else {
             this.character.hit();
             this.status_bar.setPercent(this.character.energy);
             this.character.isHittedBy = enemy.damageType;
-            // console.log("1. hit by", this.character.isHittedBy);
-
             if (this.character.energy <= 0) {
               /////hier tot .... weitermachen ////
-
+              this.background_music.pause();
               console.log("TOOOOOT");
             }
           }
@@ -98,9 +98,11 @@ class World {
       this.level.coins.forEach((coin) => {
         if (this.character.isColliding(coin)) {
           this.character.gotCoin();
+
           if (this.character.coins < 100) {
             this.level.coins.splice(this.level.coins.indexOf(coin), 1);
             this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
+            this.got_coin_music.play();
           }
           this.coins_bar.setCoinsBar(this.character.coins);
         }
@@ -122,6 +124,7 @@ class World {
                 poison.width,
                 poison.height
               );
+              this.got_poison_music.play();
             }
             this.poison_bar.setPoisonBar(this.character.poison);
           }

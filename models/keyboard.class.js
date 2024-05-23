@@ -4,6 +4,6 @@ class Keyboard {
   up = false; // 38
   down = false; //40
   space = false; //32
-  d = false;
+  d = false; //68
   constructor() {}
 }
