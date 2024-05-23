@@ -1,7 +1,7 @@
 class movableObject extends DrawableObject {
   speed = 0.33;
   otherDirection = false;
-  movingUp = false;
+  onTop = false;
   energy = 100;
   coins = 0;
   poison = 0;
@@ -27,18 +27,19 @@ class movableObject extends DrawableObject {
     }, 1000 / 60);
   }
 
-  checkSwimDirectionJelly(limit) {
+  checkSwimDirectionJelly(smaller, larger) {
     setInterval(() => {
-      if (!this.movingUp) {
-        this.swimUp();
-        if (this.y <= limit) {
-          this.movingUp = false;
-        }
-      } else {
+      if (this.y <= smaller) {
+        this.onTop = true;
+      }
+      if (this.y >= larger) {
+        this.onTop = false;
+      }
+
+      if (this.onTop) {
         this.swimDown();
-        if (this.y >= limit) {
-          this.movingUp = true;
-        }
+      } else {
+        this.swimUp();
       }
     }, 1000 / 60);
   }
