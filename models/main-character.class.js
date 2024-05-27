@@ -7,6 +7,7 @@ class mainCharacter extends movableObject {
   speed = 10;
   isHittedBy = "";
   strikedEnemy = "";
+  newBubble = false;
   hit_by_fish = new Audio("audio/hit_by_fish.wav");
   hit_by_jelly = new Audio("audio/electric_shock.mp3");
   striked_fish = new Audio("audio/striked_fish.mp3");
@@ -91,13 +92,16 @@ class mainCharacter extends movableObject {
   ];
 
   constructor() {
-    super().loadIMG("img/1.Sharkie/1.IDLE/1.png");
+    super();
+    this.loadIMG("img/1.Sharkie/1.IDLE/1.png");
+
     this.loadImages(this.images_move);
     this.loadImages(this.images_attack_fin_lap);
     this.loadImages(this.images_bubble);
     this.loadImages(this.images_dead);
     this.loadImages(this.images_hurt_electric);
     this.loadImages(this.images_hurt_poisoned);
+
     this.animate();
   }
 
@@ -133,6 +137,7 @@ class mainCharacter extends movableObject {
 
       if (this.world.keyboard.d) {
         this.playAnimation(this.images_bubble);
+        this.newBubble = true;
       }
 
       if (this.isDead()) {
@@ -140,7 +145,10 @@ class mainCharacter extends movableObject {
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
         if (this.isHittedBy == "electric") {
-          this.hit_by_jelly.play();
+          if (!this.isMuted) {
+            this.hit_by_jelly.play();
+          }
+
           this.playAnimation(this.images_hurt_electric);
         } else if (this.isHittedBy == "poison") {
           this.hit_by_fish.play();
@@ -151,7 +159,7 @@ class mainCharacter extends movableObject {
           this.strikedEnemy.enemyDying = true;
         }
       }
-    }, 150);
+    }, 100);
   }
 
   followCamera() {

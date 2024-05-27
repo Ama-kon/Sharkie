@@ -2,6 +2,7 @@ class enemyJellyfishYellow extends movableObject {
   height = 100;
   width = 90;
   speed = 5;
+  isHittable = true;
 
   images_move = [
     "img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png",

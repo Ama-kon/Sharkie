@@ -11,6 +11,9 @@ class movableObject extends DrawableObject {
   damageType;
   lastStrike = 0;
   enemyDying = false;
+
+  isHittable = false;
+
   checkSwimDirectionFish(smaller, larger) {
     setInterval(() => {
       if (this.x < smaller) {
@@ -75,6 +78,15 @@ class movableObject extends DrawableObject {
       this.x + 40 < object.x + object.width - 10 &&
       this.y + 160 + (this.height - 240) > object.y &&
       this.y + 160 < object.y + object.height - 20
+    );
+  }
+
+  hitsJelly(object) {
+    return (
+      this.x + 40 + this.width >= object.x &&
+      this.x + 40 < object.x + object.width &&
+      this.y + 160 + this.height > object.y &&
+      this.y < object.y + object.height
     );
   }
 
