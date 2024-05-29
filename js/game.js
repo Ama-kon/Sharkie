@@ -2,10 +2,12 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let character;
+background_music = new Audio("audio/background_music.mp3");
+background_music.volume = 0.1;
+let isMuted = false;
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
-  character = world.character;
 }
 
 window.addEventListener("keydown", (event) => {
@@ -50,32 +52,38 @@ window.addEventListener("keyup", (event) => {
   }
 });
 
-function toggleImage() {
+function toggleSound() {
   let img = document.getElementById("sound_toggle");
 
   if (img.src.includes("lautsprecher.png")) {
     img.src = "img/icons/lautsprecher_aus.png";
     img.alt = "sound off";
-    audioOff();
+    isMuted = true;
+    world.isMuted = true;
+    world.character.isMuted = true;
+    checkSound();
   } else {
     img.src = "img/icons/lautsprecher.png";
     img.alt = "sound on";
+    isMuted = false;
+    world.isMuted = false;
+    world.character.isMuted = false;
+    checkSound();
+  }
+}
+
+function checkSound() {
+  if (isMuted) {
+    audioOff();
+  } else {
     audioOn();
   }
 }
 
 function audioOff() {
-  world.background_music.pause();
-  // world.got_coin_music.pause();
-  // world.got_poison_music.pause();
-  // character.hit_by_jelly.pause();
-  // character.hit_by_fish.pause();
+  background_music.pause();
 }
 
 function audioOn() {
-  world.background_music.play();
-  // world.got_coin_music.play();
-  // world.got_poison_music.play();
-  // character.hit_by_jelly.play();
-  // character.hit_by_fish.play();
+  background_music.play();
 }

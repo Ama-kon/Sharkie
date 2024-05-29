@@ -23,19 +23,22 @@
     <script defer src="models/poison_up.class.js"></script>
     <script defer src="models/poison_ground.class.js"></script>
     <script defer src="models/status-bar.class.js"></script>
+    <script defer src="models/status-bar-endboss.class.js"></script>
+    <script defer src="models/bubbles.class.js"></script>
+
     <script defer src="levels/level1.js"></script>
     <script defer src="models/world.class.js"></script>
 
     <script defer src="js/game.js"></script>
     <title>Sharkie</title>
   </head>
-  <body onload="init()">
+  <body onload="init(), checkSound()">
     <h1>Sharkie</h1>
     <img
       id="sound_toggle"
       src="img/icons/lautsprecher.png"
       alt="sound on"
-      onclick="toggleImage()"
+      onclick="toggleSound()"
     />
     <canvas width="720" height="480" id="canvas"> </canvas>
   </body>

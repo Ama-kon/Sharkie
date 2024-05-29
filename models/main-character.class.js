@@ -13,6 +13,7 @@ class mainCharacter extends movableObject {
   striked_fish = new Audio("audio/striked_fish.mp3");
   striked_jelly = new Audio("audio/electric_shock.mp3");
   game_over = new Audio("audio/game_over.wav");
+  isMuted = false;
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -141,7 +142,10 @@ class mainCharacter extends movableObject {
       }
 
       if (this.isDead()) {
-        this.game_over.play();
+        if (!this.isMuted) {
+          this.game_over.play();
+        }
+
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
         if (this.isHittedBy == "electric") {
@@ -151,7 +155,10 @@ class mainCharacter extends movableObject {
 
           this.playAnimation(this.images_hurt_electric);
         } else if (this.isHittedBy == "poison") {
-          this.hit_by_fish.play();
+          if (!this.isMuted) {
+            this.hit_by_fish.play();
+          }
+
           this.playAnimation(this.images_hurt_poisoned);
         }
 
