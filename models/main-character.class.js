@@ -4,7 +4,7 @@ class mainCharacter extends movableObject {
   x = 0;
   y = 80;
   world;
-  speed = 10;
+  speed = 4;
   isHittedBy = "";
   strikedEnemy = "";
   newBubble = false;
@@ -125,9 +125,19 @@ class mainCharacter extends movableObject {
         this.y += this.speed;
         this.otherDirection = false;
       }
+      if (this.world.keyboard.left && this.x > 0 && this.world.keyboard.down) {
+        this.x -= this.speed / 5;
+        this.y += this.speed / 5;
+        this.otherDirection = true;
+      }
+      if (this.world.keyboard.left && this.x > 0 && this.world.keyboard.up) {
+        this.x -= this.speed / 5;
+        this.y -= this.speed / 5;
+        this.otherDirection = true;
+      }
 
       this.followCamera();
-    }, 1000 / 20);
+    }, 1000 / 60);
 
     setInterval(() => {
       this.playAnimation(this.images_move);
