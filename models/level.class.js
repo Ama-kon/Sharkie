@@ -5,7 +5,7 @@ class Level {
   coins;
   poison_ground;
   poison_up;
-  level_end_x = 720 * 3.9;
+  level_end_x = 720 * 4.9;
 
   constructor(enemies, clouds, background, coins, poison_ground, poison_up) {
     this.enemies = enemies;
