@@ -25,6 +25,7 @@ canvas {
   width: 720px;
   height: 480px;
   background-color: black;
+  display: block;
 }
 
 #sound_toggle {
@@ -32,4 +33,23 @@ canvas {
   height: 50px;
   filter: opacity(0.23) drop-shadow(0 0 0 white);
   cursor: pointer;
+}
+
+@media only screen and (max-width: 720px) {
+  canvas {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-height: 480px) {
+  canvas {
+    height: 100vh;
+  }
+  h1 {
+    display: none;
+  }
+
+  body {
+    filter: none;
+  }
 }
