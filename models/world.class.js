@@ -5,12 +5,17 @@ class World {
   canvas;
   keyboard;
   camera_x = 0;
-  background_music = new Audio("audio/background_music.mp3");
+
   got_coin_music = new Audio("audio/got_coin.wav");
   got_poison_music = new Audio("audio/got_poison.wav");
   status_bar = new StatusBar();
   coins_bar = new CoinsBar();
   poison_bar = new PoisonBar();
+  status_bar_endboss = new StatusBarEndboss();
+  endboss = new Endboss(this.character);
+  bubbles = [];
+
+  isMuted = false;
 
   constructor(canvas, keyboard) {
     this.canvas = canvas;
@@ -21,12 +26,15 @@ class World {
     this.checkForCollision();
     this.checkForCoins();
     this.checkForPoison();
-    this.background_music.play(); // funktioniert - erst wieder öffnen wenn fertig
+    this.drawBubble();
+    this.eraseBubbles();
+    this.bubbleCheckForJelly();
   }
 
   setWorld() {
     this.character.world = this;
   }
+
   drawAll() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
@@ -36,7 +44,10 @@ class World {
     this.addObjects(this.level.poison_ground);
     this.addObjects(this.level.poison_up);
     this.addObjects(this.level.enemies);
+    this.addToCanvas(this.endboss);
+    this.addToCanvas(this.status_bar_endboss);
     this.addToCanvas(this.character);
+    this.addObjects(this.bubbles);
     this.ctx.translate(-this.camera_x, 0);
     /// everything under here follows camera on screen //
     this.addToCanvas(this.status_bar);
@@ -72,19 +83,21 @@ class World {
         if (this.character.isColliding(enemy)) {
           if (this.keyboard.space == true) {
             this.character.lastAttack();
-            this.character.strikedEnemy = enemy;
-            enemy.enemyDying = true;
-          } else if (this.keyboard.d == true) {
-            this.character.lastAttack();
-            this.character.strikedEnemy = enemy;
-            enemy.enemyDying = true;
+            if (
+              enemy instanceof enemyGreenFish ||
+              enemy instanceof enemyRedFish ||
+              enemy instanceof enemyLilaFish
+            ) {
+              this.character.strikedEnemy = enemy;
+              enemy.enemyDying = true;
+            }
           } else {
             this.character.hit();
             this.status_bar.setPercent(this.character.energy);
             this.character.isHittedBy = enemy.damageType;
             if (this.character.energy <= 0) {
               /////hier tot .... weitermachen ////
-              this.background_music.pause();
+              audioOff();
               console.log("TOOOOOT");
             }
           }
@@ -102,7 +115,9 @@ class World {
           if (this.character.coins < 100) {
             this.level.coins.splice(this.level.coins.indexOf(coin), 1);
             this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
-            this.got_coin_music.play();
+            if (!this.isMuted) {
+              this.got_coin_music.play();
+            }
           }
           this.coins_bar.setCoinsBar(this.character.coins);
         }
@@ -124,7 +139,9 @@ class World {
                 poison.width,
                 poison.height
               );
-              this.got_poison_music.play();
+              if (!this.isMuted) {
+                this.got_poison_music.play();
+              }
             }
             this.poison_bar.setPoisonBar(this.character.poison);
           }
@@ -133,5 +150,39 @@ class World {
       checkPoison(this.level.poison_ground);
       checkPoison(this.level.poison_up);
     }, 1000);
+  }
+
+  drawBubble() {
+    setInterval(() => {
+      if (this.character.newBubble) {
+        this.character.newBubble = false;
+        this.bubbles.push(
+          new Bubbles(this.character.x + 200, this.character.y + 210)
+        );
+      }
+    }, 300);
+  }
+
+  eraseBubbles() {
+    setInterval(() => {
+      this.bubbles.forEach((bubble) => {
+        if (bubble.x <= -100 || bubble.y <= -100) {
+          this.bubbles.splice(this.bubbles.indexOf(bubble), 1);
+        }
+      });
+    }, 1000 / 60);
+  }
+
+  bubbleCheckForJelly() {
+    setInterval(() => {
+      this.bubbles.forEach((bubble) => {
+        this.level.enemies.forEach((enemy) => {
+          if (bubble.hitsJelly(enemy) && enemy.isHittable) {
+            enemy.enemyDying = true;
+            this.bubbles.splice(this.bubbles.indexOf(bubble), 1);
+          }
+        });
+      });
+    }, 1000 / 60);
   }
 } //ende constructor
