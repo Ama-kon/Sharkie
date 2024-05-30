@@ -1,10 +1,13 @@
 class Endboss extends movableObject {
-  height = 400;
+  height = 430;
   width = 400;
-  y = 0;
-  x = 3800;
+  y = -300; // outside of canvas
+  x = 5000; // outside of canvas
+  i;
   character;
-  images_move = [
+  sawEndboss = false;
+
+  images_intro = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/3.png",
@@ -15,7 +18,8 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/1.Introduce/8.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/9.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/10.png",
-
+  ];
+  images_move = [
     "img/2.Enemy/3 Final Enemy/2.floating/1.png",
     "img/2.Enemy/3 Final Enemy/2.floating/2.png",
     "img/2.Enemy/3 Final Enemy/2.floating/3.png",
@@ -31,17 +35,32 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/2.floating/13.png",
   ];
   constructor(character) {
-    super().loadIMG("img/2.Enemy/3 Final Enemy/1.Introduce/1.png");
+    super();
+    this.loadIMG("img/2.Enemy/3 Final Enemy/1.Introduce/1.png");
     this.character = character;
     this.loadImages(this.images_move);
+    this.loadImages(this.images_intro);
     this.animate();
   }
+
   animate() {
+    this.i = 0;
     setInterval(() => {
-      if (this.character.x >= 3700) {
-        this.playAnimation(this.images_move);
-        console.log("bin da!");
+      if (this.character.x >= 3500) {
+        this.x = 3800;
+        this.y = 0;
+
+        if (!this.sawEndboss && this.i < this.images_intro.length) {
+          this.sawEndboss = true;
+        }
+
+        this.playAnimation(this.images_intro);
+        this.i++;
+
+        if (this.sawEndboss && this.i > this.images_intro.length) {
+          this.playAnimation(this.images_move);
+        }
       }
-    }, 150);
+    }, 170);
   }
 }

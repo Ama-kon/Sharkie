@@ -14,6 +14,7 @@ class mainCharacter extends movableObject {
   striked_jelly = new Audio("audio/electric_shock.mp3");
   game_over = new Audio("audio/game_over.wav");
   isMuted = false;
+
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -109,8 +110,9 @@ class mainCharacter extends movableObject {
   animate() {
     setInterval(() => {
       // only keyboard //
-      if (this.world.keyboard.right && this.x <= this.world.level.level_end_x) {
+      if (this.world.keyboard.right && this.x <= 3800) {
         this.x += this.speed;
+
         this.otherDirection = false;
       }
       if (this.world.keyboard.left && this.x > 0) {
@@ -136,7 +138,9 @@ class mainCharacter extends movableObject {
         this.otherDirection = true;
       }
 
-      this.followCamera();
+      if (this.x <= 3500) {
+        this.followCamera();
+      }
     }, 1000 / 60);
 
     setInterval(() => {
@@ -176,7 +180,7 @@ class mainCharacter extends movableObject {
           this.strikedEnemy.enemyDying = true;
         }
       }
-    }, 100);
+    }, 1000 / 10);
   }
 
   followCamera() {
