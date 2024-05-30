@@ -1,5 +1,6 @@
 class StatusBarEndboss extends DrawableObject {
   otherDirection = true;
+  endboss;
   images_lifes = [
     "img/4. Marcadores/orange/100_  copia.png",
     "img/4. Marcadores/orange/80_  copia.png",
@@ -10,13 +11,22 @@ class StatusBarEndboss extends DrawableObject {
   ];
 
   percent = 100;
-  constructor() {
+  constructor(endboss) {
     super();
+    this.endboss = endboss;
     this.loadImages(this.images_lifes);
-    this.x = 3980;
+    this.x = this.endboss.x;
     this.y = 0;
     this.width = 200;
     this.height = 80;
+    this.setPercent(100);
+    this.checkForEndbossX();
+  }
+
+  checkForEndbossX() {
+    setInterval(() => {
+      this.x = this.endboss.x + 160;
+    }, 1000 / 60);
   }
 
   setPercent(percent) {
