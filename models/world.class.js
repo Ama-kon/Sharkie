@@ -5,15 +5,16 @@ class World {
   canvas;
   keyboard;
   camera_x = 0;
-
   got_coin_music = new Audio("audio/got_coin.wav");
   got_poison_music = new Audio("audio/got_poison.wav");
   status_bar = new StatusBar();
   coins_bar = new CoinsBar();
   poison_bar = new PoisonBar();
-  status_bar_endboss = new StatusBarEndboss();
+
   endboss = new Endboss(this.character);
+  status_bar_endboss = new StatusBarEndboss(this.endboss);
   bubbles = [];
+  poisonBubbles = [];
 
   isMuted = false;
 
@@ -28,6 +29,8 @@ class World {
     this.checkForPoison();
     this.drawBubble();
     this.eraseBubbles();
+    this.drawPoisonBubble();
+    this.erasePoisonBubbles();
     this.bubbleCheckForJelly();
   }
 
@@ -48,9 +51,11 @@ class World {
     this.addToCanvas(this.status_bar_endboss);
     this.addToCanvas(this.character);
     this.addObjects(this.bubbles);
+    this.addObjects(this.poisonBubbles);
     this.ctx.translate(-this.camera_x, 0);
     /// everything under here follows camera on screen //
     this.addToCanvas(this.status_bar);
+
     this.addToCanvas(this.coins_bar);
     this.addToCanvas(this.poison_bar);
     this.ctx.translate(this.camera_x, 0);
@@ -154,11 +159,14 @@ class World {
 
   drawBubble() {
     setInterval(() => {
-      if (this.character.newBubble) {
+      if (this.character.newBubble && this.character.coins > 0) {
+        this.character.lostCoin();
+
         this.character.newBubble = false;
         this.bubbles.push(
           new Bubbles(this.character.x + 200, this.character.y + 210)
         );
+        this.coins_bar.setCoinsBar(this.character.coins);
       }
     }, 300);
   }
@@ -168,6 +176,30 @@ class World {
       this.bubbles.forEach((bubble) => {
         if (bubble.x <= -100 || bubble.y <= -100) {
           this.bubbles.splice(this.bubbles.indexOf(bubble), 1);
+        }
+      });
+    }, 1000 / 60);
+  }
+
+  drawPoisonBubble() {
+    setInterval(() => {
+      if (this.character.newPoisonBubble && this.character.poison > 0) {
+        this.character.lostPoison();
+
+        this.character.newPoisonBubble = false;
+        this.poisonBubbles.push(
+          new PoisonBubbles(this.character.x + 200, this.character.y + 210)
+        );
+        this.poison_bar.setPoisonBar(this.character.poison);
+      }
+    }, 300);
+  }
+
+  erasePoisonBubbles() {
+    setInterval(() => {
+      this.poisonBubbles.forEach((bubble) => {
+        if (bubble.x <= -100 || bubble.y <= -100) {
+          this.poisonBubbles.splice(this.bubbles.indexOf(bubble), 1);
         }
       });
     }, 1000 / 60);
