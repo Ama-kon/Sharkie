@@ -29,6 +29,9 @@ window.addEventListener("keydown", (event) => {
   if (event.keyCode == 68) {
     keyboard.d = true;
   }
+  if (event.keyCode == 65) {
+    keyboard.a = true;
+  }
 });
 
 window.addEventListener("keyup", (event) => {
@@ -49,6 +52,9 @@ window.addEventListener("keyup", (event) => {
   }
   if (event.keyCode == 68) {
     keyboard.d = false;
+  }
+  if (event.keyCode == 65) {
+    keyboard.a = false;
   }
 });
 

@@ -8,6 +8,7 @@ class mainCharacter extends movableObject {
   isHittedBy = "";
   strikedEnemy = "";
   newBubble = false;
+  newPoisonBubble = false;
   hit_by_fish = new Audio("audio/hit_by_fish.wav");
   hit_by_jelly = new Audio("audio/electric_shock.mp3");
   striked_fish = new Audio("audio/striked_fish.mp3");
@@ -93,6 +94,17 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
   ];
 
+  images_poison_bubble = [
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/3.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/4.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/5.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/6.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png",
+    "img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
+  ];
+
   constructor() {
     super();
     this.loadIMG("img/1.Sharkie/1.IDLE/1.png");
@@ -103,7 +115,7 @@ class mainCharacter extends movableObject {
     this.loadImages(this.images_dead);
     this.loadImages(this.images_hurt_electric);
     this.loadImages(this.images_hurt_poisoned);
-
+    this.loadImages(this.images_poison_bubble);
     this.animate();
   }
 
@@ -153,6 +165,12 @@ class mainCharacter extends movableObject {
       if (this.world.keyboard.d) {
         this.playAnimation(this.images_bubble);
         this.newBubble = true;
+      }
+
+      if (this.world.keyboard.a) {
+        console.log("a");
+        this.playAnimation(this.images_poison_bubble);
+        this.newPoisonBubble = true;
       }
 
       if (this.isDead()) {
