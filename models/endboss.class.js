@@ -6,6 +6,8 @@ class Endboss extends movableObject {
   i;
   character;
   sawEndboss = false;
+  isHittedBy;
+  isMuted = false;
 
   images_intro = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -74,7 +76,12 @@ class Endboss extends movableObject {
   animate() {
     this.i = 0;
     setInterval(() => {
-      if (this.character.x >= 3500) {
+      if (this.character.x >= 3100 && !this.isMuted) {
+        endboss_sound.play();
+        background_music.pause();
+      }
+
+      if (this.character.x >= 3400) {
         this.x = 3800;
         this.y = 0;
 
@@ -84,11 +91,32 @@ class Endboss extends movableObject {
 
         this.playAnimation(this.images_intro);
         this.i++;
+      }
 
-        if (this.sawEndboss && this.i > this.images_intro.length) {
-          this.playAnimation(this.images_move);
-        }
+      if (this.sawEndboss && this.i > this.images_intro.length) {
+        this.playAnimation(this.images_move);
+      }
+
+      if (this.isDead()) {
+        this.playAnimation(this.images_dead);
       }
     }, 170);
+
+    setInterval(() => {
+      if (this.sawEndboss && !this.isMuted) {
+        endboss_sound.play();
+        background_music.pause();
+      } else if (this.sawEndboss && this.isMuted) {
+        background_music.pause();
+        endboss_sound.pause();
+      }
+
+      if (this.endbossIsHurt()) {
+        if (!this.isMuted) {
+          endboss_hurt_sound.play();
+        }
+        this.playAnimation(this.images_hurt);
+      }
+    }, 1000 / 60);
   }
 }
