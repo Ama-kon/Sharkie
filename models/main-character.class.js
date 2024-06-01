@@ -144,10 +144,26 @@ class mainCharacter extends movableObject {
         this.y += this.speed / 5;
         this.otherDirection = true;
       }
+      if (this.world.keyboard.left && this.x > 0 && this.world.keyboard.down) {
+        if (this.y >= 150) {
+          this.x -= this.speed / 5;
+          this.y -= this.speed / 5;
+          this.otherDirection = true;
+        } else {
+          this.x -= this.speed / 5;
+          this.otherDirection = true;
+        }
+      }
+
       if (this.world.keyboard.left && this.x > 0 && this.world.keyboard.up) {
-        this.x -= this.speed / 5;
-        this.y -= this.speed / 5;
-        this.otherDirection = true;
+        if (this.y >= 150) {
+          this.x -= this.speed / 5;
+          this.y -= this.speed / 5;
+          this.otherDirection = true;
+        } else {
+          this.x -= this.speed / 5;
+          this.otherDirection = true;
+        }
       }
 
       if (this.x <= 3500) {
@@ -168,7 +184,6 @@ class mainCharacter extends movableObject {
       }
 
       if (this.world.keyboard.a) {
-        console.log("a");
         this.playAnimation(this.images_poison_bubble);
         this.newPoisonBubble = true;
       }
