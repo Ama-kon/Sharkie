@@ -6,6 +6,7 @@ class movableObject extends DrawableObject {
   coins = 0;
   poison = 0;
   lastHit = 0;
+  lastHitEndboss = 0;
   lastCoin = 0;
   lastPoison = 0;
   damageType;
@@ -81,6 +82,15 @@ class movableObject extends DrawableObject {
     );
   }
 
+  isCollidingEndboss(object) {
+    return (
+      this.x + this.width >= object.x &&
+      this.x >= object.x &&
+      this.y + this.height > object.y + 220 &&
+      this.y < object.y + object.height
+    );
+  }
+
   hitsJelly(object) {
     return (
       this.x + 40 + this.width >= object.x &&
@@ -99,12 +109,27 @@ class movableObject extends DrawableObject {
     }
   }
 
+  hitEndboss() {
+    this.energy -= 20;
+    if (this.energy <= 0) {
+      this.energy = 0;
+    } else {
+      this.lastHitEndboss = new Date().getTime();
+    }
+  }
+
   isDead() {
     return this.energy == 0;
   }
 
   isHurt() {
     let timePassed = new Date().getTime() - this.lastHit;
+    timePassed = timePassed / 1000;
+    return timePassed < 1;
+  }
+
+  endbossIsHurt() {
+    let timePassed = new Date().getTime() - this.lastHitEndboss;
     timePassed = timePassed / 1000;
     return timePassed < 1;
   }
