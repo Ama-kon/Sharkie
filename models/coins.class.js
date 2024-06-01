@@ -1,8 +1,7 @@
 class Coins extends movableObject {
   width = 35;
   height = 35;
-  x = 100;
-  y = 250;
+
   images_coins = [
     "img/4. Marcadores/1. Coins/1.png",
     "img/4. Marcadores/1. Coins/2.png",
@@ -10,12 +9,12 @@ class Coins extends movableObject {
     "img/4. Marcadores/1. Coins/4.png",
   ];
 
-  constructor() {
+  constructor(x, y) {
     super();
     this.loadImages(this.images_coins);
     this.animate();
-    this.x = this.x + Math.random() * 3000;
-    this.y = this.y - Math.random() * 110;
+    this.x = x;
+    this.y = y;
   }
 
   animate() {

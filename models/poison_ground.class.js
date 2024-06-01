@@ -4,10 +4,10 @@ class PoisonGround extends movableObject {
     "img/4. Marcadores/Posión/Dark - Right.png",
   ];
 
-  constructor() {
+  constructor(x) {
     super();
     this.loadImages(this.images_poison_ground);
-    this.x = 200 + Math.random() * 2700;
+    this.x = x;
     this.y = 350;
     this.width = 50;
     this.height = 50;
