@@ -15,11 +15,11 @@ class movableObject extends DrawableObject {
 
   isHittable = false;
 
-  checkSwimDirectionFish(smaller, larger) {
+  checkSwimDirectionFish(x) {
     setInterval(() => {
-      if (this.x < smaller) {
+      if (this.x <= x - 150) {
         this.otherDirection = true;
-      } else if (this.x >= larger) {
+      } else if (this.x >= x + 150) {
         this.otherDirection = false;
       }
 
@@ -31,12 +31,12 @@ class movableObject extends DrawableObject {
     }, 1000 / 60);
   }
 
-  checkSwimDirectionJelly(smaller, larger) {
+  checkSwimDirectionJelly(y) {
     setInterval(() => {
-      if (this.y <= smaller) {
+      if (this.y <= y - 100) {
         this.onTop = true;
       }
-      if (this.y >= larger) {
+      if (this.y >= y + 100) {
         this.onTop = false;
       }
 
