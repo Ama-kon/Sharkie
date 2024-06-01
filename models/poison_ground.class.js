@@ -7,7 +7,7 @@ class PoisonGround extends movableObject {
   constructor() {
     super();
     this.loadImages(this.images_poison_ground);
-    this.x = this.x + Math.random() * 2700;
+    this.x = 200 + Math.random() * 2700;
     this.y = 350;
     this.width = 50;
     this.height = 50;
