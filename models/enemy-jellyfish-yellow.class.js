@@ -18,15 +18,15 @@ class enemyJellyfishYellow extends movableObject {
     "img/2.Enemy/2 Jelly fish/Dead/Yellow/y4.png",
   ];
 
-  constructor() {
+  constructor(x, y) {
     super().loadIMG("img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png");
     this.damageType = "electric";
-    this.x = 500 + Math.random() * 400;
-    this.y = 50 + Math.random() * 300;
+    this.x = x;
+    this.y = y;
     this.loadImages(this.images_move);
     this.loadImages(this.images_die);
-    this.speed = 0.2 + Math.random() * 0.2;
-    this.checkSwimDirectionJelly(120, 320);
+    this.speed = 0.3 + Math.random() * 0.5;
+    this.checkSwimDirectionJelly(this.y);
     this.animate();
   }
   animate() {

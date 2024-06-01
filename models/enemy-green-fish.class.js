@@ -16,14 +16,14 @@ class enemyGreenFish extends movableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 2 (can animate by going down to the floor after the Fin Slap attack).png",
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3 (can animate by going down to the floor after the Fin Slap attack).png",
   ];
-  constructor() {
+  constructor(x, y) {
     super();
     this.loadImages(this.images_move);
     this.loadImages(this.images_die);
     this.damageType = "poison";
-    this.x = 500 + Math.random() * 500;
-    this.y = 80 + Math.random() * 240;
-    this.checkSwimDirectionFish(600, 700);
+    this.x = x;
+    this.y = y;
+    this.checkSwimDirectionFish(this.x);
     this.animate();
   }
   animate() {
@@ -36,15 +36,4 @@ class enemyGreenFish extends movableObject {
       }
     }, 1000 / 60);
   }
-
-  // checkForDyingEnemy() {
-  //   let dyingEnemies = this.level.enemies.filter((enemy) => enemy.enemyDying);
-  //   this.level.enemies = this.level.enemies.filter(
-  //     (enemy) => !enemy.enemyDying
-  //   );
-
-  //   dyingEnemies.forEach((enemy) => {
-  //     this.ctx.clearRect(enemy.x, enemy.y, enemy.width, enemy.height);
-  //   });
-  // }
 }

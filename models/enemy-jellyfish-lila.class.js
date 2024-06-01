@@ -17,13 +17,12 @@ class enemyJellyfishLila extends movableObject {
     "img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png",
   ];
 
-  constructor() {
+  constructor(x, y) {
     super();
     this.loadImages(this.images_move);
     this.damageType = "electric";
-    this.x = 900 + Math.random() * 500;
-    console.log("lila jelly is ", this.x);
-    this.y = 30 + Math.random() * 300;
+    this.x = x;
+    this.y = y;
     this.loadImages(this.images_move);
     this.loadImages(this.images_die);
     this.speed = 0.2 + Math.random() * 0.2;

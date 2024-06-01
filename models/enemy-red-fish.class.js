@@ -16,16 +16,16 @@ class enemyRedFish extends movableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.3.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.png",
   ];
-  constructor() {
+  constructor(x, y) {
     super().loadIMG(
       "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png"
     );
     this.damageType = "poison";
-    this.x = 1000 + Math.random() * 1000;
-    this.y = 50 + Math.random() * 300;
+    this.x = x;
+    this.y = y;
     this.loadImages(this.images_move);
     this.loadImages(this.images_die);
-    this.checkSwimDirectionFish(1500, 1800);
+    this.checkSwimDirectionFish(this.x);
     this.animate();
   }
   animate() {

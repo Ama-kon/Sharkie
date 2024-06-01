@@ -1,14 +1,28 @@
-const level1 = new Level(
+// let level1; zusammen mit function init level wieder normal, bei level1 = new level noch das let weg
+
+// function initLevel1() { // beim klick auf start ausführen
+
+let level1 = new Level(
   [
-    new enemyGreenFish(),
-    new enemyGreenFish(),
-    new enemyRedFish(),
-    new enemyRedFish(),
-    new enemyLilaFish(),
-    new enemyLilaFish(),
-    new enemyJellyfishLila(),
-    new enemyJellyfishYellow(),
-    // new Endboss(),
+    new enemyGreenFish(1000, 180),
+    new enemyGreenFish(1350, 300),
+    new enemyGreenFish(1850, 310),
+    new enemyGreenFish(3000, 140),
+
+    new enemyRedFish(700, 290),
+    new enemyRedFish(2000, 140),
+
+    new enemyLilaFish(2800, 360),
+    new enemyLilaFish(2700, 320),
+    new enemyLilaFish(2600, 280),
+    new enemyLilaFish(2700, 240),
+    new enemyLilaFish(2800, 200),
+
+    new enemyJellyfishLila(2400, 200),
+    new enemyJellyfishYellow(2550, 360),
+
+    new enemyJellyfishLila(2850, 300),
+    new enemyJellyfishYellow(2950, 300),
   ],
   [new clouds()],
   [
@@ -141,15 +155,20 @@ const level1 = new Level(
     ),
   ],
   [
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
-    new Coins(),
+    new Coins(600, 250),
+    new Coins(650, 210),
+    new Coins(700, 170),
+    new Coins(750, 210),
+    new Coins(800, 250),
+    new Coins(1300, 100),
+    new Coins(1350, 60),
+    new Coins(1400, 100),
+    new Coins(2500, 390),
+    new Coins(2550, 350),
+    new Coins(2600, 310),
   ],
-  [new PoisonGround(), new PoisonGround(), new PoisonGround()],
-  [new PoisonUp(), new PoisonUp(), new PoisonUp()]
+  [new PoisonGround(1000), new PoisonGround(2000), new PoisonGround(3000)],
+  [(new PoisonUp(1500, 160), new PoisonUp(2200, 290), new PoisonUp(3200, 390))]
 );
+
+// }
