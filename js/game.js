@@ -2,8 +2,13 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let character;
+
 background_music = new Audio("audio/background_music.mp3");
 background_music.volume = 0.1;
+background_music.loop = true;
+
+endboss_sound = new Audio("audio/endboss_sound.mp3");
+endboss_sound.loop = true;
 let isMuted = false;
 function init() {
   canvas = document.getElementById("canvas");
@@ -67,6 +72,7 @@ function toggleSound() {
     isMuted = true;
     world.isMuted = true;
     world.character.isMuted = true;
+    world.endboss.isMuted = true;
     checkSound();
   } else {
     img.src = "img/icons/lautsprecher.png";
@@ -74,6 +80,7 @@ function toggleSound() {
     isMuted = false;
     world.isMuted = false;
     world.character.isMuted = false;
+    world.endboss.isMuted = false;
     checkSound();
   }
 }
