@@ -32,6 +32,7 @@ class World {
     this.erasePoisonBubbles();
     this.bubbleCheckForJelly();
     this.poisonCheckForEndboss();
+    this.setAudioVolume();
   }
 
   setWorld() {
@@ -127,7 +128,7 @@ class World {
           this.coins_bar.setCoinsBar(this.character.coins);
         }
       });
-    }, 1000);
+    }, 1000 / 60);
   }
 
   checkForPoison() {
@@ -154,7 +155,7 @@ class World {
       };
       checkPoison(this.level.poison_ground);
       checkPoison(this.level.poison_up);
-    }, 1000);
+    }, 1000 / 60);
   }
 
   drawBubble() {
@@ -235,5 +236,10 @@ class World {
       }),
         1000 / 60;
     });
+  }
+
+  setAudioVolume() {
+    this.got_coin_music.volume = 0.5;
+    this.got_poison_music.volume = 0.1;
   }
 } //ende constructor
