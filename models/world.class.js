@@ -10,7 +10,6 @@ class World {
   status_bar = new StatusBar();
   coins_bar = new CoinsBar();
   poison_bar = new PoisonBar();
-
   endboss = new Endboss(this.character);
   status_bar_endboss = new StatusBarEndboss(this.endboss);
   bubbles = [];
@@ -32,6 +31,7 @@ class World {
     this.drawPoisonBubble();
     this.erasePoisonBubbles();
     this.bubbleCheckForJelly();
+    this.poisonCheckForEndboss();
   }
 
   setWorld() {
@@ -55,9 +55,9 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
     /// everything under here follows camera on screen //
     this.addToCanvas(this.status_bar);
-
     this.addToCanvas(this.coins_bar);
     this.addToCanvas(this.poison_bar);
+
     this.ctx.translate(this.camera_x, 0);
     this.ctx.translate(-this.camera_x, 0);
     let self = this;
@@ -183,7 +183,10 @@ class World {
 
   drawPoisonBubble() {
     setInterval(() => {
-      if (this.character.newPoisonBubble && this.character.poison > 0) {
+      if (
+        this.character.newPoisonBubble
+        // && this.character.poison > 0                // zu testzwecken auskommentiert, muss dann wieder rein
+      ) {
         this.character.lostPoison();
 
         this.character.newPoisonBubble = false;
@@ -199,7 +202,7 @@ class World {
     setInterval(() => {
       this.poisonBubbles.forEach((bubble) => {
         if (bubble.x <= -100 || bubble.y <= -100) {
-          this.poisonBubbles.splice(this.bubbles.indexOf(bubble), 1);
+          this.poisonBubbles.splice(this.poisonBubbles.indexOf(bubble), 1);
         }
       });
     }, 1000 / 60);
@@ -216,5 +219,21 @@ class World {
         });
       });
     }, 1000 / 60);
+  }
+
+  poisonCheckForEndboss() {
+    setInterval(() => {
+      this.poisonBubbles.forEach((bubble) => {
+        if (bubble.isCollidingEndboss(this.endboss)) {
+          this.endboss.hitEndboss();
+          this.status_bar_endboss.setPercent(this.endboss.energy);
+          this.poisonBubbles.splice(this.poisonBubbles.indexOf(bubble), 1);
+          if (this.endboss.energy <= 0) {
+            console.log(" endgegner TOOOOOT");
+          }
+        }
+      }),
+        1000 / 60;
+    });
   }
 } //ende constructor
