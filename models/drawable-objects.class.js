@@ -36,7 +36,7 @@ class DrawableObject {
       ctx.beginPath();
       ctx.lineWidth = "7";
       ctx.strokeStyle = "blue";
-      ctx.rect(this.x + 30, this.y + 160, this.width - 80, this.height - 240);
+      ctx.rect(this.x + 30, this.y + 220, this.width - 80, this.height - 300);
       ctx.stroke();
     }
     if (
@@ -60,6 +60,14 @@ class DrawableObject {
       ctx.stroke();
     }
     if (this instanceof PoisonGround || this instanceof PoisonUp) {
+      ctx.beginPath();
+      ctx.lineWidth = "7";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
+    }
+
+    if (this instanceof PoisonBubbles) {
       ctx.beginPath();
       ctx.lineWidth = "7";
       ctx.strokeStyle = "blue";
