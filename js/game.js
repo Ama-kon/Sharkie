@@ -9,6 +9,8 @@ background_music.loop = true;
 
 endboss_sound = new Audio("audio/endboss_sound.mp3");
 endboss_sound.loop = true;
+endboss_hurt_sound = new Audio("audio/endboss_hurt.wav");
+
 let isMuted = false;
 function init() {
   canvas = document.getElementById("canvas");
