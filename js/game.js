@@ -3,15 +3,6 @@ let world;
 let keyboard = new Keyboard();
 let character;
 
-background_music = new Audio("audio/background_music.mp3");
-background_music.volume = 0.1;
-background_music.loop = true;
-
-endboss_sound = new Audio("audio/endboss_sound.mp3");
-endboss_sound.loop = true;
-endboss_hurt_sound = new Audio("audio/endboss_hurt.wav");
-
-let isMuted = false;
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas, keyboard);
@@ -64,41 +55,3 @@ window.addEventListener("keyup", (event) => {
     keyboard.a = false;
   }
 });
-
-function toggleSound() {
-  let img = document.getElementById("sound_toggle");
-
-  if (img.src.includes("lautsprecher.png")) {
-    img.src = "img/icons/lautsprecher_aus.png";
-    img.alt = "sound off";
-    isMuted = true;
-    world.isMuted = true;
-    world.character.isMuted = true;
-    world.endboss.isMuted = true;
-    checkSound();
-  } else {
-    img.src = "img/icons/lautsprecher.png";
-    img.alt = "sound on";
-    isMuted = false;
-    world.isMuted = false;
-    world.character.isMuted = false;
-    world.endboss.isMuted = false;
-    checkSound();
-  }
-}
-
-function checkSound() {
-  if (isMuted) {
-    audioOff();
-  } else {
-    audioOn();
-  }
-}
-
-function audioOff() {
-  background_music.pause();
-}
-
-function audioOn() {
-  background_music.play();
-}
