@@ -7,7 +7,7 @@ let level1 = new Level(
     new enemyGreenFish(1000, 180),
     new enemyGreenFish(1350, 300),
     new enemyGreenFish(1850, 310),
-    new enemyGreenFish(3000, 140),
+    new enemyGreenFish(3140, 140),
 
     new enemyRedFish(700, 290),
     new enemyRedFish(2000, 140),
@@ -18,11 +18,11 @@ let level1 = new Level(
     new enemyLilaFish(2700, 240),
     new enemyLilaFish(2800, 200),
 
-    new enemyJellyfishLila(2400, 200),
-    new enemyJellyfishYellow(2550, 360),
+    new enemyJellyfishLila(2400, 250),
+    new enemyJellyfishYellow(2300, 250),
 
     new enemyJellyfishLila(2850, 300),
-    new enemyJellyfishYellow(2950, 300),
+    new enemyJellyfishYellow(3070, 300),
   ],
   [new clouds()],
   [
