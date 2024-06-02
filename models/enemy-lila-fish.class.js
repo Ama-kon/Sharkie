@@ -22,8 +22,6 @@ class enemyLilaFish extends movableObject {
     this.damageType = "poison";
     this.x = x;
     this.y = y;
-    console.log(this.x);
-
     this.checkSwimDirectionFish(x);
     this.animate();
   }
