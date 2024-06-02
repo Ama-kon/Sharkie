@@ -13,7 +13,7 @@ class CoinsBar extends movableObject {
     this.loadImages(this.images_coins);
     this.x = 10;
     this.y = 60;
-    this.width = 200;
+    this.width = 160;
     this.height = 80;
   }
 

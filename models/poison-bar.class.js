@@ -13,7 +13,7 @@ class PoisonBar extends DrawableObject {
     this.loadImages(this.images_poison);
     this.x = 10;
     this.y = 125;
-    this.width = 200;
+    this.width = 160;
     this.height = 80;
   }
 
