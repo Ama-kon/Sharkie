@@ -15,8 +15,6 @@ class World {
   bubbles = [];
   poisonBubbles = [];
 
-  isMuted = false;
-
   constructor(canvas, keyboard) {
     this.canvas = canvas;
     this.keyboard = keyboard;
@@ -32,6 +30,8 @@ class World {
     this.erasePoisonBubbles();
     this.bubbleCheckForJelly();
     this.poisonCheckForEndboss();
+    this.correctCoins();
+    this.correctPoison();
   }
 
   setWorld() {
@@ -94,7 +94,7 @@ class World {
               enemy instanceof enemyRedFish ||
               enemy instanceof enemyLilaFish
             ) {
-              if (!this.isMuted) {
+              if (!isMuted) {
                 striked_fish.play();
               }
 
@@ -122,10 +122,10 @@ class World {
         if (this.character.isColliding(coin)) {
           this.character.gotCoin();
 
-          if (this.character.coins < 100) {
+          if (this.character.coins <= 100) {
             this.level.coins.splice(this.level.coins.indexOf(coin), 1);
             this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
-            if (!this.isMuted) {
+            if (!isMuted) {
               got_coin_music.play();
             }
           }
@@ -135,13 +135,21 @@ class World {
     }, 1000 / 60);
   }
 
+  correctCoins() {
+    setInterval(() => {
+      if (this.character.coins > 100) {
+        this.character.coins = 100;
+      }
+    }, 1000 / 60);
+  }
+
   checkForPoison() {
     setInterval(() => {
       const checkPoison = (array) => {
         array.forEach((poison) => {
           if (this.character.isColliding(poison)) {
             this.character.gotPoison();
-            if (this.character.poison < 100) {
+            if (this.character.poison <= 100) {
               array.splice(array.indexOf(poison), 1);
               this.ctx.clearRect(
                 poison.x,
@@ -149,7 +157,7 @@ class World {
                 poison.width,
                 poison.height
               );
-              if (!this.isMuted) {
+              if (!isMuted) {
                 got_poison_music.play();
               }
             }
@@ -162,18 +170,40 @@ class World {
     }, 1000 / 60);
   }
 
+  correctPoison() {
+    setInterval(() => {
+      if (this.character.poison > 100) {
+        this.character.poison = 100;
+      }
+    }, 1000 / 60);
+  }
+
   drawBubble() {
     setInterval(() => {
-      if (this.character.newBubble && this.character.coins > 0) {
+      if (
+        this.character.newBubble
+        // && this.character.coins > 0        // zu testzwecken auskommentiert . muss wieder rein
+      ) {
         this.character.lostCoin();
 
         this.character.newBubble = false;
-        this.bubbles.push(
-          new Bubbles(this.character.x + 200, this.character.y + 210)
-        );
+        if (!this.character.otherDirection) {
+          this.bubbles.push(
+            new Bubbles(
+              this.character.x + 150,
+              this.character.y + 210,
+              "swimRight"
+            )
+          );
+        } else {
+          this.bubbles.push(
+            new Bubbles(this.character.x, this.character.y + 210, "swimLeft")
+          );
+        }
+
         this.coins_bar.setCoinsBar(this.character.coins);
       }
-    }, 300);
+    }, 500);
   }
 
   eraseBubbles() {
@@ -195,9 +225,23 @@ class World {
         this.character.lostPoison();
 
         this.character.newPoisonBubble = false;
-        this.poisonBubbles.push(
-          new PoisonBubbles(this.character.x + 200, this.character.y + 210)
-        );
+        if (!this.character.otherDirection) {
+          this.poisonBubbles.push(
+            new PoisonBubbles(
+              this.character.x + 150,
+              this.character.y + 210,
+              "swimRight"
+            )
+          );
+        } else {
+          this.poisonBubbles.push(
+            new PoisonBubbles(
+              this.character.x,
+              this.character.y + 210,
+              "swimLeft"
+            )
+          );
+        }
         this.poison_bar.setPoisonBar(this.character.poison);
       }
     }, 300);
@@ -218,7 +262,7 @@ class World {
       this.bubbles.forEach((bubble) => {
         this.level.enemies.forEach((enemy) => {
           if (bubble.hitsJelly(enemy) && enemy.isHittable) {
-            if (!this.isMuted) {
+            if (!isMuted) {
               striked_jelly.play();
             }
             enemy.enemyDying = true;

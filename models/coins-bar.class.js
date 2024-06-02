@@ -15,26 +15,28 @@ class CoinsBar extends movableObject {
     this.y = 60;
     this.width = 160;
     this.height = 80;
+    this.setCoinsBar(0);
   }
 
-  setCoinsBar(number) {
-    if (number <= 0) {
-      this.selectImg(5);
-    } else if (number <= 20) {
-      this.selectImg(4);
-    } else if (number <= 40) {
-      this.selectImg(3);
-    } else if (number <= 60) {
-      this.selectImg(2);
-    } else if (number <= 80) {
-      this.selectImg(1);
-    } else if (number <= 100) {
-      this.selectImg(0);
-    }
-  }
-
-  selectImg(nr) {
-    let imagePath = this.images_coins[nr];
+  setCoinsBar(percent) {
+    this.percent = percent;
+    let imagePath = this.images_coins[this.findIndexOfStatusImg()];
     this.img = this.imageCache[imagePath];
+  }
+
+  findIndexOfStatusImg() {
+    if (this.percent >= 100) {
+      return 0;
+    } else if (this.percent >= 80) {
+      return 1;
+    } else if (this.percent >= 60) {
+      return 2;
+    } else if (this.percent >= 40) {
+      return 3;
+    } else if (this.percent >= 20) {
+      return 4;
+    } else {
+      return 5;
+    }
   }
 }
