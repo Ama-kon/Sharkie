@@ -8,19 +8,15 @@ let level1 = new Level(
     new enemyGreenFish(1350, 300),
     new enemyGreenFish(1850, 310),
     new enemyGreenFish(3140, 140),
-
     new enemyRedFish(700, 290),
     new enemyRedFish(2000, 140),
-
     new enemyLilaFish(2800, 360),
     new enemyLilaFish(2700, 320),
     new enemyLilaFish(2600, 280),
     new enemyLilaFish(2700, 240),
     new enemyLilaFish(2800, 200),
-
     new enemyJellyfishLila(2400, 250),
     new enemyJellyfishYellow(2300, 250),
-
     new enemyJellyfishLila(2850, 300),
     new enemyJellyfishYellow(3070, 300),
   ],
@@ -167,8 +163,19 @@ let level1 = new Level(
     new Coins(2550, 350),
     new Coins(2600, 310),
   ],
-  [new PoisonGround(1000), new PoisonGround(2000), new PoisonGround(3000)],
-  [(new PoisonUp(1500, 160), new PoisonUp(2200, 290), new PoisonUp(3200, 390))]
+  [
+    new PoisonGround(500),
+    new PoisonGround(1000),
+    new PoisonGround(2000),
+    new PoisonGround(3000),
+  ],
+  [
+    new PoisonUp(300, 150),
+    new PoisonUp(1100, 170),
+    new PoisonUp(2200, 150),
+    new PoisonUp(3200, 390),
+    new PoisonUp(3300, 140),
+  ]
 );
 
 // }
