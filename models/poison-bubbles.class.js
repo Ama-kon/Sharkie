@@ -9,21 +9,27 @@ class PoisonBubbles extends movableObject {
     "img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png",
   ];
 
-  constructor(x, y) {
+  constructor(x, y, direction) {
     super();
     this.loadImages(this.image_bubble);
     this.x = x;
     this.y = y;
-
+    this.direction = direction;
     this.animate(x, y);
   }
 
   animate() {
     setInterval(() => {
-      this.playAnimation(this.image_bubble);
-      this.x += this.offsetX + this.speed;
-      this.y -= this.offsetY * this.speed;
       this.speed += 0.2;
+      if (this.direction == "swimRight") {
+        this.playAnimation(this.image_bubble);
+        this.x += this.offsetX + this.speed;
+        this.y -= this.offsetY * this.speed;
+      } else {
+        this.playAnimation(this.image_bubble);
+        this.x -= this.offsetX + this.speed;
+        this.y -= this.offsetY * this.speed;
+      }
     }, 100);
   }
 }

@@ -7,21 +7,28 @@ class Bubbles extends movableObject {
 
   image_bubble = ["img/1.Sharkie/4.Attack/Bubble trap/Bubble.png"];
 
-  constructor(x, y) {
+  constructor(x, y, direction) {
     super();
     this.loadImages(this.image_bubble);
     this.x = x;
     this.y = y;
-
-    this.animate(x, y);
+    this.direction = direction;
+    this.animate();
   }
 
   animate() {
     setInterval(() => {
-      this.playAnimation(this.image_bubble);
-      this.x += this.offsetX + this.speed;
-      this.y -= this.offsetY * this.speed;
-      this.speed += 0.2;
+      if (this.direction == "swimRight") {
+        this.playAnimation(this.image_bubble);
+        this.x += this.offsetX + this.speed;
+        this.y -= this.offsetY * this.speed;
+        this.speed += 0.2;
+      } else {
+        this.playAnimation(this.image_bubble);
+        this.x -= this.offsetX + this.speed;
+        this.y -= this.offsetY * this.speed;
+        this.speed += 0.2;
+      }
     }, 100);
   }
 }
