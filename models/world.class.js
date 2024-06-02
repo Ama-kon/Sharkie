@@ -5,10 +5,10 @@ class World {
   canvas;
   keyboard;
   camera_x = 0;
-  got_coin_music = new Audio("audio/got_coin.wav");
-  got_poison_music = new Audio("audio/got_poison.wav");
+
   status_bar = new StatusBar();
   coins_bar = new CoinsBar();
+
   poison_bar = new PoisonBar();
   endboss = new Endboss(this.character);
   status_bar_endboss = new StatusBarEndboss(this.endboss);
@@ -32,7 +32,6 @@ class World {
     this.erasePoisonBubbles();
     this.bubbleCheckForJelly();
     this.poisonCheckForEndboss();
-    this.setAudioVolume();
   }
 
   setWorld() {
@@ -88,12 +87,17 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
           if (this.keyboard.space == true) {
+            /// hier muss noch dem psieler etwas mehr zeit gegebn werden zum drücken der  taste
             this.character.lastAttack();
             if (
               enemy instanceof enemyGreenFish ||
               enemy instanceof enemyRedFish ||
               enemy instanceof enemyLilaFish
             ) {
+              if (!this.isMuted) {
+                striked_fish.play();
+              }
+
               this.character.strikedEnemy = enemy;
               enemy.enemyDying = true;
             }
@@ -122,7 +126,7 @@ class World {
             this.level.coins.splice(this.level.coins.indexOf(coin), 1);
             this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
             if (!this.isMuted) {
-              this.got_coin_music.play();
+              got_coin_music.play();
             }
           }
           this.coins_bar.setCoinsBar(this.character.coins);
@@ -146,7 +150,7 @@ class World {
                 poison.height
               );
               if (!this.isMuted) {
-                this.got_poison_music.play();
+                got_poison_music.play();
               }
             }
             this.poison_bar.setPoisonBar(this.character.poison);
@@ -214,6 +218,9 @@ class World {
       this.bubbles.forEach((bubble) => {
         this.level.enemies.forEach((enemy) => {
           if (bubble.hitsJelly(enemy) && enemy.isHittable) {
+            if (!this.isMuted) {
+              striked_jelly.play();
+            }
             enemy.enemyDying = true;
             this.bubbles.splice(this.bubbles.indexOf(bubble), 1);
           }
@@ -236,10 +243,5 @@ class World {
       }),
         1000 / 60;
     });
-  }
-
-  setAudioVolume() {
-    this.got_coin_music.volume = 0.5;
-    this.got_poison_music.volume = 0.1;
   }
 } //ende constructor
