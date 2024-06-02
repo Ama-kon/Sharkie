@@ -10,8 +10,6 @@ class mainCharacter extends movableObject {
   newBubble = false;
   newPoisonBubble = false;
 
-  isMuted = false;
-
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -203,20 +201,22 @@ class mainCharacter extends movableObject {
       }
 
       if (this.isDead()) {
-        if (!this.isMuted) {
+        if (!isMuted) {
+          background_music.pause();
+          endboss_sound.pause();
           game_over.play();
         }
 
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
         if (this.isHittedBy == "electric") {
-          if (!this.isMuted) {
+          if (!isMuted) {
             hit_by_jelly.play();
           }
 
           this.playAnimation(this.images_hurt_electric);
         } else if (this.isHittedBy == "poison") {
-          if (!this.isMuted) {
+          if (!isMuted) {
             hit_by_fish.play();
           }
 

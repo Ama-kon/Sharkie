@@ -7,7 +7,6 @@ class Endboss extends movableObject {
   character;
   sawEndboss = false;
   isHittedBy;
-  isMuted = false;
 
   images_intro = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -76,11 +75,7 @@ class Endboss extends movableObject {
   animate() {
     this.i = 0;
     setInterval(() => {
-      if (
-        this.character.x >= 3100 &&
-        !this.isMuted &&
-        this.character.energy > 0
-      ) {
+      if (this.character.x >= 3100 && !isMuted && this.character.energy > 0) {
         endboss_sound.play();
         background_music.pause();
       }
@@ -102,7 +97,7 @@ class Endboss extends movableObject {
       }
 
       if (this.isDead()) {
-        if (!this.isMuted) {
+        if (!isMuted) {
           endboss_sound.pause();
           you_win.play();
         } else {
@@ -114,16 +109,16 @@ class Endboss extends movableObject {
     }, 170);
 
     setInterval(() => {
-      if (this.sawEndboss && !this.isMuted && this.energy > 0) {
+      if (this.sawEndboss && !isMuted && this.energy > 0) {
         endboss_sound.play();
         background_music.pause();
-      } else if (this.sawEndboss && this.isMuted) {
+      } else if (this.sawEndboss && isMuted && this.energy > 0) {
         background_music.pause();
         endboss_sound.pause();
       }
 
       if (this.endbossIsHurt()) {
-        if (!this.isMuted) {
+        if (!isMuted) {
           endboss_hurt_sound.play();
         }
         this.playAnimation(this.images_hurt);

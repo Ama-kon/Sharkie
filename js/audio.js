@@ -15,7 +15,7 @@ hit_by_jelly = new Audio("audio/electric_shock.mp3");
 hit_by_jelly.playbackRate = 2.3;
 
 striked_fish = new Audio("audio/striked_fish.mp3");
-striked_fish.playbackRate = 1.5;
+striked_fish.playbackRate = 2;
 
 striked_jelly = new Audio("audio/striked_jelly.mp3");
 striked_jelly.playbackRate = 2;
@@ -32,7 +32,7 @@ you_win.loop = true;
 
 game_over = new Audio("audio/game_over.wav");
 
-let isMuted = false;
+isMuted = false;
 
 function toggleSound() {
   let img = document.getElementById("sound_toggle");
@@ -41,18 +41,11 @@ function toggleSound() {
     img.src = "img/icons/lautsprecher_aus.png";
     img.alt = "sound off";
     isMuted = true;
-    world.isMuted = true;
-    world.character.isMuted = true;
-    world.endboss.isMuted = true;
-
     checkSound();
   } else {
     img.src = "img/icons/lautsprecher.png";
     img.alt = "sound on";
     isMuted = false;
-    world.isMuted = false;
-    world.character.isMuted = false;
-    world.endboss.isMuted = false;
     checkSound();
   }
 }
