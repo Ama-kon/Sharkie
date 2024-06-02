@@ -34,7 +34,9 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("keyup", (event) => {
   if (event.keyCode == 32) {
-    keyboard.space = false;
+    setTimeout(() => {
+      keyboard.space = false;
+    }, 1000);
   }
   if (event.keyCode == 38) {
     keyboard.up = false;
