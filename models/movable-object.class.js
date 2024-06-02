@@ -138,8 +138,6 @@ class movableObject extends DrawableObject {
     this.coins += 20;
     if (this.coins <= 0) {
       this.coins = 0;
-    } else if (this.coins >= 100) {
-      this.coins = 100;
     } else {
       this.lastCoin = new Date().getTime();
     }
@@ -149,8 +147,6 @@ class movableObject extends DrawableObject {
     this.coins -= 20;
     if (this.coins <= 0) {
       this.coins = 0;
-    } else if (this.coins >= 100) {
-      this.coins = 100;
     } else {
       this.lastCoin = new Date().getTime();
     }
@@ -160,8 +156,6 @@ class movableObject extends DrawableObject {
     this.poison -= 20;
     if (this.poison <= 0) {
       this.poison = 0;
-    } else if (this.poison >= 100) {
-      this.poison = 100;
     } else {
       this.lastPoison = new Date().getTime();
     }
@@ -171,8 +165,6 @@ class movableObject extends DrawableObject {
     this.poison += 20;
     if (this.poison <= 0) {
       this.poison = 0;
-    } else if (this.poison >= 100) {
-      this.poison = 100;
     } else {
       this.lastPoison = new Date().getTime();
     }
