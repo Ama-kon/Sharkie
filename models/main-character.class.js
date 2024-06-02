@@ -9,11 +9,7 @@ class mainCharacter extends movableObject {
   strikedEnemy = "";
   newBubble = false;
   newPoisonBubble = false;
-  hit_by_fish = new Audio("audio/hit_by_fish.wav");
-  hit_by_jelly = new Audio("audio/electric_shock.mp3");
-  striked_fish = new Audio("audio/striked_fish.mp3");
-  striked_jelly = new Audio("audio/electric_shock.mp3");
-  game_over = new Audio("audio/game_over.wav");
+
   isMuted = false;
 
   images_move = [
@@ -208,20 +204,20 @@ class mainCharacter extends movableObject {
 
       if (this.isDead()) {
         if (!this.isMuted) {
-          this.game_over.play();
+          game_over.play();
         }
 
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
         if (this.isHittedBy == "electric") {
           if (!this.isMuted) {
-            this.hit_by_jelly.play();
+            hit_by_jelly.play();
           }
 
           this.playAnimation(this.images_hurt_electric);
         } else if (this.isHittedBy == "poison") {
           if (!this.isMuted) {
-            this.hit_by_fish.play();
+            hit_by_fish.play();
           }
 
           this.playAnimation(this.images_hurt_poisoned);
