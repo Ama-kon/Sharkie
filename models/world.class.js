@@ -265,8 +265,8 @@ class World {
             if (!isMuted) {
               striked_jelly.play();
             }
-            enemy.enemyDying = true;
             this.bubbles.splice(this.bubbles.indexOf(bubble), 1);
+            enemy.enemyDying = true;
           }
         });
       });
