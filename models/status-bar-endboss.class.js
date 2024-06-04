@@ -25,7 +25,7 @@ class StatusBarEndboss extends DrawableObject {
 
   checkForEndbossX() {
     setInterval(() => {
-      this.x = this.endboss.x + 160;
+      this.x = this.endboss.x + 200;
     }, 1000 / 60);
   }
 
