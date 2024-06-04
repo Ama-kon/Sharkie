@@ -52,28 +52,6 @@ class DrawableObject {
       ctx.rect(this.x, this.y, this.width - 10, this.height - 20);
       ctx.stroke();
     }
-    if (this instanceof Coins) {
-      ctx.beginPath();
-      ctx.lineWidth = "7";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-    }
-    if (this instanceof PoisonGround || this instanceof PoisonUp) {
-      ctx.beginPath();
-      ctx.lineWidth = "7";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-    }
-
-    if (this instanceof PoisonBubbles) {
-      ctx.beginPath();
-      ctx.lineWidth = "7";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-    }
   }
 
   flipImage(ctx) {
