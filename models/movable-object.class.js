@@ -93,9 +93,9 @@ class movableObject extends DrawableObject {
 
   hitsJelly(object) {
     return (
-      this.x + 40 + this.width >= object.x &&
-      this.x + 40 < object.x + object.width &&
-      this.y + 160 + this.height > object.y &&
+      this.x + this.width >= object.x &&
+      this.x < object.x + object.width &&
+      this.y + this.height > object.y &&
       this.y < object.y + object.height
     );
   }
