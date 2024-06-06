@@ -48,6 +48,26 @@ class movableObject extends DrawableObject {
     }, 1000 / 60);
   }
 
+  checkDirectionEndboss(character) {
+    if (character.x > this.x) {
+      this.otherDirection = true;
+    } else {
+      this.otherDirection = false;
+    }
+  }
+
+  setEndbossSpeed(distance) {
+    if (distance > 600) {
+      return 2;
+    } else if (distance > 400) {
+      return 1.5;
+    } else if (distance > 200) {
+      return 0.7;
+    } else {
+      return 0.4;
+    }
+  }
+
   swimUp() {
     this.y -= this.speed;
   }
