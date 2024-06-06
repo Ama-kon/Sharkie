@@ -144,10 +144,27 @@ class Endboss extends movableObject {
         let normDeltaY = distanceY / distance;
         this.x += normDeltaX * this.speed;
         this.y += normDeltaY * this.speed;
-      } else if (distance <= 1) {
-        //////// endboss needs to attack sharkie
       }
       this.checkDirectionEndboss(this.character);
+      if (
+        distance < 127 &&
+        !this.otherDirection &&
+        distanceY >= 0 &&
+        distanceY <= 100
+      ) {
+        this.attack = true;
+        console.log("attack now!");
+        debugger;
+      } else if (
+        distance < 315 &&
+        this.otherDirection &&
+        distanceY >= 0 &&
+        distanceY <= 100
+      ) {
+        this.attack = true;
+        console.log("attack now!");
+        debugger;
+      }
     }
   }
 }
