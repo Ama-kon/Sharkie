@@ -7,6 +7,8 @@ class Endboss extends movableObject {
   character;
   sawEndboss = false;
   isHittedBy;
+  speed = 2.5;
+  sharkieIsNear = false;
 
   images_intro = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -94,6 +96,7 @@ class Endboss extends movableObject {
 
       if (this.sawEndboss && this.i > this.images_intro.length) {
         this.playAnimation(this.images_move);
+        this.sharkieIsNear = true;
       }
 
       if (this.isDead()) {
@@ -109,12 +112,20 @@ class Endboss extends movableObject {
     }, 170);
 
     setInterval(() => {
-      if (this.sawEndboss && !isMuted && this.energy > 0) {
+      if (
+        this.sawEndboss &&
+        !isMuted &&
+        this.character.energy > 0 &&
+        this.energy > 0
+      ) {
         endboss_sound.play();
         background_music.pause();
-      } else if (this.sawEndboss && isMuted && this.energy > 0) {
+      } else if (this.sawEndboss && isMuted && this.character.energy > 0) {
         background_music.pause();
         endboss_sound.pause();
+      }
+      if (this.sharkieIsNear) {
+        this.huntSharkie();
       }
 
       if (this.endbossIsHurt()) {
@@ -124,5 +135,42 @@ class Endboss extends movableObject {
         this.playAnimation(this.images_hurt);
       }
     }, 1000 / 60);
+  }
+
+  huntSharkie() {
+    let distanceX = this.character.x - this.x;
+    let distanceY = this.character.y - this.y;
+
+    let distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+    if (distance > 600) {
+      this.speed = 2;
+    } else if (distance > 400) {
+      this.speed = 1.5;
+    } else if (distance > 200) {
+      this.speed = 0.7;
+    } else {
+      this.speed = 0.4;
+    }
+    console.log("the distance is:", distance, "and the speed is:", this.speed);
+
+    if (distance > 1) {
+      let normDeltaX = distanceX / distance;
+      let normDeltaY = distanceY / distance;
+
+      this.x += normDeltaX * this.speed;
+      this.y += normDeltaY * this.speed;
+
+      if (this.character.otherDirection) {
+        this.x += normDeltaX * this.speed * 0.5; // oder eine andere Anpassung
+        this.y += normDeltaY * this.speed * 0.5; // oder eine andere Anpassung
+      }
+    }
+
+    if (this.character.x - this.character.width / 2 > this.x) {
+      this.otherDirection = true; // Endboss schaut nach rechts
+    } else if (this.character.x <= this.x) {
+      this.otherDirection = false; // Endboss schaut nach links
+    }
   }
 }
