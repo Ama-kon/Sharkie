@@ -1,7 +1,7 @@
 class mainCharacter extends movableObject {
   height = 350;
   width = 200;
-  x = 0;
+  x = 2900;
   y = 80;
   world;
   speed = 4;
@@ -9,6 +9,7 @@ class mainCharacter extends movableObject {
   strikedEnemy = "";
   newBubble = false;
   newPoisonBubble = false;
+  killedByEndboss = false;
 
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
@@ -178,7 +179,7 @@ class mainCharacter extends movableObject {
         }
       }
 
-      if (this.x <= 3500) {
+      if (this.x <= 3500 && this.x >= 0) {
         this.followCamera();
       }
     }, 1000 / 60);

@@ -32,6 +32,7 @@ class World {
     this.poisonCheckForEndboss();
     this.correctCoins();
     this.correctPoison();
+    this.checkDeadByEndboss();
   }
 
   setWorld() {
@@ -47,9 +48,10 @@ class World {
     this.addObjects(this.level.poison_ground);
     this.addObjects(this.level.poison_up);
     this.addObjects(this.level.enemies);
-    this.addToCanvas(this.endboss);
+
     this.addToCanvas(this.status_bar_endboss);
     this.addToCanvas(this.character);
+    this.addToCanvas(this.endboss);
     this.addObjects(this.bubbles);
     this.addObjects(this.poisonBubbles);
     this.ctx.translate(-this.camera_x, 0);
@@ -87,7 +89,6 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
           if (this.keyboard.space == true) {
-            /// hier muss noch dem psieler etwas mehr zeit gegebn werden zum drücken der  taste
             this.character.lastAttack();
             if (
               enemy instanceof enemyGreenFish ||
@@ -105,11 +106,6 @@ class World {
             this.character.hit();
             this.status_bar.setPercent(this.character.energy);
             this.character.isHittedBy = enemy.damageType;
-            if (this.character.energy <= 0) {
-              /////hier tot .... weitermachen ////
-              audioOff();
-              console.log("TOOOOOT");
-            }
           }
         }
       });
@@ -280,12 +276,18 @@ class World {
           this.endboss.hitEndboss();
           this.status_bar_endboss.setPercent(this.endboss.energy);
           this.poisonBubbles.splice(this.poisonBubbles.indexOf(bubble), 1);
-          if (this.endboss.energy <= 0) {
-            console.log(" endgegner TOOOOOT");
-          }
         }
       }),
         1000 / 60;
     });
+  }
+
+  checkDeadByEndboss() {
+    setInterval(() => {
+      if (this.character.killedByEndboss) {
+        this.character.x = -200;
+        this.character.y = -200;
+      }
+    }, 1000 / 60);
   }
 } //ende constructor

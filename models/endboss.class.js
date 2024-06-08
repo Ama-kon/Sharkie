@@ -9,6 +9,7 @@ class Endboss extends movableObject {
   isHittedBy;
   speed = 2.5;
   sharkieIsNear = false;
+  attack = false;
 
   images_intro = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
@@ -106,6 +107,13 @@ class Endboss extends movableObject {
       } else if (this.sharkieIsNear && !this.isDead()) {
         this.playAnimation(this.images_move);
       }
+      if (this.attack && this.character.energy > 0) {
+        this.playAnimation(this.images_attack);
+        setTimeout(() => {
+          this.character.killedByEndboss = true;
+          this.character.energy = 0;
+        }, 100);
+      }
     }, 170);
 
     setInterval(() => {
@@ -134,7 +142,7 @@ class Endboss extends movableObject {
   }
 
   huntSharkie() {
-    if (this.energy > 0) {
+    if (this.energy > 0 && !this.attack) {
       let distanceX = this.character.x - this.x;
       let distanceY = this.character.y - this.y;
       let distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
@@ -145,26 +153,31 @@ class Endboss extends movableObject {
         this.x += normDeltaX * this.speed;
         this.y += normDeltaY * this.speed;
       }
-      this.checkDirectionEndboss(this.character);
-      if (
-        distance < 127 &&
-        !this.otherDirection &&
-        distanceY >= 0 &&
-        distanceY <= 100
-      ) {
-        this.attack = true;
-        console.log("attack now!");
-        debugger;
-      } else if (
-        distance < 315 &&
-        this.otherDirection &&
-        distanceY >= 0 &&
-        distanceY <= 100
-      ) {
-        this.attack = true;
-        console.log("attack now!");
-        debugger;
+      if (!this.attack) {
+        this.checkDirectionEndboss(this.character);
       }
+      this.checkDistanceAndAttack(distance, distanceY);
+    }
+  }
+  checkDistanceAndAttack(distance, distanceY) {
+    if (
+      distance < 127 &&
+      !this.otherDirection &&
+      distanceY >= 0 &&
+      distanceY <= 100 &&
+      this.character.energy > 0
+    ) {
+      this.attack = true;
+      this.x -= 50;
+    } else if (
+      distance < 315 &&
+      this.otherDirection &&
+      distanceY >= 0 &&
+      distanceY <= 100 &&
+      this.character.energy > 0
+    ) {
+      this.attack = true;
+      this.x += 50;
     }
   }
 }
