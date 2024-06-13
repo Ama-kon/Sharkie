@@ -104,6 +104,11 @@ class Endboss extends movableObject {
           you_win.pause();
         }
         this.playAnimation(this.images_dead);
+        setTimeout(() => {
+          endScreen("you_win");
+
+          playWinningSpeech();
+        }, 1000);
       } else if (this.sharkieIsNear && !this.isDead()) {
         this.playAnimation(this.images_move);
       }
