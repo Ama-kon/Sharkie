@@ -2,10 +2,25 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url("img/3. Background/body-background.jpg");
-  background-position: center;
+  margin: 0;
   filter: drop-shadow(1px 3px 10px rgb(50, 62, 87));
   background-repeat: no-repeat;
+}
+
+.background_container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -5;
+  display: flex;
+  position: absolute;
+  background: rgb(148, 191, 204);
+  background: radial-gradient(
+    circle,
+    rgba(148, 191, 204, 1) 0%,
+    rgba(9, 98, 121, 1) 33%,
+    rgba(0, 2, 36, 1) 100%
+  );
 }
 
 @font-face {
@@ -15,10 +30,20 @@ body {
 
 h1 {
   font-family: "sharky", Arial, Helvetica, sans-serif;
-  color: rgb(204, 241, 255);
-  font-size: 50px;
+  color: #a4a4a4;
+  font-size: 4rem;
   font-weight: 500;
-  text-shadow: 5px 8px 39px rgb(6 6 6 / 50%);
+  text-shadow: 4px 4px 2px rgb(0 0 0 / 20%);
+}
+
+h2 {
+  font-family: "sharky", Arial, Helvetica, sans-serif;
+  color: #e7e7e7;
+  font-size: 3rem;
+  font-weight: 500;
+  text-shadow: 4px 4px 2px rgb(0 0 0 / 20%);
+  text-align: center;
+  line-height: 0;
 }
 
 canvas {
@@ -31,8 +56,111 @@ canvas {
 #sound_toggle {
   width: 50px;
   height: 50px;
-  filter: opacity(0.23) drop-shadow(0 0 0 white);
+  filter: invert(1) contrast(0.3);
   cursor: pointer;
+}
+
+.sound_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#game_over,
+#you_win {
+  /* display: flex; */
+  flex-direction: column;
+  position: absolute;
+  width: 50vw;
+  height: 50vh;
+  background-color: #799fad;
+  top: 27%;
+  opacity: 0;
+  animation: fadeInAnimation 0.5s ease-in forwards;
+  padding: 5%;
+  border: 13px groove #ffffff;
+  border-radius: 5%;
+}
+
+.game_over_img,
+.you_win_img {
+  width: 30vw;
+  margin: auto;
+  height: 10vh;
+}
+
+.d-none {
+  display: none;
+}
+
+.play_again_btn {
+  width: 15vw;
+  height: 5vh;
+  background: none;
+  margin-top: 65px;
+  border: unset;
+}
+
+#text-container {
+  height: 70%;
+  overflow: hidden;
+  position: relative;
+  margin: 30px 15% 5% 15%;
+}
+
+#scrolling-text {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  white-space: normal;
+  animation: scrollUp 22s linear forwards;
+  color: #334762;
+}
+
+.font_medium {
+  font-family: "math", Arial, Helvetica, sans-serif;
+  font-size: 1.3rem;
+}
+
+/************************ KEYFRAMES ************************/
+
+@keyframes scrollUp {
+  0% {
+    bottom: -95%;
+  }
+  100% {
+    bottom: 19%;
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/************************ RESPONSIVE STYLES ************************/
+
+/* @media only screen and (max-width: 1400px) {
+  #game_over,
+  #you_win {
+    width: 70vw;
+  }
+} */
+
+@media only screen and (max-width: 1175px) {
+  #game_over,
+  #you_win {
+    width: 90vw;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
 }
 
 @media only screen and (max-width: 720px) {
@@ -45,6 +173,12 @@ canvas {
   canvas {
     height: 100vh;
   }
+
+  #game_over,
+  #you_win {
+    height: 100%;
+  }
+
   h1 {
     display: none;
   }
