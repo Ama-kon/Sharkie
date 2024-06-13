@@ -33,6 +33,7 @@ class World {
     this.correctCoins();
     this.correctPoison();
     this.checkDeadByEndboss();
+    // this.checkSoundOff();
   }
 
   setWorld() {
@@ -287,6 +288,11 @@ class World {
       if (this.character.killedByEndboss) {
         this.character.x = -200;
         this.character.y = -200;
+        setTimeout(() => {
+          endScreen("game_over");
+
+          playLostGameSpeech();
+        }, 1000);
       }
     }, 1000 / 60);
   }
