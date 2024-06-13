@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="buttons.css" />
     <script defer src="models/drawable-objects.class.js"></script>
     <script defer src="models/movable-object.class.js"></script>
     <script defer src="models/main-character.class.js"></script>
@@ -30,16 +31,85 @@
     <script defer src="models/world.class.js"></script>
     <script defer src="js/audio.js"></script>
     <script defer src="js/game.js"></script>
+    <script defer src="js/start.js"></script>
+    <script defer src="js/end-of-game.js"></script>
     <title>Sharkie</title>
   </head>
   <body onload="init(), checkSound()">
+    <div class="background_container"></div>
     <h1>Sharkie</h1>
-    <img
-      id="sound_toggle"
-      src="img/icons/lautsprecher.png"
-      alt="sound on"
-      onclick="toggleSound()"
-    />
+    <div class="sound_container">
+      <img
+        id="sound_toggle"
+        src="img/icons/lautsprecher.png"
+        alt="sound on"
+        onclick="toggleSound()"
+      />
+    </div>
+
     <canvas width="720" height="480" id="canvas"> </canvas>
+    <!-- <div id="start_game"></div> -->
+    <div id="game_over" class="d-none">
+      <h2>Game Over</h2>
+      <div id="text-container">
+        <div id="scrolling-text" class="font_medium">
+          <p><b>Too Bad!</b></p>
+          <p>
+            You gave it your best, but the dangerous underwater world has
+            defeated Sharkie this time.<br />
+            Don't be discouraged - every attempt brings you closer to victory!
+          </p>
+          <p>
+            You have overcome many obstacles and gained valuable experience.<br />
+            Use this experience to come back stronger and smarter.
+          </p>
+          <p>
+            Sharkie and the sea creatures believe in you.<br />
+            With your bravery and determination, you will surely succeed next
+            time.
+          </p>
+          <p>
+            Try again and be ready for new exciting adventures.<br />
+            Thank you for being part of this thrilling journey.
+          </p>
+          <button class="button-57" role="button">Play again</button>
+          <!-- <button class="play_again_btn font_medium">Play again</button> -->
+        </div>
+      </div>
+    </div>
+
+    <div id="you_win" class="d-none">
+      <h2>Congratulations!</h2>
+      <div id="text-container">
+        <div id="scrolling-text" class="font_medium">
+          <p><b>Congratulations!</b></p>
+          <p>
+            You have helped Sharkie conquer the dangerous underwater world.
+            <br />
+            Thanks to your incredible skills and endurance, Sharkie has overcome
+            all obstacles and successfully completed his mission.
+          </p>
+          <p>
+            Your bravery and dexterity have made the underwater world safer.
+            <br />
+            The sea creatures are endlessly grateful to you, and Sharkie could
+            not be prouder of his brave companion.
+          </p>
+          <p>
+            Celebrate your great success.
+            <br />
+            We hope you continue to experience exciting adventures and carry on
+            with your heroic deeds.
+          </p>
+          <p>Thank you for being part of this exciting journey.</p>
+          <button class="button-57" role="button">Play again</button>
+          <!-- <button class="play_again_btn font_medium">Play again</button> -->
+        </div>
+      </div>
+      <!-- <div id="repeat_container">
+        <img id="repeat_img" src="img/icons/repeat.png" alt="repeat game" />
+      
+      </div> -->
+    </div>
   </body>
 </html>
