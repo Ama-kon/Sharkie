@@ -35,7 +35,7 @@
     <script defer src="js/end-of-game.js"></script>
     <title>Sharkie</title>
   </head>
-  <body onload="init(), checkSound()">
+  <body onload="init(), checkSound(), resizeCanvas()">
     <div class="background_container"></div>
     <h1>Sharkie</h1>
     <div class="sound_container">
@@ -47,8 +47,44 @@
       />
     </div>
 
-    <canvas width="720" height="480" id="canvas"> </canvas>
-    <!-- <div id="start_game"></div> -->
+    <canvas width="1000" height="480" id="canvas"> </canvas>
+    <!-- ********** INSTRUCTIONS ********** -->
+    <div id="instructions">
+      <div class="instruction_container">
+        <img class="keyboard_img" src="img/icons/keyboard.png" alt="keyboard" />
+        <span> Move Shark</span>
+      </div>
+
+      <div class="instruction_container">
+        <img
+          class="space_key"
+          src="img/icons/space.png"
+          alt="keyboard space icon"
+        />
+        <span> Finlap kills fish</span>
+      </div>
+
+      <div class="instruction_container">
+        <img class="keyboard_d" src="img/icons/key-d.png" alt="keyboard d" />
+        <span> Bubble kills jellys</span>
+      </div>
+
+      <div class="instruction_container">
+        <img class="keyboard_a" src="img/icons/key-a.png" alt="keyboard a" />
+        <span> Poison kills endboss</span>
+      </div>
+    </div>
+    <!-- ********** START SCREEN ********** -->
+    <div id="start_game">
+      <img
+        id="start_background_img"
+        src="img/3. Background/start_screen.png"
+        alt="start screen"
+      />
+    </div>
+    <!-- ********** BLUR CONTAINER ********** -->
+    <div id="blur-container" class="d-none"></div>
+    <!-- ********** GAME OVER CONTENT ********** -->
     <div id="game_over" class="d-none">
       <h2>Game Over</h2>
       <div id="text-container">
@@ -73,11 +109,10 @@
             Thank you for being part of this thrilling journey.
           </p>
           <button class="button-57" role="button">Play again</button>
-          <!-- <button class="play_again_btn font_medium">Play again</button> -->
         </div>
       </div>
     </div>
-
+    <!-- ********** YOU WIN CONTENT ********** -->
     <div id="you_win" class="d-none">
       <h2>Congratulations!</h2>
       <div id="text-container">
@@ -103,13 +138,8 @@
           </p>
           <p>Thank you for being part of this exciting journey.</p>
           <button class="button-57" role="button">Play again</button>
-          <!-- <button class="play_again_btn font_medium">Play again</button> -->
         </div>
       </div>
-      <!-- <div id="repeat_container">
-        <img id="repeat_img" src="img/icons/repeat.png" alt="repeat game" />
-      
-      </div> -->
     </div>
   </body>
 </html>
