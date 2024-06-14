@@ -47,9 +47,8 @@ h2 {
 }
 
 canvas {
-  width: 720px;
-  height: 480px;
-  background-color: black;
+  width: 75vw;
+  height: 50vh;
   display: block;
 }
 
@@ -63,18 +62,31 @@ canvas {
 .sound_container {
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 75vw;
+  justify-content: flex-end;
+}
+
+#blur-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(2 2 2 / 80%);
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
 }
 
 #game_over,
 #you_win {
-  /* display: flex; */
+  z-index: 20;
   flex-direction: column;
   position: absolute;
   width: 50vw;
-  height: 50vh;
+  height: 53vh;
   background-color: #799fad;
-  top: 27%;
+  top: 24%;
   opacity: 0;
   animation: fadeInAnimation 0.5s ease-in forwards;
   padding: 5%;
@@ -122,6 +134,48 @@ canvas {
   font-size: 1.3rem;
 }
 
+span {
+  color: #a4a4a4;
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-style: oblique;
+  text-align: center;
+}
+
+#instructions {
+  width: 75vw;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.instruction_container {
+  width: 25%;
+  display: flex;
+  gap: 5px;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.keyboard_img {
+  width: 50%;
+  filter: drop-shadow(2px 4px 6px white);
+}
+
+.keyboard_a,
+.keyboard_d {
+  width: 60px;
+  filter: drop-shadow(2px 4px 6px white);
+}
+
+.space_key {
+  width: 80px;
+  filter: invert(0.3) drop-shadow(2px 4px 6px white);
+}
+
 /************************ KEYFRAMES ************************/
 
 @keyframes scrollUp {
@@ -146,12 +200,14 @@ canvas {
 
 /************************ RESPONSIVE STYLES ************************/
 
-/* @media only screen and (max-width: 1400px) {
-  #game_over,
-  #you_win {
-    width: 70vw;
+@media only screen and (min-width: 1300px) {
+  canvas {
+    width: 60vw;
   }
-} */
+  .sound_container {
+    width: 60vw;
+  }
+}
 
 @media only screen and (max-width: 1175px) {
   #game_over,
@@ -163,9 +219,12 @@ canvas {
   }
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 1000px) {
   canvas {
-    width: 100%;
+    width: 100vw;
+  }
+  .sound_container {
+    width: 95vw;
   }
 }
 
@@ -174,9 +233,18 @@ canvas {
     height: 100vh;
   }
 
+  #instructions {
+    display: none;
+  }
+
+  #sound_toggle {
+    display: none;
+  }
+
   #game_over,
   #you_win {
     height: 100%;
+    top: -20px;
   }
 
   h1 {
@@ -185,5 +253,15 @@ canvas {
 
   body {
     filter: none;
+    overflow: hidden;
+  }
+
+  @keyframes scrollUp {
+    0% {
+      bottom: -150%;
+    }
+    100% {
+      bottom: 19%;
+    }
   }
 }
