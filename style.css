@@ -28,6 +28,20 @@ body {
   src: url("fonts/Sharky-nRW5O.ttf");
 }
 
+#start_game {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+
+#start_background_img {
+  position: relative;
+  width: 80vw;
+  height: 80vh;
+  margin: 0 10%;
+  top: 14%;
+}
+
 h1 {
   font-family: "sharky", Arial, Helvetica, sans-serif;
   color: #a4a4a4;
