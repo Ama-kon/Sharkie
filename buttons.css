@@ -1,9 +1,104 @@
+button {
+  cursor: pointer;
+}
+
+/************************* PLAY *************************/
+
+.play_btn {
+  border: none;
+  background: none;
+}
+
+.start_button {
+  width: clamp(22vw, 45vw, 250px);
+  height: clamp(5vh, 10vh, 80px);
+  filter: hue-rotate(-336deg);
+}
+
+.start_button:hover {
+  filter: drop-shadow(0px 3px 25px rgb(255, 255, 255));
+}
+
+/************************* FULLSCREEN *************************/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #a6a6a6;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #40bcd3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #40bcd3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/************************* INSTRUCTIONS *************************/
+
+.instructions_img {
+  width: clamp(6vw, 20vw, 80px);
+  height: clamp(8vh, 10vh, 50px);
+}
+
+.instructions_img:hover {
+  filter: hue-rotate(-33deg) drop-shadow(0px 3px 25px rgb(255, 255, 255));
+  animation: spin 0.3s backwards;
+}
+
+/************************* TRY AGAIN *************************/
+
 .button-57 {
   background-color: #203c47;
   border: 0;
   border-radius: 56px;
   color: #fff;
-  cursor: pointer;
   display: inline-block;
   font-family: system-ui, -apple-system, system-ui, "Segoe UI", Roboto, Ubuntu,
     "Helvetica Neue", sans-serif;
