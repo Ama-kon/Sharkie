@@ -288,6 +288,7 @@ class World {
       if (this.character.killedByEndboss) {
         this.character.x = -200;
         this.character.y = -200;
+        this.status_bar.setPercent(0);
         setTimeout(() => {
           endScreen("game_over");
 
