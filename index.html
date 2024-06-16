@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="buttons.css" />
+    <link rel="stylesheet" href="media-queries.css" />
     <script defer src="models/drawable-objects.class.js"></script>
     <script defer src="models/movable-object.class.js"></script>
     <script defer src="models/main-character.class.js"></script>
@@ -38,7 +39,15 @@
   <body onload="init(), checkSound(), resizeCanvas()">
     <div class="background_container"></div>
     <h1>Sharkie</h1>
-    <div class="sound_container">
+
+    <div class="sound_screen_container">
+      <div class="fullscreen_container">
+        <span>Fullscreen</span>
+        <label class="switch">
+          <input id="fullscreenToggle" type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
       <img
         id="sound_toggle"
         src="img/icons/lautsprecher.png"
@@ -81,6 +90,94 @@
         src="img/3. Background/start_screen.png"
         alt="start screen"
       />
+      <div id="start_screen_buttons_container">
+        <div class="centering_container">
+          <button class="play_btn">
+            <img
+              onclick="toggleInstructions()"
+              class="instructions_img"
+              src="img/icons/information.png"
+              alt="instructions button"
+            />
+          </button>
+          <button class="play_btn" onclick="startGame()">
+            <img
+              class="start_button"
+              src="img/6.Botones/Start/1.png"
+              alt="start
+        button"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ********** ISTRUCTIONS POP UP ********** -->
+    <div id="instructions_sheet" class="d-none">
+      <div class="close_container">
+        <img
+          onclick="toggleInstructions()"
+          class="close_img lighter_filter"
+          src="img/icons/close.png"
+          alt="close introductions"
+        />
+      </div>
+      <div class="instruction_sheet_container">
+        <img
+          class="instructions_keyboard_img"
+          src="img/icons/keyboard.png"
+          alt="keyboard"
+        />
+        <span> Move Shark</span>
+        <img
+          class="preview_img"
+          src="img/1.Sharkie/3.Swim/1.png"
+          alt="preview of swimming"
+        />
+      </div>
+      <hr />
+
+      <div class="instruction_sheet_container">
+        <img
+          class="instructions_keyboard_img"
+          src="img/icons/key-d.png"
+          alt="keyboard d"
+        />
+        <span> Bubble kills jellys</span>
+        <img
+          class="preview_img mirror_img"
+          src="img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png"
+          alt="preview of bubble attack"
+        />
+      </div>
+      <hr />
+      <div class="instruction_sheet_container">
+        <img
+          class="instructions_keyboard_img"
+          src="img/icons/key-a.png"
+          alt="keyboard a"
+        />
+        <span> Poison kills endboss</span>
+        <img
+          class="preview_img"
+          src="img/1.Sharkie/4.Attack/Bubble trap/For Whale/7.png"
+          alt="preview of poison attack"
+        />
+      </div>
+      <hr />
+      <div class="instruction_sheet_container">
+        <img
+          class="instructions_keyboard_img lighter_filter"
+          src="img/icons/space.png"
+          alt="keyboard space icon"
+        />
+        <span> Finlap kills fish</span>
+        <img
+          class="preview_img"
+          src="img/1.Sharkie/4.Attack/Fin slap/5.png"
+          alt="preview of fin slap"
+        />
+      </div>
     </div>
     <!-- ********** BLUR CONTAINER ********** -->
     <div id="blur-container" class="d-none"></div>
