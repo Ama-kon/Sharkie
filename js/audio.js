@@ -44,6 +44,33 @@ isMuted = false;
 congratulations_speech_told = false;
 lost_game_speech_told = false;
 
+let audios = [
+  background_music,
+  endboss_sound,
+  endboss_hurt_sound,
+  hit_by_fish,
+  hit_by_jelly,
+  striked_fish,
+  striked_jelly,
+  got_coin_music,
+  got_poison_music,
+  you_win,
+  game_over,
+  congratulations_speech,
+  lost_game_speech,
+];
+
+/**
+ * Toggles the sound on or off in the game.
+ *
+ * When the sound is toggled off, all audio playback is paused. When the sound is
+ * toggled on, the `checkSound()` function is called to resume audio playback.
+ *
+ * The sound toggle is represented by an image element with the ID "sound_toggle".
+ * The image source and alt text are updated to reflect the current sound state.
+ *
+ * The `isMuted` flag is also updated to reflect the current sound state.
+ */
 function toggleSound() {
   let img = document.getElementById("sound_toggle");
 
@@ -60,6 +87,15 @@ function toggleSound() {
   }
 }
 
+/**
+ * Checks the sound state and pauses or resumes audio playback accordingly.
+ *
+ * If the game is muted (`isMuted` is true), this function will pause all audio
+ * playback. Otherwise, it will resume playback of the background music.
+ *
+ * This function is called repeatedly using `setInterval` to ensure the audio
+ * state is kept up-to-date with the mute state.
+ */
 function checkSound() {
   background_music.play();
   setInterval(() => {
@@ -82,6 +118,10 @@ function checkSound() {
   }, 1000 / 60);
 }
 
+/**
+ * Plays the congratulations speech audio if the game is not muted and the speech has not been played yet.
+ * The `congratulations_speech_told` flag is set to true after the speech has finished playing to prevent it from being played again.
+ */
 function playWinningSpeech() {
   if (!isMuted && !congratulations_speech_told) {
     congratulations_speech.play();
@@ -92,6 +132,10 @@ function playWinningSpeech() {
   }
 }
 
+/**
+ * Plays the lost game speech audio if the game is not muted and the speech has not been played yet.
+ * The `lost_game_speech_told` flag is set to true after the speech has finished playing to prevent it from being played again.
+ */
 function playLostGameSpeech() {
   if (!isMuted && !lost_game_speech_told) {
     lost_game_speech.play();
@@ -100,4 +144,17 @@ function playLostGameSpeech() {
       lost_game_speech_told = true;
     }, 23350);
   }
+}
+
+/**
+ * Stops all audio playback and resets the state of the `lost_game_speech_told` and `congratulations_speech_told` flags.
+ * This function is used to ensure a clean state when the game is reset or restarted.
+ */
+function stopAudios() {
+  audios.forEach((audio) => {
+    audio.pause();
+    audio.currentTime = 0;
+  });
+  lost_game_speech_told = false;
+  congratulations_speech_told = false;
 }
