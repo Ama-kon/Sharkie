@@ -15,7 +15,6 @@
     <script defer src="models/enemy-jellyfish-lila.class.js"></script>
     <script defer src="models/enemy-jellyfish-yellow.class.js"></script>
     <script defer src="models/endboss.class.js"></script>
-    <script defer src="models/clouds.class.js"></script>
     <script defer src="models/background-objects.class.js"></script>
     <script defer src="models/keyboard.class.js"></script>
     <script defer src="models/level.class.js"></script>
@@ -31,12 +30,12 @@
     <script defer src="levels/level1.js"></script>
     <script defer src="models/world.class.js"></script>
     <script defer src="js/audio.js"></script>
-    <script defer src="js/game.js"></script>
+    <script defer src="js/keyboard.js"></script>
     <script defer src="js/start.js"></script>
     <script defer src="js/end-of-game.js"></script>
     <title>Sharkie</title>
   </head>
-  <body onload="init(), checkSound(), resizeCanvas()">
+  <body onload="resizeCanvas()">
     <div class="background_container"></div>
     <h1>Sharkie</h1>
 
@@ -180,7 +179,7 @@
       </div>
     </div>
     <!-- ********** BLUR CONTAINER ********** -->
-    <div id="blur-container" class="d-none"></div>
+    <div id="blur_container" class="d-none"></div>
     <!-- ********** GAME OVER CONTENT ********** -->
     <div id="game_over" class="d-none">
       <h2>Game Over</h2>
@@ -205,8 +204,19 @@
             Try again and be ready for new exciting adventures.<br />
             Thank you for being part of this thrilling journey.
           </p>
-          <button class="button-57" role="button">Play again</button>
         </div>
+      </div>
+      <div class="play_or_start_btn_container">
+        <button onclick="restartGame()" class="button-57" role="button">
+          Play again
+        </button>
+        <button
+          onclick="window.location.reload()"
+          class="button-57"
+          role="button"
+        >
+          Back to Start
+        </button>
       </div>
     </div>
     <!-- ********** YOU WIN CONTENT ********** -->
@@ -234,8 +244,19 @@
             with your heroic deeds.
           </p>
           <p>Thank you for being part of this exciting journey.</p>
-          <button class="button-57" role="button">Play again</button>
         </div>
+      </div>
+      <div class="play_or_start_btn_container">
+        <button onclick="restartGame()" class="button-57" role="button">
+          Play again
+        </button>
+        <button
+          onclick="window.location.reload()"
+          class="button-57"
+          role="button"
+        >
+          Back to Start
+        </button>
       </div>
     </div>
   </body>
