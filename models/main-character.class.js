@@ -1,7 +1,7 @@
 class mainCharacter extends movableObject {
   height = 350;
   width = 200;
-  x = 2900;
+  x = 3150;
   y = 80;
   world;
   speed = 4;
@@ -9,6 +9,7 @@ class mainCharacter extends movableObject {
   strikedEnemy = "";
   newBubble = false;
   newPoisonBubble = false;
+  killed = false;
   killedByEndboss = false;
 
   images_move = [
@@ -202,12 +203,18 @@ class mainCharacter extends movableObject {
       }
 
       if (this.isDead()) {
+        this.killed = true;
         if (!isMuted) {
           background_music.pause();
           endboss_sound.pause();
           game_over.play();
         }
+        setTimeout(() => {
+          endScreen("game_over");
 
+          playLostGameSpeech();
+          this.killed = false;
+        }, 1000);
         this.playAnimation(this.images_dead);
       } else if (this.isHurt()) {
         if (this.isHittedBy == "electric") {
