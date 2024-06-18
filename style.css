@@ -179,7 +179,12 @@ canvas {
   gap: 1vw;
 }
 
-#blur-container {
+.d-none {
+  display: none !important;
+}
+
+#blur_container {
+  display: flex;
   position: absolute;
   top: 0;
   left: 0;
@@ -193,6 +198,7 @@ canvas {
 
 #game_over,
 #you_win {
+  display: flex;
   z-index: 20;
   flex-direction: column;
   position: absolute;
@@ -201,7 +207,6 @@ canvas {
   background-color: #799fad;
   top: 15%;
   opacity: 0;
-  animation: fadeInAnimation 0.5s ease-in forwards;
   padding: 5%;
   border: 13px groove #ffffff;
   border-radius: 5%;
@@ -214,16 +219,11 @@ canvas {
   height: 10vh;
 }
 
-.d-none {
-  display: none !important;
-}
-
-.play_again_btn {
-  width: 15vw;
-  height: 5vh;
-  background: none;
-  margin-top: 65px;
-  border: unset;
+.play_or_start_btn_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5vw;
 }
 
 #text-container {
@@ -238,7 +238,7 @@ canvas {
   bottom: 0;
   text-align: center;
   white-space: normal;
-  animation: scrollUp 22s linear forwards;
+
   color: #334762;
 }
 
@@ -289,15 +289,19 @@ span {
   filter: invert(0.3) drop-shadow(2px 4px 6px white);
 }
 
+.scroll-up {
+  animation: scrollUp 22s linear forwards;
+}
+
 .fade-in {
-  animation: fadeInAnimation 0.5s forwards;
+  animation: fadeInAnimation 0.1s forwards;
 }
 
 .fade-out {
-  animation: fadeOutAnimation 0.5s forwards;
+  animation: fadeOutAnimation 0.1s forwards;
 }
 
-/************************ KEYFRAMES ************************/
+/************************************************* KEYFRAMES *************************************************/
 
 @keyframes scrollUp {
   0% {
@@ -311,7 +315,7 @@ span {
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;
-    transform: translateY(-10%);
+    transform: translateY(-100%);
   }
   100% {
     opacity: 1;
@@ -326,7 +330,7 @@ span {
   }
   to {
     opacity: 0;
-    transform: translateY(-10%);
+    transform: translateY(-100%);
   }
 }
 
