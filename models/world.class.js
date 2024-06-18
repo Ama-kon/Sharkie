@@ -5,13 +5,11 @@ class World {
   canvas;
   keyboard;
   camera_x = 0;
-
   status_bar = new StatusBar();
   coins_bar = new CoinsBar();
-
   poison_bar = new PoisonBar();
   endboss = new Endboss(this.character);
-  status_bar_endboss = new StatusBarEndboss(this.endboss);
+  status_bar_endboss = new StatusBarEndboss(this.endboss, this.character);
   bubbles = [];
   poisonBubbles = [];
 
@@ -19,6 +17,7 @@ class World {
     this.canvas = canvas;
     this.keyboard = keyboard;
     this.ctx = canvas.getContext("2d");
+
     this.drawAll();
     this.setWorld();
     this.checkForCollision();
@@ -33,7 +32,6 @@ class World {
     this.correctCoins();
     this.correctPoison();
     this.checkDeadByEndboss();
-    // this.checkSoundOff();
   }
 
   setWorld() {
@@ -45,11 +43,9 @@ class World {
     this.ctx.translate(this.camera_x, 0);
     this.addObjects(this.level.background);
     this.addObjects(this.level.coins);
-    this.addObjects(this.level.clouds);
     this.addObjects(this.level.poison_ground);
     this.addObjects(this.level.poison_up);
     this.addObjects(this.level.enemies);
-
     this.addToCanvas(this.status_bar_endboss);
     this.addToCanvas(this.character);
     this.addToCanvas(this.endboss);
@@ -290,11 +286,9 @@ class World {
         this.character.y = -200;
         this.status_bar.setPercent(0);
         setTimeout(() => {
-          endScreen("game_over");
-
-          playLostGameSpeech();
+          this.character.killedByEndboss = false;
         }, 1000);
       }
     }, 1000 / 60);
   }
-} //ende constructor
+}
