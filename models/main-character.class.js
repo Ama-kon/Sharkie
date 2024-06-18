@@ -1,3 +1,21 @@
+/**
+ * Represents the main character in the game.
+ *
+ * @class mainCharacter
+ * @extends movableObject
+ * @property {number} height - The height of the main character.
+ * @property {number} width - The width of the main character.
+ * @property {number} x - The initial x-coordinate of the main character.
+ * @property {number} y - The initial y-coordinate of the main character.
+ * @property {object} world - The world instance the main character belongs to.
+ * @property {number} speed - The speed at which the main character moves.
+ * @property {string} isHittedBy - The type of attack the main character is hit by.
+ * @property {string} strikedEnemy - The type of enemy the main character has struck.
+ * @property {boolean} newBubble - Indicates if the main character has created a new bubble.
+ * @property {boolean} newPoisonBubble - Indicates if the main character has created a new poison bubble.
+ * @property {boolean} killed - Indicates if the main character is killed.
+ * @property {boolean} killedByEndboss - Indicates if the main character is killed by the end boss.
+ */
 class mainCharacter extends movableObject {
   height = 350;
   width = 200;
@@ -12,6 +30,9 @@ class mainCharacter extends movableObject {
   killed = false;
   killedByEndboss = false;
 
+  /**
+   * An array of image paths for the main character's idle animation frames.
+   */
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -33,6 +54,9 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/1.IDLE/18.png",
   ];
 
+  /**
+   * An array of image paths for the main character's sleeping animation frames.
+   */
   images_sleeping = [
     "img/1.Sharkie/2.Long_IDLE/i1.png",
     "img/1.Sharkie/2.Long_IDLE/I2.png",
@@ -50,6 +74,9 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/2.Long_IDLE/I14.png",
   ];
 
+  /**
+   * An array of image paths for the main character's fin slap attack animation frames.
+   */
   images_attack_fin_lap = [
     "img/1.Sharkie/4.Attack/Fin slap/1.png",
     "img/1.Sharkie/4.Attack/Fin slap/2.png",
@@ -61,6 +88,9 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Fin slap/8.png",
   ];
 
+  /**
+   * An array of image paths for the main character's electric shock hurt animation frames.
+   */
   images_hurt_electric = [
     "img/1.Sharkie/6.dead/2.Electro_shock/1.png",
     "img/1.Sharkie/6.dead/2.Electro_shock/2.png",
@@ -74,6 +104,10 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/6.dead/2.Electro_shock/10.png",
   ];
 
+  /**
+   * An array of image paths for the main character's poisoned hurt animation frames.
+   */
+
   images_hurt_poisoned = [
     "img/1.Sharkie/5.Hurt/1.Poisoned/1.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/2.png",
@@ -81,6 +115,9 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
   ];
 
+  /**
+   * An array of image paths for the main character's death animation frames.
+   */
   images_dead = [
     "img/1.Sharkie/6.dead/1.Poisoned/1.png",
     "img/1.Sharkie/6.dead/1.Poisoned/2.png",
@@ -96,6 +133,9 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/6.dead/1.Poisoned/12.png",
   ];
 
+  /**
+   * An array of image paths for the main character's bubble attack animation frames.
+   */
   images_bubble = [
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
@@ -107,6 +147,9 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
   ];
 
+  /**
+   * An array of image paths for the main character's poison bubble attack animation frames.
+   */
   images_poison_bubble = [
     "img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png",
     "img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png",
@@ -118,6 +161,11 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Bubble trap/For Whale/8.png",
   ];
 
+  /**
+   * Initializes the main character in the game.
+   * Loads all the necessary images for the character's animations, including idle, attack, bubble, death, and hurt states.
+   * Starts the main animation loop for the character.
+   */
   constructor() {
     super();
     this.loadIMG("img/1.Sharkie/1.IDLE/1.png");
@@ -133,6 +181,12 @@ class mainCharacter extends movableObject {
     this.animate();
   }
 
+  /**
+   * Handles the animation and movement logic for the main character in the game.
+   * This function is called repeatedly at a fixed interval to update the character's position and animation.
+   * It responds to keyboard input to move the character left, right, up, and down, and also handles the character's attack and bubble abilities.
+   * If the character is killed or hurt, the appropriate animation is played and the game state is updated accordingly.
+   */
   animate() {
     setInterval(() => {
       // only keyboard //
@@ -238,6 +292,9 @@ class mainCharacter extends movableObject {
     }, 100);
   }
 
+  /**
+   * Follows the camera to the main character's position, setting the camera's x-coordinate to the character's x-coordinate minus 50.
+   */
   followCamera() {
     this.world.camera_x = -this.x + 50;
   }

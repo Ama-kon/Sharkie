@@ -1,3 +1,7 @@
+/**
+ * Represents the state of the keyboard input for a game.
+ * This class tracks the state of various keyboard keys that are commonly used in games, such as the arrow keys and the space bar.
+ */
 class Keyboard {
   left = false; //37
   right = false; //39

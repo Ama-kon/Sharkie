@@ -1,16 +1,74 @@
+/**
+ * Represents an end boss character in the game.
+ *
+ * @class Endboss
+ * @extends movableObject
+ */
 class Endboss extends movableObject {
+  /**
+   * Height of the end boss.
+   * @type {number}
+   * @default 430
+   */
   height = 430;
-  width = 400;
-  y = -300; // outside of canvas
-  x = 5000; // outside of canvas
-  i;
-  character;
-  sawEndboss = false;
-  isHittedBy;
-  speed = 2.5;
-  sharkieIsNear = false;
-  attack = false;
 
+  /**
+   * Width of the end boss.
+   * @type {number}
+   * @default 400
+   */
+  width = 400;
+
+  /**
+   * Initial y-coordinate of the end boss (outside of canvas).
+   * @type {number}
+   * @default -300
+   */
+  y = -300;
+
+  /**
+   * Initial x-coordinate of the end boss (outside of canvas).
+   * @type {number}
+   * @default 5000
+   */
+  x = 5000;
+
+  /**
+   * Index variable.
+   * @type {number}
+   */
+  i;
+
+  /**
+   * Reference to the main character object.
+   * @type {movableObject} - The character object controlled by the player.
+   */
+  character;
+
+  /**
+   * Flag indicating whether the end boss has been defeated.
+   * @type {boolean}
+   * @default false
+   */
+  sawEndboss = false;
+
+  /**
+   * Placeholder for the entity that hit the end boss.
+   * @type {any}
+   */
+  isHittedBy;
+
+  /**
+   * Speed of movement for the end boss.
+   * @type {number}
+   * @default 2.5
+   */
+  speed = 2.5;
+
+  /**
+   * Array of image paths for the introduction animation of the end boss.
+   * @type {Array<string>}
+   */
   images_intro = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
@@ -23,6 +81,11 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/1.Introduce/9.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/10.png",
   ];
+
+  /**
+   * Array of image paths for the moving animation of the end boss.
+   * @type {Array<string>}
+   */
   images_move = [
     "img/2.Enemy/3 Final Enemy/2.floating/1.png",
     "img/2.Enemy/3 Final Enemy/2.floating/2.png",
@@ -39,6 +102,10 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/2.floating/13.png",
   ];
 
+  /**
+   * Array of image paths for the attack animation of the end boss.
+   * @type {Array<string>}
+   */
   images_attack = [
     "img/2.Enemy/3 Final Enemy/Attack/1.png",
     "img/2.Enemy/3 Final Enemy/Attack/2.png",
@@ -48,6 +115,10 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/Attack/6.png",
   ];
 
+  /**
+   * Array of image paths for the hurt animation of the end boss.
+   * @type {Array<string>}
+   */
   images_hurt = [
     "img/2.Enemy/3 Final Enemy/Hurt/1.png",
     "img/2.Enemy/3 Final Enemy/Hurt/2.png",
@@ -55,6 +126,10 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/Hurt/4.png",
   ];
 
+  /**
+   * Array of image paths for the dead animation of the end boss.
+   * @type {Array<string>}
+   */
   images_dead = [
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png",
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png",
@@ -63,6 +138,12 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png",
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2.png",
   ];
+
+  /**
+   * Creates an instance of Endboss.
+   * @constructor
+   * @param {movableObject} character - The main character object.
+   */
   constructor(character) {
     super();
     this.loadIMG("img/2.Enemy/3 Final Enemy/1.Introduce/1.png");
@@ -75,6 +156,15 @@ class Endboss extends movableObject {
     this.animate();
   }
 
+  /**
+   * Handles the animation and behavior of the end boss in the game.
+   * This method is responsible for:
+   * - Playing the end boss introduction animation when the player reaches a certain position
+   * - Checking if the end boss is dead and playing the death animation
+   * - Checking if the player is within attack range and initiating the attack animation
+   * - Controlling the end boss's movement and hunting behavior towards the player
+   * - Playing sound effects for the end boss's actions
+   */
   animate() {
     this.i = 0;
     setInterval(() => {
@@ -146,6 +236,17 @@ class Endboss extends movableObject {
     }, 1000 / 60);
   }
 
+  /**
+   * Handles the logic for the endboss character to hunt the player character.
+   *
+   * This method is responsible for the following:
+   * - Calculating the distance and direction between the endboss and the player character
+   * - Adjusting the endboss's speed and position to move towards the player character
+   * - Checking if the endboss is within attack range and initiating an attack if so
+   *
+   * @returns {void}
+   */
+
   huntSharkie() {
     if (this.energy > 0 && !this.attack) {
       let distanceX = this.character.x - this.x;
@@ -164,6 +265,53 @@ class Endboss extends movableObject {
       this.checkDistanceAndAttack(distance, distanceY);
     }
   }
+
+  /**
+   * Checks the distance between the endboss and the player character, and initiates an attack if the conditions are met.
+   *
+   * This method is responsible for the following:
+   * - Checking if the distance between the endboss and the player character is less than 127 pixels, and the player character is within a certain vertical range
+   * - Checking if the distance between the endboss and the player character is less than 315 pixels, the endboss is facing the other direction, and the player character is within a certain vertical range
+   * - Setting the `attack` property to `true` and adjusting the endboss's x-position accordingly if the attack conditions are met
+   *
+   * @param {number} distance - The distance between the endboss and the player character
+   * @param {number} distanceY - The vertical distance between the endboss and the player character
+   * @returns {void}
+   */
+  checkDistanceAndAttack(distance, distanceY) {
+    if (
+      distance < 127 &&
+      !this.otherDirection &&
+      distanceY >= 0 &&
+      distanceY <= 100 &&
+      this.character.energy > 0
+    ) {
+      this.attack = true;
+      this.x -= 50;
+    } else if (
+      distance < 315 &&
+      this.otherDirection &&
+      distanceY >= 0 &&
+      distanceY <= 100 &&
+      this.character.energy > 0
+    ) {
+      this.attack = true;
+      this.x += 50;
+    }
+  }
+
+  /**
+   * Checks the distance between the endboss and the player character, and initiates an attack if the conditions are met.
+   *
+   * This method is responsible for the following:
+   * - Checking if the distance between the endboss and the player character is less than 127 pixels, and the player character is within a certain vertical range
+   * - Checking if the distance between the endboss and the player character is less than 315 pixels, the endboss is facing the other direction, and the player character is within a certain vertical range
+   * - Setting the `attack` property to `true` and adjusting the endboss's x-position accordingly if the attack conditions are met
+   *
+   * @param {number} distance - The distance between the endboss and the player character
+   * @param {number} distanceY - The vertical distance between the endboss and the player character
+   * @returns {void}
+   */
   checkDistanceAndAttack(distance, distanceY) {
     if (
       distance < 127 &&
