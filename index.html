@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="buttons.css" />
-    <link rel="stylesheet" href="media-queries.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/buttons.css" />
+    <link rel="stylesheet" href="css/media-queries.css" />
     <script defer src="models/drawable-objects.class.js"></script>
     <script defer src="models/movable-object.class.js"></script>
     <script defer src="models/main-character.class.js"></script>
@@ -34,10 +37,10 @@
     <script defer src="js/start.js"></script>
     <script defer src="js/touchscreen.js"></script>
     <script defer src="js/end-of-game.js"></script>
-    <link rel="icon" type="image/x-icon" href="img/icons/shark.png" />
+    <link rel="icon" type="image/png" href="./img/icons/shark.png" />
     <title>Sharkie</title>
   </head>
-  <body onload="resizeCanvas()">
+  <body onload="resizeCanvas(),   initLevel1()">
     <div class="background_container"></div>
     <h1>Sharkie</h1>
     <!-- ********** SOUND AND SCREEN CONTAINER ********** -->
