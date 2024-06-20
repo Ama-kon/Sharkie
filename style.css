@@ -6,6 +6,7 @@ body {
   filter: drop-shadow(1px 3px 10px rgb(50, 62, 87));
   background-repeat: no-repeat;
   overflow: hidden;
+  height: 100vh;
 }
 
 .background_container {
@@ -34,6 +35,7 @@ body {
   height: 100vh;
   position: absolute;
   overflow: hidden;
+  z-index: 100;
 }
 
 #start_background_img {
@@ -64,7 +66,7 @@ body {
 #instructions_sheet {
   display: flex;
   position: absolute;
-  z-index: 30;
+  z-index: 150;
   width: clamp(100%, 80vw, 1000px);
   top: 4.7vh;
   background-color: #1e1e1e;
@@ -191,7 +193,7 @@ canvas {
   width: 100vw;
   height: 100vh;
   background: rgb(2 2 2 / 80%);
-  z-index: 10;
+  z-index: 40;
   align-items: center;
   justify-content: center;
 }
@@ -199,7 +201,7 @@ canvas {
 #game_over,
 #you_win {
   display: flex;
-  z-index: 20;
+  z-index: 200;
   flex-direction: column;
   position: absolute;
   width: 50vw;
@@ -208,8 +210,8 @@ canvas {
   top: 15%;
   opacity: 0;
   padding: 5%;
-  border: 13px groove #ffffff;
   border-radius: 5%;
+  filter: drop-shadow(0px 5px 15px white);
 }
 
 .game_over_img,
@@ -287,6 +289,82 @@ span {
 .space_key {
   width: 80px;
   filter: invert(0.3) drop-shadow(2px 4px 6px white);
+}
+
+.full_screen {
+  height: 85vh;
+  width: 100vw;
+}
+
+#turn_device_container {
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: rgb(2 2 2 / 90%);
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+}
+
+.turn_text_img {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8%;
+  margin: 5%;
+}
+
+.turn_device_img {
+  width: 10vh;
+  height: 20vw;
+  filter: invert(0.68);
+}
+
+#mobile_keyboard_container {
+  z-index: 30;
+  width: 100%;
+  background-color: #070f49;
+  height: 15vh;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.instructions_for_mobile_keyboard {
+  z-index: 40;
+  width: 100%;
+  background-color: transparent;
+  height: 15vh;
+  bottom: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.arrow_img {
+  width: 30px;
+  height: 30px;
+  background-color: #c35555;
+  filter: invert(1);
+  border-radius: 50%;
+  padding: 10px;
+  border: 2px solid;
+}
+
+.bubbles_img {
+  width: 30px;
+  height: 30px;
+  background-color: #49a1a1;
+  border-radius: 50%;
+  padding: 10px;
+  border: 2px solid white;
 }
 
 .scroll-up {
