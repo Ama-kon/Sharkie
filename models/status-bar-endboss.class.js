@@ -51,16 +51,18 @@ class StatusBarEndboss extends DrawableObject {
   checkForX() {
     setInterval(() => {
       if (this.endboss.x <= 3800) {
-        if (this.canvas.offsetWidth < 720) {
-          this.x = this.character.x + canvas.offsetWidth - this.width * 1.5;
-        } else {
-          this.x = this.character.x + canvas.offsetWidth - this.width;
+        this.x = this.character.x + canvas.width - this.width * 1.5;
+        if (canvas.width >= 1000) {
+          if (this.x > 4250) {
+            this.x = 4250;
+          }
+        }
+        if (canvas.width <= 720) {
+          if (this.x > 4000) {
+            this.x = 4000;
+          }
         }
       }
-      if (this.x > 4000) {
-        this.x = 4000;
-      }
-      // console.log("x ist", this.x);
     }, 1000 / 40);
   }
 
