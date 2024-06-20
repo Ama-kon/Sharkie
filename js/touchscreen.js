@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", toggleFullscreen);
 
 let startScreen = document.getElementById("start_game");
 startScreen.addEventListener("click", () => {
-  if (isTouchDevice) {
+  if (isTouchDevice()) {
     showFullScreen();
   }
 });
