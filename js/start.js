@@ -17,7 +17,6 @@ function init() {
  * is enabled. Finally, it hides the start screen element.
  */
 function startGame() {
-  initLevel1();
   init();
   checkSound();
   let startScreen = document.getElementById("start_game");
