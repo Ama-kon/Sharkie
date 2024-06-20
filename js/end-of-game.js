@@ -19,12 +19,10 @@ function restartGame() {
  */
 function endScreen(id) {
   let container = document.getElementById(id);
-
   container.classList.remove("d-none");
   container.classList.remove("fade-out");
   blur_container.classList.remove("d-none");
   container.classList.add("fade-in");
-  console.log("container wird angezeigt - fade in");
   text.classList.add("scroll-up");
 }
 
@@ -48,7 +46,6 @@ function clearAllIntervals() {
 function closeEndAnimation() {
   winning.classList.replace("fade-in", "fade-out");
   losing.classList.replace("fade-in", "fade-out");
-  console.log("container weg! - fade out");
   text.classList.remove("scroll-up");
   setTimeout(() => {
     winning.classList.add("d-none");
