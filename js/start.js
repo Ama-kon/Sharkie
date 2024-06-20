@@ -1,23 +1,3 @@
-window.addEventListener("resize", resizeCanvas);
-document.addEventListener("DOMContentLoaded", toggleFullscreen);
-
-/**
- * Resizes the canvas element to fit the current window width.
- * The canvas width is set to 630 pixels if the window width is less than 600 pixels,
- * 720 pixels if the window width is less than 760 pixels, and 1000 pixels otherwise.
- */
-function resizeCanvas() {
-  let canvas = document.getElementById("canvas");
-
-  if (window.innerWidth < 600) {
-    canvas.width = 630;
-  } else if (window.innerWidth < 760) {
-    canvas.width = 720;
-  } else {
-    canvas.width = 1000;
-  }
-}
-
 /**
  * Initializes the game world and canvas.
  * This function is called to set up the initial state of the game.
@@ -41,7 +21,9 @@ function startGame() {
   init();
   checkSound();
   let startScreen = document.getElementById("start_game");
+  let blur_container = document.getElementById("blur_container");
   startScreen.classList.add("d-none");
+  blur_container.classList.add("d-none");
 }
 
 /**
