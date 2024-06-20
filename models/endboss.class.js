@@ -282,7 +282,7 @@ class Endboss extends movableObject {
     if (
       distance < 127 &&
       !this.otherDirection &&
-      distanceY >= 0 &&
+      distanceY >= -2 &&
       distanceY <= 100 &&
       this.character.energy > 0
     ) {
@@ -291,7 +291,7 @@ class Endboss extends movableObject {
     } else if (
       distance < 315 &&
       this.otherDirection &&
-      distanceY >= 0 &&
+      distanceY >= -2 &&
       distanceY <= 100 &&
       this.character.energy > 0
     ) {
