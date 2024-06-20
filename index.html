@@ -32,13 +32,15 @@
     <script defer src="js/audio.js"></script>
     <script defer src="js/keyboard.js"></script>
     <script defer src="js/start.js"></script>
+    <script defer src="js/touchscreen.js"></script>
     <script defer src="js/end-of-game.js"></script>
+    <link rel="icon" type="image/x-icon" href="img/icons/shark.png" />
     <title>Sharkie</title>
   </head>
   <body onload="resizeCanvas()">
     <div class="background_container"></div>
     <h1>Sharkie</h1>
-
+    <!-- ********** SOUND AND SCREEN CONTAINER ********** -->
     <div class="sound_screen_container">
       <div class="fullscreen_container">
         <span>Fullscreen</span>
@@ -54,7 +56,7 @@
         onclick="toggleSound()"
       />
     </div>
-
+    <!-- ********** CANVAS ********** -->
     <canvas width="1000" height="480" id="canvas"> </canvas>
     <!-- ********** INSTRUCTIONS ********** -->
     <div id="instructions">
@@ -93,6 +95,7 @@
         <div class="centering_container">
           <button class="play_btn">
             <img
+              id="desktop_instructions_btn"
               onclick="toggleInstructions()"
               class="instructions_img"
               src="img/icons/information.png"
@@ -179,7 +182,64 @@
       </div>
     </div>
     <!-- ********** BLUR CONTAINER ********** -->
-    <div id="blur_container" class="d-none"></div>
+    <div id="blur_container"></div>
+    <!-- ********** TURN DEVICE CONTAINER ********** -->
+    <div id="turn_device_container" class="d-none">
+      <div class="turn_text_img">
+        <span>Please switch your device to landscape mode.</span>
+        <img
+          class="turn_device_img"
+          src="img/icons/rotate_device.png"
+          alt="image of turning device"
+        />
+      </div>
+    </div>
+    <!-- ********** MOBILE KEYBOARD CONTAINER ********** -->
+    <div id="mobile_keyboard_container" class="d-none">
+      <img
+        id="left_arrow"
+        class="arrow_img"
+        src="img/icons/left-arrow.png"
+        alt="arrow left"
+      />
+      <img
+        id="right_arrow"
+        class="arrow_img"
+        src="img/icons/right-arrow.png"
+        alt="arrow right"
+      />
+      <img
+        id="up_arrow"
+        class="arrow_img"
+        src="img/icons/up-arrow.png"
+        alt="arrow up"
+      />
+      <img
+        id="down_arrow"
+        class="arrow_img"
+        src="img/icons/down-arrow.png"
+        alt="arrow down"
+      />
+      <img
+        id="space_button"
+        class="arrow_img"
+        src="img/icons/flash.png"
+        alt="flash icon"
+      />
+      <img
+        id="d_button"
+        class="bubbles_img"
+        src="img/1.Sharkie/4.Attack/Bubble trap/Bubble.png"
+        alt="one bubble"
+      />
+      <img
+        id="a_button"
+        class="bubbles_img"
+        src="img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png"
+        alt="green poisoned bubble"
+      />
+    </div>
+
     <!-- ********** GAME OVER CONTENT ********** -->
     <div id="game_over" class="d-none">
       <h2>Game Over</h2>
