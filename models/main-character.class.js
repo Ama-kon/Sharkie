@@ -19,7 +19,7 @@
 class mainCharacter extends movableObject {
   height = 350;
   width = 200;
-  x = 3150;
+  x = 0;
   y = 80;
   world;
   speed = 4;
