@@ -1,33 +1,6 @@
 /************************ RESPONSIVE STYLES ************************/
 
-@media only screen and (min-width: 1800px) {
-  #start_background_img {
-    width: 1600px;
-    margin: 0 auto;
-  }
-}
-
-@media only screen and (min-width: 1300px) {
-  canvas {
-    width: 60vw;
-  }
-  .sound_screen_container {
-    width: 60vw;
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-  #start_screen_buttons_container {
-    left: 25vw;
-  }
-}
-
-@media only screen and (min-width: 700px) {
-  #start_screen_buttons_container {
-    left: 12vw;
-    bottom: 10vh;
-  }
-}
+/* Max-width Media Queries in aufsteigender Reihenfolge */
 
 @media only screen and (max-width: 1200px) {
   #start_background_img {
@@ -43,7 +16,8 @@
     width: 90vw;
     border-left: none;
     border-right: none;
-    border-radius: 0;
+    border-radius: 5%;
+    filter: drop-shadow(0px 5px 15px white);
   }
 }
 
@@ -83,12 +57,21 @@
   }
 }
 
-@media only screen and (max-height: 480px) {
+@media only screen and (max-height: 750px) and (max-width: 1024px) {
   canvas {
-    height: 100vh;
+    height: 50vh;
   }
 
-  #instructions {
+  #start_background_img {
+    height: 100vh;
+    top: 0;
+  }
+
+  .sound_screen_container {
+    display: none;
+  }
+
+  .instructions_img {
     display: none;
   }
 
@@ -98,12 +81,8 @@
 
   #game_over,
   #you_win {
-    height: 100%;
-    top: -20px;
-  }
-
-  h1 {
-    display: none;
+    height: 90vh;
+    top: -15px;
   }
 
   body {
@@ -112,10 +91,41 @@
 
   @keyframes scrollUp {
     0% {
-      bottom: -150%;
+      bottom: -300%;
     }
     100% {
       bottom: 19%;
     }
+  }
+}
+
+/* Min-width Media Queries in aufsteigender Reihenfolge */
+
+@media only screen and (min-width: 700px) and (max-height: 750px) {
+  #start_screen_buttons_container {
+    left: 12vw;
+    bottom: 30vh;
+  }
+}
+
+@media only screen and (min-width: 1200px) and (min-height: 800px) {
+  #start_screen_buttons_container {
+    left: 25vw;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  canvas {
+    width: 60vw;
+  }
+  .sound_screen_container {
+    width: 60vw;
+  }
+}
+
+@media only screen and (min-width: 1800px) {
+  #start_background_img {
+    width: 1600px;
+    margin: 0 auto;
   }
 }

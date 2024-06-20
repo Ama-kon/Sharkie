@@ -27,7 +27,7 @@ body {
 
 @font-face {
   font-family: "sharky";
-  src: url("fonts/Sharky-nRW5O.ttf");
+  src: url("../fonts/Sharky-nRW5O.ttf");
 }
 
 #start_game {
