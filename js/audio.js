@@ -100,22 +100,19 @@ function checkSound() {
   background_music.play();
   setInterval(() => {
     if (isMuted) {
-      background_music.pause();
-      endboss_sound.pause();
-      striked_fish.pause();
-      endboss_hurt_sound.pause();
-      hit_by_fish.pause();
-      hit_by_jelly.pause();
-      striked_fish.pause();
-      striked_jelly.pause();
-      got_coin_music.pause();
-      got_poison_music.pause();
-      you_win.pause();
-      game_over.pause();
-      congratulations_speech.pause();
-      lost_game_speech.pause();
+      pauseAllAudios();
     }
   }, 1000 / 60);
+}
+
+/**
+ * Pauses all audio playback.
+ * This function is used to stop all audio when the game is reset or restarted.
+ */
+function pauseAllAudios() {
+  audios.forEach((audio) => {
+    audio.pause();
+  });
 }
 
 /**
