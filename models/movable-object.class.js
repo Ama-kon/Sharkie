@@ -141,6 +141,22 @@ class movableObject extends DrawableObject {
   }
 
   /**
+   * Moves the object diagonally by reducing the speed in both the x and y directions.
+   */
+  swimLeftDown() {
+    this.x -= this.speed / 5;
+    this.y += this.speed / 5;
+  }
+
+  /**
+   * Moves the object diagonally upward and leftward by reducing the speed in both the x and y directions.
+   */
+  swimLeftUp() {
+    this.x -= this.speed / 5;
+    this.y -= this.speed / 5;
+  }
+
+  /**
    * Records the timestamp of the last attack performed by the object.
    */
   lastAttack() {
