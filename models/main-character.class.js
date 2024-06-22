@@ -169,7 +169,6 @@ class mainCharacter extends movableObject {
   constructor() {
     super();
     this.loadIMG("img/1.Sharkie/1.IDLE/1.png");
-
     this.loadImages(this.images_move);
     this.loadImages(this.images_attack_fin_lap);
     this.loadImages(this.images_bubble);
@@ -182,58 +181,14 @@ class mainCharacter extends movableObject {
   }
 
   /**
-   * Handles the animation and movement logic for the main character in the game.
-   * This function is called repeatedly at a fixed interval to update the character's position and animation.
-   * It responds to keyboard input to move the character left, right, up, and down, and also handles the character's attack and bubble abilities.
-   * If the character is killed or hurt, the appropriate animation is played and the game state is updated accordingly.
+   * Handles the main animation loop for the main character in the game.
+   * This method sets up two intervals:
+   * 1. A 60 FPS interval that moves the character and follows the camera if the character is within the camera's bounds.
+   * 2. A 10 FPS interval that plays the character's movement animation, checks for attacks, and handles the character's death and hurt states.
    */
   animate() {
     setInterval(() => {
-      // only keyboard //
-      if (this.world.keyboard.right && this.x <= 3800) {
-        this.x += this.speed;
-
-        this.otherDirection = false;
-      }
-      if (this.world.keyboard.left && this.x > 0) {
-        this.x -= this.speed;
-        this.otherDirection = true;
-      }
-      if (this.world.keyboard.up && this.y > -130) {
-        this.y -= this.speed;
-        this.otherDirection = false;
-      }
-      if (this.world.keyboard.down && this.y < 150) {
-        this.y += this.speed;
-        this.otherDirection = false;
-      }
-      if (this.world.keyboard.left && this.x > 0 && this.world.keyboard.down) {
-        this.x -= this.speed / 5;
-        this.y += this.speed / 5;
-        this.otherDirection = true;
-      }
-      if (this.world.keyboard.left && this.x > 0 && this.world.keyboard.down) {
-        if (this.y >= 150) {
-          this.x -= this.speed / 5;
-          this.y -= this.speed / 5;
-          this.otherDirection = true;
-        } else {
-          this.x -= this.speed / 5;
-          this.otherDirection = true;
-        }
-      }
-
-      if (this.world.keyboard.left && this.x > 0 && this.world.keyboard.up) {
-        if (this.y >= 150) {
-          this.x -= this.speed / 5;
-          this.y -= this.speed / 5;
-          this.otherDirection = true;
-        } else {
-          this.x -= this.speed / 5;
-          this.otherDirection = true;
-        }
-      }
-
+      this.moveCharacter();
       if (this.x <= 3500 && this.x >= 0) {
         this.followCamera();
       }
@@ -241,55 +196,219 @@ class mainCharacter extends movableObject {
 
     setInterval(() => {
       this.playAnimation(this.images_move);
-
-      if (this.world.keyboard.space) {
-        this.playAnimation(this.images_attack_fin_lap);
-      }
-
-      if (this.world.keyboard.d) {
-        this.playAnimation(this.images_bubble);
-        this.newBubble = true;
-      }
-
-      if (this.world.keyboard.a) {
-        this.playAnimation(this.images_poison_bubble);
-        this.newPoisonBubble = true;
-      }
-
+      this.attacksEnemy();
       if (this.isDead()) {
-        this.killed = true;
-        if (!isMuted) {
-          background_music.pause();
-          endboss_sound.pause();
-          game_over.play();
-        }
-        setTimeout(() => {
-          endScreen("game_over");
-
-          playLostGameSpeech();
-          this.killed = false;
-        }, 1000);
-        this.playAnimation(this.images_dead);
+        this.showGameOver();
       } else if (this.isHurt()) {
-        if (this.isHittedBy == "electric") {
-          if (!isMuted) {
-            hit_by_jelly.play();
-          }
-
-          this.playAnimation(this.images_hurt_electric);
-        } else if (this.isHittedBy == "poison") {
-          if (!isMuted) {
-            hit_by_fish.play();
-          }
-
-          this.playAnimation(this.images_hurt_poisoned);
-        }
-
+        this.showHurtingTypeAndAnimation();
         if (this.strikesEnemy()) {
           this.strikedEnemy.enemyDying = true;
         }
       }
     }, 100);
+  }
+
+  /**
+   * Handles the movement logic for the main character in the game.
+   * This method checks the keyboard input and the character's current position to determine if the character can move right, left, up, or down. It then calls the appropriate movement methods to update the character's position accordingly.
+   */
+  moveCharacter() {
+    if (this.canMoveRight()) {
+      this.swimRight();
+      this.otherDirection = false;
+    }
+    if (this.canMoveLeft()) {
+      this.swimLeft();
+      this.otherDirection = true;
+    }
+    if (this.canMoveUp()) {
+      this.swimUp();
+      this.otherDirection = false;
+    }
+    if (this.canMoveDown()) {
+      this.swimDown();
+      this.otherDirection = false;
+    }
+    if (this.canMoveLeftDown()) {
+      this.swimLeftDown();
+      if (this.touchesGround()) {
+        this.swimLeft();
+      }
+      this.otherDirection = true;
+    }
+    if (this.canMoveLeftUp()) {
+      this.swimLeftUp();
+      if (this.touchesSky()) {
+        this.swimLeft();
+      }
+      this.otherDirection = true;
+    }
+  }
+
+  /**
+   * Performs various attack actions by the main character.
+   *
+   * This method checks if the main character can perform a fin slap, shoot a bubble, or shoot a poison bubble, and plays the corresponding animation.
+   * If the character can shoot a bubble or poison bubble, it sets the `newBubble` or `newPoisonBubble` flag to true, respectively.
+   */
+  attacksEnemy() {
+    if (this.canFinSlap()) {
+      this.playAnimation(this.images_attack_fin_lap);
+    }
+    if (this.canShootBubble()) {
+      this.playAnimation(this.images_bubble);
+      this.newBubble = true;
+    }
+    if (this.canShootPoisonBubble()) {
+      this.playAnimation(this.images_poison_bubble);
+      this.newPoisonBubble = true;
+    }
+  }
+
+  /**
+   * Checks if the main character can move right based on the keyboard input and the character's current x-coordinate.
+   * @returns {boolean} True if the main character can move right, false otherwise.
+   */
+  canMoveRight() {
+    return this.world.keyboard.right && this.x <= 3800;
+  }
+
+  /**
+   * Checks if the main character can move left based on the keyboard input and the character's current x-coordinate.
+   * @returns {boolean} True if the main character can move left, false otherwise.
+   */
+  canMoveLeft() {
+    return this.world.keyboard.left && this.x > 0;
+  }
+
+  /**
+   * Checks if the main character can move up based on the keyboard input and the character's current y-coordinate.
+   * @returns {boolean} True if the main character can move up, false otherwise.
+   */
+  canMoveUp() {
+    return this.world.keyboard.up && this.y > -130;
+  }
+
+  /**
+   * Checks if the main character can move down based on the keyboard input and the character's current y-coordinate.
+   * @returns {boolean} True if the main character can move down, false otherwise.
+   */
+  canMoveDown() {
+    return this.world.keyboard.down && this.y < 150;
+  }
+
+  /**
+   * Checks if the main character can move left and down based on the keyboard input and the character's current x and y coordinates.
+   * @returns {boolean} True if the main character can move left and down, false otherwise.
+   */
+  canMoveLeftDown() {
+    return this.world.keyboard.left && this.x > 0 && this.world.keyboard.down;
+  }
+
+  /**
+   * Checks if the main character can move left and up based on the keyboard input and the character's current x and y coordinates.
+   * @returns {boolean} True if the main character can move left and up, false otherwise.
+   */
+  canMoveLeftUp() {
+    return this.world.keyboard.left && this.x > 0 && this.world.keyboard.up;
+  }
+
+  /**
+   * Checks if the main character is touching the ground based on the character's current y-coordinate.
+   * @returns {boolean} True if the main character is touching the ground, false otherwise.
+   */
+  touchesGround() {
+    return this.y <= 150;
+  }
+
+  /**
+   * Checks if the main character is touching the sky based on the character's current y-coordinate.
+   * @returns {boolean} True if the main character is touching the sky, false otherwise.
+   */
+  touchesSky() {
+    return this.y >= 150;
+  }
+
+  /**
+   * Checks if the main character can perform a fin slap based on the keyboard input.
+   * @returns {boolean} True if the main character can perform a fin slap, false otherwise.
+   */
+  canFinSlap() {
+    return this.world.keyboard.space;
+  }
+
+  /**
+   * Checks if the main character can shoot a poison bubble based on the keyboard input.
+   * @returns {boolean} True if the main character can shoot a poison bubble, false otherwise.
+   */
+  canShootBubble() {
+    return this.world.keyboard.d;
+  }
+
+  /**
+   * Checks if the main character can shoot a poison bubble based on the keyboard input.
+   * @returns {boolean} True if the main character can shoot a poison bubble, false otherwise.
+   */
+  canShootPoisonBubble() {
+    return this.world.keyboard.a;
+  }
+
+  /**
+   * Plays the appropriate hurt animation and sound effect based on the type of damage the main character has taken.
+   * If the main character has been hit by an electric attack, it plays the "hit_by_jelly" sound effect and the "images_hurt_electric" animation.
+   * If the main character has been hit by a poison attack, it plays the "hit_by_fish" sound effect and the "images_hurt_poisoned" animation.
+   */
+  showHurtingTypeAndAnimation() {
+    if (this.hittedByElectro()) {
+      if (!isMuted) {
+        hit_by_jelly.play();
+      }
+      this.playAnimation(this.images_hurt_electric);
+    } else if (this.hittedByPoison()) {
+      if (!isMuted) {
+        hit_by_fish.play();
+      }
+
+      this.playAnimation(this.images_hurt_poisoned);
+    }
+  }
+
+  /**
+   * Checks if the main character has been hit by an electric attack.
+   * @returns {boolean} True if the main character has been hit by an electric attack, false otherwise.
+   */
+  hittedByElectro() {
+    return this.isHittedBy == "electric";
+  }
+
+  /**
+   * Checks if the main character has been hit by a poison attack.
+   * @returns {boolean} True if the main character has been hit by a poison attack, false otherwise.
+   */
+  hittedByPoison() {
+    return this.isHittedBy == "poison";
+  }
+
+  /**
+   * Handles the game over sequence when the main character is killed.
+   * This method pauses the background music and endboss sound, plays the game over sound effect, and displays the end screen with a "game over" message.
+   * After a 1 second delay, it plays the lost game speech and resets the killed flag.
+   * Finally, it plays the "images_dead" animation to show the main character's death.
+   */
+  showGameOver() {
+    this.startGameOver();
+    this.killed = true;
+    if (!isMuted) {
+      background_music.pause();
+      endboss_sound.pause();
+      game_over.play();
+    }
+    setTimeout(() => {
+      endScreen("game_over");
+      playLostGameSpeech();
+      this.killed = false;
+    }, 1000);
+    this.playAnimation(this.images_dead);
   }
 
   /**
