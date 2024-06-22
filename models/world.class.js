@@ -113,7 +113,6 @@ class World {
       object.flipImage(this.ctx);
     }
     object.draw(this.ctx);
-    object.drawRectangle(this.ctx);
 
     if (object.otherDirection) {
       object.flipImageBack(this.ctx);
@@ -243,10 +242,7 @@ class World {
    */
   drawBubble() {
     setInterval(() => {
-      if (
-        this.character.newBubble
-        // && this.character.coins > 0        // zu testzwecken auskommentiert . muss wieder rein
-      ) {
+      if (this.character.newBubble && this.character.coins > 0) {
         this.character.lostCoin();
 
         this.character.newBubble = false;
@@ -292,10 +288,7 @@ class World {
    */
   drawPoisonBubble() {
     setInterval(() => {
-      if (
-        this.character.newPoisonBubble
-        // && this.character.poison > 0                // zu testzwecken auskommentiert, muss dann wieder rein
-      ) {
+      if (this.character.newPoisonBubble && this.character.poison > 0) {
         this.character.lostPoison();
 
         this.character.newPoisonBubble = false;
