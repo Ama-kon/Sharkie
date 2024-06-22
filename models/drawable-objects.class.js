@@ -75,46 +75,6 @@ class DrawableObject {
   }
 
   /**
-   * Draws a rectangle around the object on the canvas, used for collision detection.
-   * The rectangle is drawn with a blue stroke and a line width of 7 pixels.
-   * The position and size of the rectangle depends on the type of object:
-   * - For the main character, the rectangle is drawn around the character's body, excluding the head and feet.
-   * - For the end boss, the rectangle is drawn around the boss's body, excluding the head and tail.
-   * - For enemy fish and jellyfish, the rectangle is drawn around the entire object, with a small offset.
-   * @param {CanvasRenderingContext2D} ctx - The canvas rendering context to use for drawing the rectangle.
-   */
-  drawRectangle(ctx) {
-    // zum berechnen des zusammenstoßens, kann danach raus
-    if (this instanceof mainCharacter) {
-      ctx.beginPath();
-      ctx.lineWidth = "7";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x + 40, this.y + 160, this.width - 80, this.height - 240);
-      ctx.stroke();
-    }
-    if (this instanceof Endboss) {
-      ctx.beginPath();
-      ctx.lineWidth = "7";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x + 30, this.y + 220, this.width - 80, this.height - 300);
-      ctx.stroke();
-    }
-    if (
-      this instanceof enemyGreenFish ||
-      this instanceof enemyLilaFish ||
-      this instanceof enemyRedFish ||
-      this instanceof enemyJellyfishLila ||
-      this instanceof enemyJellyfishYellow
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = "7";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width - 10, this.height - 20);
-      ctx.stroke();
-    }
-  }
-
-  /**
    * Flips the image horizontally, translating it to the right side of the canvas.
    * @param {CanvasRenderingContext2D} ctx - The canvas rendering context to use for the image flip.
    */
