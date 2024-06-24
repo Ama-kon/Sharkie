@@ -43,17 +43,21 @@ class Bubbles extends movableObject {
    */
   animate() {
     setInterval(() => {
-      if (this.direction == "swimRight") {
+      if (this.isRightDirection()) {
         this.playAnimation(this.image_bubble);
-        this.x += this.offsetX + this.speed;
-        this.y -= this.offsetY * this.speed;
-        this.speed += 0.2;
+        this.moveUpFastRight();
       } else {
         this.playAnimation(this.image_bubble);
-        this.x -= this.offsetX + this.speed;
-        this.y -= this.offsetY * this.speed;
-        this.speed += 0.2;
+        this.moveUpFastLeft();
       }
     }, 100);
+  }
+
+  /**
+   * Checks if the bubble is moving in the "swimRight" direction.
+   * @returns {boolean} - True if the bubble is moving in the "swimRight" direction, false otherwise.
+   */
+  isRightDirection() {
+    return this.direction == "swimRight";
   }
 }
