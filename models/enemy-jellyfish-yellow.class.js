@@ -89,8 +89,7 @@ class enemyJellyfishYellow extends movableObject {
       this.playAnimation(this.images_move);
       if (this.enemyDying) {
         this.playAnimation(this.images_die);
-        this.x += 15;
-        this.y -= 25;
+        this.swimOutUpRight();
       }
     }, 150);
   }

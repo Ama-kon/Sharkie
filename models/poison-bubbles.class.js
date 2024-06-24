@@ -47,12 +47,10 @@ class PoisonBubbles extends movableObject {
       this.speed += 0.2;
       if (this.direction == "swimRight") {
         this.playAnimation(this.image_bubble);
-        this.x += this.offsetX + this.speed;
-        this.y -= this.offsetY * this.speed;
+        this.moveUpFastRight();
       } else {
         this.playAnimation(this.image_bubble);
-        this.x -= this.offsetX + this.speed;
-        this.y -= this.offsetY * this.speed;
+        this.moveUpFastLeft();
       }
     }, 100);
   }

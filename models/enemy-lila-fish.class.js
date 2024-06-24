@@ -79,8 +79,7 @@ class enemyLilaFish extends movableObject {
       this.playAnimation(this.images_move);
       if (this.enemyDying) {
         this.playAnimation(this.images_die);
-        this.x += 5;
-        this.y += 5;
+        this.swimOutDownRight();
       }
     }, 1000 / 60);
   }

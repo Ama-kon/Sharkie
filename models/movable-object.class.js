@@ -156,6 +156,49 @@ class movableObject extends DrawableObject {
     this.y -= this.speed / 5;
   }
 
+  swimOutUpRight() {
+    this.x += 15;
+    this.y -= 25;
+  }
+
+  /**
+   * Moves the object upwards and to the left, outside of canvas, simulating a swimming motion.
+   */
+  swimOutUpLeft() {
+    this.x -= 5;
+    this.y -= 5;
+  }
+
+  /**
+   * Moves the object diagonally downward and rightward by increasing the x and y coordinates.
+   */
+  swimOutDownRight() {
+    this.x += 5;
+    this.y += 5;
+  }
+
+  /**
+   * Moves the poison bubble up and to the right at an increasing speed.
+   * The bubble's x-coordinate is increased by the sum of the offsetX and current speed,
+   * and the y-coordinate is decreased by the product of the offsetY and current speed.
+   * This causes the bubble to move diagonally up and to the right.
+   */
+  moveUpFastRight() {
+    this.x += this.offsetX + this.speed;
+    this.y -= this.offsetY * this.speed;
+  }
+
+  /**
+   * Moves the poison bubble up and to the left at an increasing speed.
+   * The bubble's x-coordinate is decreased by the sum of the offsetX and current speed,
+   * and the y-coordinate is decreased by the product of the offsetY and current speed.
+   * This causes the bubble to move diagonally up and to the left.
+   */
+  moveUpFastLeft() {
+    this.x -= this.offsetX + this.speed;
+    this.y -= this.offsetY * this.speed;
+  }
+
   /**
    * Records the timestamp of the last attack performed by the object.
    */
@@ -231,7 +274,7 @@ class movableObject extends DrawableObject {
    * Reduces the energy of the current object by 10. If the energy becomes 0 or less, it is set to 0. Otherwise, the time of the last hit on the endboss is recorded.
    */
   hitEndboss() {
-    this.energy -= 10;
+    this.energy -= 20;
     if (this.energy <= 0) {
       this.energy = 0;
     } else {
