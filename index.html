@@ -44,7 +44,7 @@
     <div class="background_container"></div>
     <h1>Sharkie</h1>
     <!-- ********** SOUND AND SCREEN CONTAINER ********** -->
-    <div class="sound_screen_container">
+    <section class="sound_screen_container">
       <div class="fullscreen_container">
         <span>Fullscreen</span>
         <label class="switch">
@@ -58,11 +58,11 @@
         alt="sound on"
         onclick="toggleSound()"
       />
-    </div>
+    </section>
     <!-- ********** CANVAS ********** -->
     <canvas width="1000" height="480" id="canvas"> </canvas>
     <!-- ********** INSTRUCTIONS ********** -->
-    <div id="instructions">
+    <section id="instructions">
       <div class="instruction_container">
         <img class="keyboard_img" src="img/icons/keyboard.png" alt="keyboard" />
         <span> Move Shark</span>
@@ -86,9 +86,9 @@
         <img class="keyboard_a" src="img/icons/key-a.png" alt="keyboard a" />
         <span> Poison kills endboss</span>
       </div>
-    </div>
+    </section>
     <!-- ********** START SCREEN ********** -->
-    <div id="start_game">
+    <section id="start_game">
       <img
         id="start_background_img"
         src="img/3. Background/start_screen.png"
@@ -115,10 +115,10 @@
           </button>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- ********** ISTRUCTIONS POP UP ********** -->
-    <div id="instructions_sheet" class="d-none">
+    <section id="instructions_sheet" class="d-none">
       <div class="close_container">
         <img
           onclick="toggleInstructions()"
@@ -183,11 +183,11 @@
           alt="preview of fin slap"
         />
       </div>
-    </div>
+    </section>
     <!-- ********** BLUR CONTAINER ********** -->
     <div id="blur_container"></div>
     <!-- ********** TURN DEVICE CONTAINER ********** -->
-    <div id="turn_device_container" class="d-none">
+    <section id="turn_device_container" class="d-none">
       <div class="turn_text_img">
         <span>Please switch your device to landscape mode.</span>
         <img
@@ -196,9 +196,9 @@
           alt="image of turning device"
         />
       </div>
-    </div>
+    </section>
     <!-- ********** MOBILE KEYBOARD CONTAINER ********** -->
-    <div id="mobile_keyboard_container" class="d-none">
+    <section id="mobile_keyboard_container" class="d-none">
       <img
         id="left_arrow"
         class="arrow_img"
@@ -241,10 +241,9 @@
         src="img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png"
         alt="green poisoned bubble"
       />
-    </div>
-
+    </section>
     <!-- ********** GAME OVER CONTENT ********** -->
-    <div id="game_over" class="d-none">
+    <section id="game_over" class="d-none">
       <h2>Game Over</h2>
       <div id="text-container">
         <div id="scrolling-text" class="font_medium">
@@ -281,9 +280,9 @@
           Back to Start
         </button>
       </div>
-    </div>
+    </section>
     <!-- ********** YOU WIN CONTENT ********** -->
-    <div id="you_win" class="d-none">
+    <section id="you_win" class="d-none">
       <h2>Congratulations!</h2>
       <div id="text-container">
         <div id="scrolling-text" class="font_medium">
@@ -321,6 +320,17 @@
           Back to Start
         </button>
       </div>
-    </div>
+    </section>
+    <!-- ********** FOOTER ********** -->
+    <footer>
+      <div class="footer_container">
+        <a
+          href="impressum-datenschutz.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Legal Notice & Privacy Policy</a
+        >
+      </div>
+    </footer>
   </body>
 </html>
