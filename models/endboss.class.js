@@ -168,62 +168,13 @@ class Endboss extends movableObject {
   animate() {
     this.i = 0;
     setInterval(() => {
-      if (this.character.x >= 3100 && !isMuted && this.character.energy > 0) {
-        endboss_sound.play();
-        background_music.pause();
-      }
-      if (this.character.x >= 3400) {
-        if (!this.sawEndboss) {
-          this.sawEndboss = true;
-          this.x = 3800;
-          this.y = 0;
-        }
-        if (this.i < this.images_intro.length) {
-          this.playAnimation(this.images_intro);
-          this.i++;
-        } else {
-          this.sharkieIsNear = true;
-        }
-      }
-      if (this.isDead()) {
-        if (!isMuted) {
-          endboss_sound.pause();
-          you_win.play();
-        } else {
-          endboss_sound.pause();
-          you_win.pause();
-        }
-        this.playAnimation(this.images_dead);
-        setTimeout(() => {
-          endScreen("you_win");
-
-          playWinningSpeech();
-        }, 1000);
-      } else if (this.sharkieIsNear && !this.isDead()) {
-        this.playAnimation(this.images_move);
-      }
-      if (this.attack && this.character.energy > 0) {
-        this.playAnimation(this.images_attack);
-        setTimeout(() => {
-          this.character.killedByEndboss = true;
-          this.character.energy = 0;
-        }, 100);
-      }
+      this.playSoundAndIntro();
+      this.checkIfDeadOrAlive();
+      this.attackSharkie();
     }, 170);
 
     setInterval(() => {
-      if (
-        this.sawEndboss &&
-        !isMuted &&
-        this.character.energy > 0 &&
-        this.energy > 0
-      ) {
-        endboss_sound.play();
-        background_music.pause();
-      } else if (this.sawEndboss && isMuted && this.character.energy > 0) {
-        background_music.pause();
-        endboss_sound.pause();
-      }
+      this.playPauseEnbossSound();
       if (this.sharkieIsNear) {
         this.huntSharkie();
       }
@@ -237,6 +188,161 @@ class Endboss extends movableObject {
   }
 
   /**
+   * Plays the end boss introduction animation and sound effect when the player character is near the end boss.
+   *
+   * This method is responsible for the following:
+   * - Checking if the player character is near the end boss using the `isSharkieIsNear()` method
+   * - Playing the end boss sound effect if the player character is near
+   * - Pausing the background music if the player character is near
+   * - Checking if the player character is in front of the end boss using the `sharkieIsInFront()` method
+   * - Displaying the end boss introduction animation if the player character is in front and the end boss has not been seen before
+   * - Setting the `sharkieIsNear` flag to true once the introduction animation is complete
+   */
+  playSoundAndIntro() {
+    if (this.isSharkieIsNear()) {
+      endboss_sound.play();
+      background_music.pause();
+    }
+    if (this.sharkieIsInFront()) {
+      if (!this.sawEndboss) {
+        this.endbossAppears();
+      }
+      if (this.i < this.images_intro.length) {
+        this.playAnimation(this.images_intro);
+        this.i++;
+      } else {
+        this.sharkieIsNear = true;
+      }
+    }
+  }
+
+  /**
+   * Checks the state of the end boss and performs appropriate actions.
+   *
+   * This method is responsible for the following:
+   * - Checking if the end boss is dead using the `isDead()` method
+   * - If the end boss is dead, it calls the `userWins()` method to handle the player's victory
+   * - If the end boss is not dead and the player character is near, it plays the end boss's movement animation using the `playAnimation()` method and the `images_move` property
+   */
+  checkIfDeadOrAlive() {
+    if (this.isDead()) {
+      this.userWins();
+    } else if (this.sharkieIsNear && !this.isDead()) {
+      this.playAnimation(this.images_move);
+    }
+  }
+
+  /**
+   * Handles the logic for when the player character wins the game against the endboss.
+   *
+   * This method is responsible for the following:
+   * - Pausing the endboss sound effect and playing the "you win" sound effect
+   * - Playing the endboss's death animation
+   * - Displaying the end screen with the "you win" message
+   * - Triggering the winning speech playback
+   *
+   * @returns {void}
+   */
+  userWins() {
+    if (!isMuted) {
+      endboss_sound.pause();
+      you_win.play();
+    } else {
+      endboss_sound.pause();
+      you_win.pause();
+    }
+    this.playAnimation(this.images_dead);
+    setTimeout(() => {
+      endScreen("you_win");
+
+      playWinningSpeech();
+    }, 1000);
+  }
+
+  /**
+   * Handles the logic for when the endboss attacks the sharkie (player character).
+   *
+   * This method checks if the endboss is attacking the sharkie (by checking the `attack` flag and the player character's energy level). If the endboss is attacking, it plays the endboss's attack animation and triggers the sharkie's death.
+   *
+   * @returns {void}
+   */
+  attackSharkie() {
+    if (this.endbosAttacksSharkie()) {
+      this.playAnimation(this.images_attack);
+      this.sharkieIsDead();
+    }
+  }
+
+  /**
+   * Checks if the endboss is attacking the sharkie (player character).
+   *
+   * This method returns a boolean indicating whether the `attack` flag is true and the player character's energy is greater than 0.
+   *
+   * @returns {boolean} - True if the endboss is attacking the sharkie, false otherwise.
+   */
+  endbosAttacksSharkie() {
+    return this.attack && this.character.energy > 0;
+  }
+
+  /**
+   * Handles the logic for when the sharkie (player character) is killed by the endboss.
+   *
+   * This method sets the `killedByEndboss` flag on the player character to `true` and reduces the player character's energy to 0 after a 100 millisecond delay.
+   *
+   * @returns {void}
+   */
+  sharkieIsDead() {
+    setTimeout(() => {
+      this.character.killedByEndboss = true;
+      this.character.energy = 0;
+    }, 100);
+  }
+
+  /**
+   * Checks if the sharkie (player character) is near the endboss.
+   *
+   * This method returns a boolean indicating whether the player character's x-coordinate is greater than or equal to 3100, the game is not muted, and the player character's energy is greater than 0.
+   *
+   * @returns {boolean} - True if the sharkie is near the endboss, false otherwise.
+   */
+  isSharkieIsNear() {
+    return this.character.x >= 3100 && !isMuted && this.character.energy > 0;
+  }
+
+  /**
+   * Checks if the sharkie (player character) is in front of the endboss.
+   *
+   * This method returns a boolean indicating whether the player character's x-coordinate is greater than or equal to 3400.
+   *
+   * @returns {boolean} - True if the sharkie is in front of the endboss, false otherwise.
+   */
+  sharkieIsInFront() {
+    return this.character.x >= 3400;
+  }
+
+  /**
+   * Triggers the appearance of the endboss in the game.
+   *
+   * This function sets the `sawEndboss` flag to `true`, indicating that the endboss has been seen, and positions the endboss at the coordinates (3800, 0) on the game screen.
+   */
+  endbossAppears() {
+    this.sawEndboss = true;
+    this.x = 3800;
+    this.y = 0;
+  }
+
+  /**
+   * Checks if both the endboss and the player character are alive.
+   *
+   * This method returns a boolean indicating whether the player character's energy is greater than 0 and the endboss's energy is greater than 0.
+   *
+   * @returns {boolean} - True if both the endboss and the player character are alive, false otherwise.
+   */
+  bothAreAlive() {
+    return this.character.energy > 0 && this.energy > 0;
+  }
+
+  /**
    * Handles the logic for the endboss character to hunt the player character.
    *
    * This method is responsible for the following:
@@ -246,7 +352,6 @@ class Endboss extends movableObject {
    *
    * @returns {void}
    */
-
   huntSharkie() {
     if (this.energy > 0 && !this.attack) {
       let distanceX = this.character.x - this.x;
@@ -301,36 +406,19 @@ class Endboss extends movableObject {
   }
 
   /**
-   * Checks the distance between the endboss and the player character, and initiates an attack if the conditions are met.
+   * Plays or pauses the endboss sound effect based on the current game state.
    *
    * This method is responsible for the following:
-   * - Checking if the distance between the endboss and the player character is less than 127 pixels, and the player character is within a certain vertical range
-   * - Checking if the distance between the endboss and the player character is less than 315 pixels, the endboss is facing the other direction, and the player character is within a certain vertical range
-   * - Setting the `attack` property to `true` and adjusting the endboss's x-position accordingly if the attack conditions are met
-   *
-   * @param {number} distance - The distance between the endboss and the player character
-   * @param {number} distanceY - The vertical distance between the endboss and the player character
-   * @returns {void}
+   * - Playing the endboss sound effect if the player has seen the endboss, the game is not muted, and both the player and endboss are alive.
+   * - Pausing the endboss sound effect and the background music if the player has seen the endboss, the game is muted, and both the player and endboss are alive.
    */
-  checkDistanceAndAttack(distance, distanceY) {
-    if (
-      distance < 127 &&
-      !this.otherDirection &&
-      distanceY >= 0 &&
-      distanceY <= 100 &&
-      this.character.energy > 0
-    ) {
-      this.attack = true;
-      this.x -= 50;
-    } else if (
-      distance < 315 &&
-      this.otherDirection &&
-      distanceY >= 0 &&
-      distanceY <= 100 &&
-      this.character.energy > 0
-    ) {
-      this.attack = true;
-      this.x += 50;
+  playPauseEnbossSound() {
+    if (this.sawEndboss && !isMuted && this.bothAreAlive()) {
+      endboss_sound.play();
+      background_music.pause();
+    } else if (this.sawEndboss && isMuted && this.bothAreAlive()) {
+      background_music.pause();
+      endboss_sound.pause();
     }
   }
 }
