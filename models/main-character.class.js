@@ -396,7 +396,6 @@ class mainCharacter extends movableObject {
    * Finally, it plays the "images_dead" animation to show the main character's death.
    */
   showGameOver() {
-    this.startGameOver();
     this.killed = true;
     if (!isMuted) {
       background_music.pause();
