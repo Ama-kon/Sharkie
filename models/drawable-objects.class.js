@@ -93,4 +93,36 @@ class DrawableObject {
     this.x = this.x * -1;
     ctx.restore();
   }
+
+  /**
+   * Sets the percentage value of the status bar and updates the displayed image accordingly.
+   *
+   * @param {number} percent - The new percentage value to set.
+   */
+  setPercent(percent) {
+    this.percent = percent;
+    let imagePath = this.images_lifes[this.findIndexOfStatusImg()];
+    this.img = this.imageCache[imagePath];
+  }
+
+  /**
+   * Determines the index of the appropriate status image to display based on the current percentage value.
+   *
+   * @returns {number} The index of the status image to display.
+   */
+  findIndexOfStatusImg() {
+    if (this.percent == 100) {
+      return 0;
+    } else if (this.percent >= 80) {
+      return 1;
+    } else if (this.percent >= 60) {
+      return 2;
+    } else if (this.percent >= 40) {
+      return 3;
+    } else if (this.percent >= 20) {
+      return 4;
+    } else {
+      return 5;
+    }
+  }
 }

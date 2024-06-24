@@ -38,25 +38,4 @@ class PoisonBar extends DrawableObject {
     let imagePath = this.images_poison[this.findIndexOfStatusImg()];
     this.img = this.imageCache[imagePath];
   }
-
-  /**
-   * Determines the index of the appropriate poison bar image based on the current poison percentage.
-   *
-   * @returns {number} The index of the poison bar image to display.
-   */
-  findIndexOfStatusImg() {
-    if (this.percent >= 100) {
-      return 0;
-    } else if (this.percent >= 80) {
-      return 1;
-    } else if (this.percent >= 60) {
-      return 2;
-    } else if (this.percent >= 40) {
-      return 3;
-    } else if (this.percent >= 20) {
-      return 4;
-    } else {
-      return 5;
-    }
-  }
 }
