@@ -83,8 +83,8 @@ input:checked + .slider:before {
 /************************* INSTRUCTIONS *************************/
 
 .instructions_img {
-  width: clamp(6vw, 20vw, 80px);
-  height: clamp(8vh, 10vh, 50px);
+  width: clamp(6vw, 20vw, 150px);
+  height: clamp(8vh, 10vh, 100px);
 }
 
 .instructions_img:hover {
