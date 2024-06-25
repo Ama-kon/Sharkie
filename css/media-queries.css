@@ -1,6 +1,6 @@
 /************************ RESPONSIVE STYLES ************************/
 
-/* Max-width Media Queries in aufsteigender Reihenfolge */
+/* Max-width Media Queries */
 
 @media only screen and (max-width: 1200px) {
   #start_background_img {
@@ -99,7 +99,7 @@
   }
 }
 
-/* Min-width Media Queries in aufsteigender Reihenfolge */
+/* Min-width Media Queries */
 
 @media only screen and (min-width: 700px) and (max-height: 750px) {
   #start_screen_buttons_container {
@@ -123,9 +123,19 @@
   }
 }
 
+@media only screen and (min-width: 1500px) {
+  #start_screen_buttons_container {
+    left: 0;
+  }
+  .start_button {
+    width: clamp(10vw, 10vw, 500px);
+    height: clamp(5vh, 10vh, 500px);
+  }
+}
+
 @media only screen and (min-width: 1800px) {
   #start_background_img {
-    width: 1600px;
+    width: 70%;
     margin: 0 auto;
   }
 }
