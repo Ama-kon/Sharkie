@@ -30,9 +30,6 @@ class mainCharacter extends movableObject {
   killed = false;
   killedByEndboss = false;
 
-  /**
-   * An array of image paths for the main character's idle animation frames.
-   */
   images_move = [
     "img/1.Sharkie/1.IDLE/1.png",
     "img/1.Sharkie/1.IDLE/2.png",
@@ -54,9 +51,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/1.IDLE/18.png",
   ];
 
-  /**
-   * An array of image paths for the main character's sleeping animation frames.
-   */
   images_sleeping = [
     "img/1.Sharkie/2.Long_IDLE/i1.png",
     "img/1.Sharkie/2.Long_IDLE/I2.png",
@@ -74,9 +68,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/2.Long_IDLE/I14.png",
   ];
 
-  /**
-   * An array of image paths for the main character's fin slap attack animation frames.
-   */
   images_attack_fin_lap = [
     "img/1.Sharkie/4.Attack/Fin slap/1.png",
     "img/1.Sharkie/4.Attack/Fin slap/2.png",
@@ -88,9 +79,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Fin slap/8.png",
   ];
 
-  /**
-   * An array of image paths for the main character's electric shock hurt animation frames.
-   */
   images_hurt_electric = [
     "img/1.Sharkie/6.dead/2.Electro_shock/1.png",
     "img/1.Sharkie/6.dead/2.Electro_shock/2.png",
@@ -104,10 +92,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/6.dead/2.Electro_shock/10.png",
   ];
 
-  /**
-   * An array of image paths for the main character's poisoned hurt animation frames.
-   */
-
   images_hurt_poisoned = [
     "img/1.Sharkie/5.Hurt/1.Poisoned/1.png",
     "img/1.Sharkie/5.Hurt/1.Poisoned/2.png",
@@ -115,9 +99,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/5.Hurt/1.Poisoned/4.png",
   ];
 
-  /**
-   * An array of image paths for the main character's death animation frames.
-   */
   images_dead = [
     "img/1.Sharkie/6.dead/1.Poisoned/1.png",
     "img/1.Sharkie/6.dead/1.Poisoned/2.png",
@@ -133,9 +114,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/6.dead/1.Poisoned/12.png",
   ];
 
-  /**
-   * An array of image paths for the main character's bubble attack animation frames.
-   */
   images_bubble = [
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png",
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png",
@@ -147,9 +125,6 @@ class mainCharacter extends movableObject {
     "img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png",
   ];
 
-  /**
-   * An array of image paths for the main character's poison bubble attack animation frames.
-   */
   images_poison_bubble = [
     "img/1.Sharkie/4.Attack/Bubble trap/For Whale/1.png",
     "img/1.Sharkie/4.Attack/Bubble trap/For Whale/2.png",
@@ -189,21 +164,15 @@ class mainCharacter extends movableObject {
   animate() {
     setInterval(() => {
       this.moveCharacter();
-      if (this.x <= 3500 && this.x >= 0) {
-        this.followCamera();
-      }
+      if (this.x <= 3500 && this.x >= 0) this.followCamera();
     }, 1000 / 60);
-
     setInterval(() => {
       this.moveOrSleep();
       this.attacksEnemy();
-      if (this.isDead()) {
-        this.showGameOver();
-      } else if (this.isHurt()) {
+      if (this.isDead()) this.showGameOver();
+      else if (this.isHurt()) {
         this.showHurtingTypeAndAnimation();
-        if (this.strikesEnemy()) {
-          this.strikedEnemy.enemyDying = true;
-        }
+        if (this.strikesEnemy()) this.strikedEnemy.enemyDying = true;
       }
     }, 120);
   }
@@ -251,39 +220,35 @@ class mainCharacter extends movableObject {
     }
   }
 
+  /**
+   * Handles the logic for the main character's movement or sleeping state.
+   * If the character does not move, it falls asleep and plays a snoring sound. Otherwise, it plays the animation for the character's movement and pauses the snoring sound.
+   */
   moveOrSleep() {
     if (this.doesntMove()) {
       this.fallAsleep();
-      if (!isMuted) {
-        snoring.play();
-      }
+      if (!isMuted && !endOfGame) snoring.play();
     } else {
-      this.playAnimation(this.images_move);
-      snoring.pause();
+      this.playAnimation(this.images_move), snoring.pause();
     }
   }
 
   /**
-   * Performs various attack actions by the main character.
-   *
-   * This method checks if the main character can perform a fin slap, shoot a bubble, or shoot a poison bubble, and plays the corresponding animation.
-   * If the character can shoot a bubble or poison bubble, it sets the `newBubble` or `newPoisonBubble` flag to true, respectively.
+   * Performs various attack actions for the main character.
+   * Checks if the character can perform a fin slap, shoot bubbles, or shoot poison bubbles, and plays the corresponding animation.
+   * Sets the `newBubble` or `newPoisonBubble` flag to true if the character can shoot bubbles or poison bubbles, respectively.
    */
   attacksEnemy() {
-    if (this.canFinSlap()) {
-      this.playAnimation(this.images_attack_fin_lap);
-      this.movedLastTime();
-    }
-    if (this.canShootBubble()) {
-      this.playAnimation(this.images_bubble);
-      this.newBubble = true;
-      this.movedLastTime();
-    }
-    if (this.canShootPoisonBubble()) {
-      this.playAnimation(this.images_poison_bubble);
-      this.newPoisonBubble = true;
-      this.movedLastTime();
-    }
+    if (this.canFinSlap())
+      this.playAnimation(this.images_attack_fin_lap), this.movedLastTime();
+    if (this.canShootBubble())
+      this.playAnimation(this.images_bubble),
+        (this.newBubble = true),
+        this.movedLastTime();
+    if (this.canShootPoisonBubble())
+      this.playAnimation(this.images_poison_bubble),
+        (this.newPoisonBubble = true),
+        this.movedLastTime();
   }
 
   /**
@@ -335,22 +300,6 @@ class mainCharacter extends movableObject {
   }
 
   /**
-   * Checks if the main character is touching the ground based on the character's current y-coordinate.
-   * @returns {boolean} True if the main character is touching the ground, false otherwise.
-   */
-  touchesGround() {
-    return this.y <= 150;
-  }
-
-  /**
-   * Checks if the main character is touching the sky based on the character's current y-coordinate.
-   * @returns {boolean} True if the main character is touching the sky, false otherwise.
-   */
-  touchesSky() {
-    return this.y >= 150;
-  }
-
-  /**
    * Checks if the main character can perform a fin slap based on the keyboard input.
    * @returns {boolean} True if the main character can perform a fin slap, false otherwise.
    */
@@ -374,12 +323,15 @@ class mainCharacter extends movableObject {
     return this.world.keyboard.a;
   }
 
+  /**
+   * Checks if the main character has not moved for a certain amount of time.
+   * @returns {boolean} True if the main character has not moved for more than 5 seconds, false otherwise.
+   */
   doesntMove() {
     let timePassed = new Date().getTime() - this.lastMove;
     timePassed = timePassed / 1000;
-    if (this.lastMove == 0) {
-      return;
-    } else {
+    if (this.lastMove == 0) return;
+    else {
       if (timePassed > 5) {
         return true;
       } else {
@@ -402,16 +354,11 @@ class mainCharacter extends movableObject {
    */
   showHurtingTypeAndAnimation() {
     if (this.hittedByElectro()) {
-      if (!isMuted) {
-        hit_by_jelly.play();
-      }
-      this.playAnimation(this.images_hurt_electric);
+      if (!isMuted)
+        hit_by_jelly.play(), this.playAnimation(this.images_hurt_electric);
     } else if (this.hittedByPoison()) {
-      if (!isMuted) {
-        hit_by_fish.play();
-      }
-
-      this.playAnimation(this.images_hurt_poisoned);
+      if (!isMuted)
+        hit_by_fish.play(), this.playAnimation(this.images_hurt_poisoned);
     }
   }
 
