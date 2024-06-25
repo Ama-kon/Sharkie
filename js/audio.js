@@ -49,6 +49,8 @@ isMuted = false;
 congratulations_speech_told = false;
 lost_game_speech_told = false;
 
+endOfGame = false;
+
 let audios = [
   background_music,
   snoring,
@@ -79,7 +81,6 @@ let audios = [
  */
 function toggleSound() {
   let img = document.getElementById("sound_toggle");
-
   if (img.src.includes("lautsprecher.png")) {
     img.src = "img/icons/lautsprecher_aus.png";
     img.alt = "sound off";
@@ -90,6 +91,34 @@ function toggleSound() {
     img.alt = "sound on";
     isMuted = false;
     checkSound();
+  }
+}
+
+/**
+ * Saves the current mute state of the game to the browser's local storage.
+ * This allows the mute state to persist across page refreshes or browser sessions.
+ */
+function settingToLocalStorage() {
+  localStorage.setItem("isMuted", isMuted);
+}
+
+/**
+ * Retrieves the mute state of the game from the browser's local storage and updates the UI accordingly.
+ *
+ * This function is called to initialize the mute state of the game when the page is loaded. It checks if a mute state has been saved in the local storage, and if so, it updates the "sound_toggle" image element to reflect the saved mute state.
+ */
+function getSettingFromLocalStorage() {
+  const isMutedFromStorage = localStorage.getItem("isMuted");
+  if (isMutedFromStorage !== null) {
+    isMuted = isMutedFromStorage === "true";
+    const img = document.getElementById("sound_toggle");
+    if (isMuted) {
+      img.src = "img/icons/lautsprecher_aus.png";
+      img.alt = "sound off";
+    } else {
+      img.src = "img/icons/lautsprecher.png";
+      img.alt = "sound on";
+    }
   }
 }
 
@@ -109,6 +138,7 @@ function checkSound() {
       pauseAllAudios();
     }
   }, 1000 / 60);
+  settingToLocalStorage();
 }
 
 /**
@@ -128,7 +158,6 @@ function pauseAllAudios() {
 function playWinningSpeech() {
   if (!isMuted && !congratulations_speech_told) {
     congratulations_speech.play();
-
     setTimeout(() => {
       congratulations_speech_told = true;
     }, 23350);
@@ -142,7 +171,6 @@ function playWinningSpeech() {
 function playLostGameSpeech() {
   if (!isMuted && !lost_game_speech_told) {
     lost_game_speech.play();
-
     setTimeout(() => {
       lost_game_speech_told = true;
     }, 23350);
