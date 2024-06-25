@@ -163,7 +163,6 @@ class World {
       this.level.coins.forEach((coin) => {
         if (this.character.isColliding(coin)) {
           this.character.gotCoin();
-
           if (this.character.coins <= 100) {
             this.level.coins.splice(this.level.coins.indexOf(coin), 1);
             this.ctx.clearRect(coin.x, coin.y, coin.width, coin.height);
@@ -380,5 +379,6 @@ class World {
         }, 1000);
       }
     }, 1000 / 60);
+    endOfGame = true;
   }
 }
