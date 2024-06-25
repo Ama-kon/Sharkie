@@ -275,7 +275,7 @@ span {
 }
 
 .keyboard_img {
-  width: 50%;
+  width: clamp(50px, 50%, 150px);
   filter: drop-shadow(2px 4px 6px white);
 }
 
@@ -464,7 +464,13 @@ footer a:hover {
   filter: none;
   height: fit-content;
   max-width: 1500px;
-  background-color: #dbdbdb;
+  background: rgb(148, 191, 204);
+  background: radial-gradient(
+    circle,
+    rgba(148, 191, 204, 1) 0%,
+    rgba(9, 98, 121, 1) 33%,
+    rgba(0, 2, 36, 1) 100%
+  );
 }
 
 #legal_and_privacy {
