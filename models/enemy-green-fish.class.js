@@ -26,10 +26,6 @@ class enemyGreenFish extends movableObject {
    */
   speed = 0.75;
 
-  /**
-   * Array of image paths for the swimming animation of the green fish enemy.
-   * @type {Array<string>}
-   */
   images_move = [
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png",
@@ -38,10 +34,6 @@ class enemyGreenFish extends movableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png",
   ];
 
-  /**
-   * Array of image paths for the dying animation of the green fish enemy.
-   * @type {Array<string>}
-   */
   images_die = [
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png",
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 2 (can animate by going down to the floor after the Fin Slap attack).png",

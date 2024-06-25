@@ -26,10 +26,6 @@ class enemyLilaFish extends movableObject {
    */
   speed = 1.6;
 
-  /**
-   * Array of image paths for the movement animation of the purple fish enemy.
-   * @type {Array<string>}
-   */
   images_move = [
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim1.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim2.png",
@@ -38,10 +34,6 @@ class enemyLilaFish extends movableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim5.png",
   ];
 
-  /**
-   * Array of image paths for the death animation of the purple fish enemy.
-   * @type {Array<string>}
-   */
   images_die = [
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.2.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.3.png",

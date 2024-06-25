@@ -33,10 +33,6 @@ class enemyJellyfishYellow extends movableObject {
    */
   isHittable = true;
 
-  /**
-   * Array of image paths for the movement animation of the yellow jellyfish enemy.
-   * @type {Array<string>}
-   */
   images_move = [
     "img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png",
     "img/2.Enemy/2 Jelly fish/Regular damage/Yellow 2.png",
@@ -44,10 +40,6 @@ class enemyJellyfishYellow extends movableObject {
     "img/2.Enemy/2 Jelly fish/Regular damage/Yellow 4.png",
   ];
 
-  /**
-   * Array of image paths for the death animation of the yellow jellyfish enemy.
-   * @type {Array<string>}
-   */
   images_die = [
     "img/2.Enemy/2 Jelly fish/Dead/Yellow/y1.png",
     "img/2.Enemy/2 Jelly fish/Dead/Yellow/y2.png",

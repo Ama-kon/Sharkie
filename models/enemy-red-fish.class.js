@@ -26,10 +26,6 @@ class enemyRedFish extends movableObject {
    */
   speed = 1;
 
-  /**
-   * Array of image paths for the movement animation of the red fish enemy.
-   * @type {Array<string>}
-   */
   images_move = [
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim2.png",
@@ -38,10 +34,6 @@ class enemyRedFish extends movableObject {
     "img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim5.png",
   ];
 
-  /**
-   * Array of image paths for the death animation of the red fish enemy.
-   * @type {Array<string>}
-   */
   images_die = [
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.2.png",
     "img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.3.png",
