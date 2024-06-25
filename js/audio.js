@@ -2,6 +2,11 @@ background_music = new Audio("audio/background_music.mp3");
 background_music.volume = 0.1;
 background_music.loop = true;
 
+snoring = new Audio("audio/Cartoon-snoring.mp3");
+snoring.loop = true;
+snoring.playbackRate = 1.1;
+snoring.volume = 0.5;
+
 endboss_sound = new Audio("audio/endboss_sound.mp3");
 endboss_sound.loop = true;
 
@@ -46,6 +51,7 @@ lost_game_speech_told = false;
 
 let audios = [
   background_music,
+  snoring,
   endboss_sound,
   endboss_hurt_sound,
   hit_by_fish,
