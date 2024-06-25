@@ -19,6 +19,7 @@ function init() {
 function startGame() {
   initLevel1();
   init();
+  getSettingFromLocalStorage();
   checkSound();
   let startScreen = document.getElementById("start_game");
   let blur_container = document.getElementById("blur_container");
