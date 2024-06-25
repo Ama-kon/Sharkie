@@ -111,7 +111,7 @@ class DrawableObject {
    * @returns {number} The index of the status image to display.
    */
   findIndexOfStatusImg() {
-    if (this.percent == 100) {
+    if (this.percent >= 100) {
       return 0;
     } else if (this.percent >= 80) {
       return 1;
