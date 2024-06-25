@@ -65,10 +65,6 @@ class Endboss extends movableObject {
    */
   speed = 2.5;
 
-  /**
-   * Array of image paths for the introduction animation of the end boss.
-   * @type {Array<string>}
-   */
   images_intro = [
     "img/2.Enemy/3 Final Enemy/1.Introduce/1.png",
     "img/2.Enemy/3 Final Enemy/1.Introduce/2.png",
@@ -82,10 +78,6 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/1.Introduce/10.png",
   ];
 
-  /**
-   * Array of image paths for the moving animation of the end boss.
-   * @type {Array<string>}
-   */
   images_move = [
     "img/2.Enemy/3 Final Enemy/2.floating/1.png",
     "img/2.Enemy/3 Final Enemy/2.floating/2.png",
@@ -102,10 +94,6 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/2.floating/13.png",
   ];
 
-  /**
-   * Array of image paths for the attack animation of the end boss.
-   * @type {Array<string>}
-   */
   images_attack = [
     "img/2.Enemy/3 Final Enemy/Attack/1.png",
     "img/2.Enemy/3 Final Enemy/Attack/2.png",
@@ -115,10 +103,6 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/Attack/6.png",
   ];
 
-  /**
-   * Array of image paths for the hurt animation of the end boss.
-   * @type {Array<string>}
-   */
   images_hurt = [
     "img/2.Enemy/3 Final Enemy/Hurt/1.png",
     "img/2.Enemy/3 Final Enemy/Hurt/2.png",
@@ -126,10 +110,6 @@ class Endboss extends movableObject {
     "img/2.Enemy/3 Final Enemy/Hurt/4.png",
   ];
 
-  /**
-   * Array of image paths for the dead animation of the end boss.
-   * @type {Array<string>}
-   */
   images_dead = [
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png",
     "img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png",
@@ -179,9 +159,7 @@ class Endboss extends movableObject {
         this.huntSharkie();
       }
       if (this.endbossIsHurt()) {
-        if (!isMuted) {
-          endboss_hurt_sound.play();
-        }
+        if (!isMuted) endboss_hurt_sound.play();
         this.playAnimation(this.images_hurt);
       }
     }, 1000 / 60);
@@ -254,7 +232,6 @@ class Endboss extends movableObject {
     this.playAnimation(this.images_dead);
     setTimeout(() => {
       endScreen("you_win");
-
       playWinningSpeech();
     }, 1000);
   }
@@ -267,7 +244,7 @@ class Endboss extends movableObject {
    * @returns {void}
    */
   attackSharkie() {
-    if (this.endbosAttacksSharkie()) {
+    if (this.endbossAttacksSharkie()) {
       this.playAnimation(this.images_attack);
       this.sharkieIsDead();
     }
@@ -280,7 +257,7 @@ class Endboss extends movableObject {
    *
    * @returns {boolean} - True if the endboss is attacking the sharkie, false otherwise.
    */
-  endbosAttacksSharkie() {
+  endbossAttacksSharkie() {
     return this.attack && this.character.energy > 0;
   }
 
@@ -296,6 +273,7 @@ class Endboss extends movableObject {
       this.character.killedByEndboss = true;
       this.character.energy = 0;
     }, 100);
+    endOfGame = true;
   }
 
   /**
