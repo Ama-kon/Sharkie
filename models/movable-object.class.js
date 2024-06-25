@@ -114,6 +114,22 @@ class movableObject extends DrawableObject {
   }
 
   /**
+   * Checks if the main character is touching the ground based on the character's current y-coordinate.
+   * @returns {boolean} True if the main character is touching the ground, false otherwise.
+   */
+  touchesGround() {
+    return this.y <= 150;
+  }
+
+  /**
+   * Checks if the main character is touching the sky based on the character's current y-coordinate.
+   * @returns {boolean} True if the main character is touching the sky, false otherwise.
+   */
+  touchesSky() {
+    return this.y >= 150;
+  }
+
+  /**
    * Moves the object upward by the current speed value.
    */
   swimUp() {
