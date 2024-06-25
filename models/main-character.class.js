@@ -195,7 +195,7 @@ class mainCharacter extends movableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      this.playAnimation(this.images_move);
+      this.moveOrSleep();
       this.attacksEnemy();
       if (this.isDead()) {
         this.showGameOver();
@@ -205,7 +205,7 @@ class mainCharacter extends movableObject {
           this.strikedEnemy.enemyDying = true;
         }
       }
-    }, 100);
+    }, 120);
   }
 
   /**
@@ -216,23 +216,28 @@ class mainCharacter extends movableObject {
     if (this.canMoveRight()) {
       this.swimRight();
       this.otherDirection = false;
+      this.movedLastTime();
     }
     if (this.canMoveLeft()) {
       this.swimLeft();
       this.otherDirection = true;
+      this.movedLastTime();
     }
     if (this.canMoveUp()) {
       this.swimUp();
       this.otherDirection = false;
+      this.movedLastTime();
     }
     if (this.canMoveDown()) {
       this.swimDown();
       this.otherDirection = false;
+      this.movedLastTime();
     }
     if (this.canMoveLeftDown()) {
       this.swimLeftDown();
       if (this.touchesGround()) {
         this.swimLeft();
+        this.movedLastTime();
       }
       this.otherDirection = true;
     }
@@ -240,8 +245,21 @@ class mainCharacter extends movableObject {
       this.swimLeftUp();
       if (this.touchesSky()) {
         this.swimLeft();
+        this.movedLastTime();
       }
       this.otherDirection = true;
+    }
+  }
+
+  moveOrSleep() {
+    if (this.doesntMove()) {
+      this.fallAsleep();
+      if (!isMuted) {
+        snoring.play();
+      }
+    } else {
+      this.playAnimation(this.images_move);
+      snoring.pause();
     }
   }
 
@@ -254,14 +272,17 @@ class mainCharacter extends movableObject {
   attacksEnemy() {
     if (this.canFinSlap()) {
       this.playAnimation(this.images_attack_fin_lap);
+      this.movedLastTime();
     }
     if (this.canShootBubble()) {
       this.playAnimation(this.images_bubble);
       this.newBubble = true;
+      this.movedLastTime();
     }
     if (this.canShootPoisonBubble()) {
       this.playAnimation(this.images_poison_bubble);
       this.newPoisonBubble = true;
+      this.movedLastTime();
     }
   }
 
@@ -351,6 +372,27 @@ class mainCharacter extends movableObject {
    */
   canShootPoisonBubble() {
     return this.world.keyboard.a;
+  }
+
+  doesntMove() {
+    let timePassed = new Date().getTime() - this.lastMove;
+    timePassed = timePassed / 1000;
+    if (this.lastMove == 0) {
+      return;
+    } else {
+      if (timePassed > 5) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  /**
+   * Plays the "images_sleeping" animation to show the main character falling asleep.
+   */
+  fallAsleep() {
+    this.playAnimation(this.images_sleeping);
   }
 
   /**
