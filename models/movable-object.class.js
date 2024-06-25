@@ -16,6 +16,7 @@
  * @property {string} damageType - The type of damage the object deals.
  * @property {number} lastStrike - The timestamp of the last strike made by the object.
  * @property {boolean} enemyDying - Indicates if the enemy object is dying.
+ * @property {number} lastMove - The timestamp of the characters last move.
  * @property {boolean} isHittable - Indicates if the object can be hit.
  */
 class movableObject extends DrawableObject {
@@ -32,7 +33,7 @@ class movableObject extends DrawableObject {
   damageType;
   lastStrike = 0;
   enemyDying = false;
-
+  lastMove = 0;
   isHittable = false;
 
   /**
@@ -204,6 +205,10 @@ class movableObject extends DrawableObject {
    */
   lastAttack() {
     this.lastStrike = new Date().getTime();
+  }
+
+  movedLastTime() {
+    this.lastMove = new Date().getTime();
   }
 
   /**
