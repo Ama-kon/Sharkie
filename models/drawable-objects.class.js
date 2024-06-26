@@ -67,6 +67,17 @@ class DrawableObject {
   }
 
   /**
+   * Plays the next frame of an animation by updating the current image being displayed.
+   * @param {Array<string>} image - An array of file paths for the images in the animation.
+   */
+  playAnimation(image) {
+    let i = this.currentIMG % image.length;
+    let path = image[i];
+    this.img = this.imageCache[path];
+    this.currentIMG++;
+  }
+
+  /**
    * Draws the image of the drawable object on the canvas at the specified position and size.
    * @param {CanvasRenderingContext2D} ctx - The canvas rendering context to use for drawing the image.
    */
