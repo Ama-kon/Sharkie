@@ -143,7 +143,6 @@ class mainCharacter extends movableObject {
    */
   constructor() {
     super();
-    this.loadIMG("img/1.Sharkie/1.IDLE/1.png");
     this.loadImages(this.images_move);
     this.loadImages(this.images_attack_fin_lap);
     this.loadImages(this.images_bubble);
@@ -178,30 +177,42 @@ class mainCharacter extends movableObject {
   }
 
   /**
-   * Handles the movement logic for the main character in the game.
-   * This method checks the keyboard input and the character's current position to determine if the character can move right, left, up, or down. It then calls the appropriate movement methods to update the character's position accordingly.
+   * Handles the main character's movement, including left/right, up/down, and horizontal movement.
+   * This method calls the appropriate movement methods based on the character's current position and movement abilities.
    */
   moveCharacter() {
-    if (this.canMoveRight()) {
-      this.swimRight();
-      this.otherDirection = false;
-      this.movedLastTime();
-    }
-    if (this.canMoveLeft()) {
-      this.swimLeft();
-      this.otherDirection = true;
-      this.movedLastTime();
-    }
-    if (this.canMoveUp()) {
-      this.swimUp();
-      this.otherDirection = false;
-      this.movedLastTime();
-    }
-    if (this.canMoveDown()) {
-      this.swimDown();
-      this.otherDirection = false;
-      this.movedLastTime();
-    }
+    this.moveLeftOrRight();
+    this.moveUpOrDown();
+    this.moveHorizontal();
+  }
+
+  /**
+   * Handles the main character's left and right movement.
+   * If the character can move right, it swims right, sets the `otherDirection` flag to false, and marks that the character has moved.
+   * If the character can move left, it swims left, sets the `otherDirection` flag to true, and marks that the character has moved.
+   */
+  moveLeftOrRight() {
+    if (this.canMoveRight()) this.swimRight(), (this.otherDirection = false);
+    if (this.canMoveLeft()) this.swimLeft(), (this.otherDirection = true);
+    if (this.canMoveRight() || this.canMoveLeft()) this.movedLastTime();
+  }
+
+  /**
+   * Handles the main character's up and down movement.
+   * If the character can move up, it swims up, sets the `otherDirection` flag to false, and marks that the character has moved.
+   * If the character can move down, it swims down, sets the `otherDirection` flag to false, and marks that the character has moved.
+   */
+  moveUpOrDown() {
+    if (this.canMoveUp()) this.swimUp(), (this.otherDirection = false);
+    if (this.canMoveDown()) this.swimDown(), (this.otherDirection = false);
+    if (this.canMoveUp() || this.canMoveDown()) this.movedLastTime();
+  }
+
+  /**
+   * Handles the main character's horizontal movement, including moving left and down, and moving left and up.
+   * This method checks if the character can move left and down or left and up, and performs the corresponding swimming actions. It also sets the `otherDirection` flag and marks that the character has moved.
+   */
+  moveHorizontal() {
     if (this.canMoveLeftDown()) {
       this.swimLeftDown();
       if (this.touchesGround()) {
@@ -228,9 +239,7 @@ class mainCharacter extends movableObject {
     if (this.doesntMove()) {
       this.fallAsleep();
       if (!isMuted && !endOfGame) snoring.play();
-    } else {
-      this.playAnimation(this.images_move), snoring.pause();
-    }
+    } else this.playAnimation(this.images_move), snoring.pause();
   }
 
   /**
@@ -239,16 +248,18 @@ class mainCharacter extends movableObject {
    * Sets the `newBubble` or `newPoisonBubble` flag to true if the character can shoot bubbles or poison bubbles, respectively.
    */
   attacksEnemy() {
-    if (this.canFinSlap())
-      this.playAnimation(this.images_attack_fin_lap), this.movedLastTime();
+    if (this.canFinSlap()) this.playAnimation(this.images_attack_fin_lap);
     if (this.canShootBubble())
-      this.playAnimation(this.images_bubble),
-        (this.newBubble = true),
-        this.movedLastTime();
+      this.playAnimation(this.images_bubble), (this.newBubble = true);
     if (this.canShootPoisonBubble())
       this.playAnimation(this.images_poison_bubble),
-        (this.newPoisonBubble = true),
-        this.movedLastTime();
+        (this.newPoisonBubble = true);
+    if (
+      this.canShootBubble() ||
+      this.canShootPoisonBubble() ||
+      this.canFinSlap()
+    )
+      this.movedLastTime();
   }
 
   /**
