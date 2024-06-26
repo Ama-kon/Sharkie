@@ -365,11 +365,11 @@ class mainCharacter extends movableObject {
    */
   showHurtingTypeAndAnimation() {
     if (this.hittedByElectro()) {
-      if (!isMuted)
-        hit_by_jelly.play(), this.playAnimation(this.images_hurt_electric);
+      if (!isMuted) hit_by_jelly.play();
+      this.playAnimation(this.images_hurt_electric);
     } else if (this.hittedByPoison()) {
-      if (!isMuted)
-        hit_by_fish.play(), this.playAnimation(this.images_hurt_poisoned);
+      if (!isMuted) hit_by_fish.play();
+      this.playAnimation(this.images_hurt_poisoned);
     }
   }
 
