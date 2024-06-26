@@ -147,7 +147,7 @@ aButton.addEventListener("touchend", () => (keyboard.a = false));
  * touch event handling.
  */
 mobile_keyboard.forEach((key) => {
-  key.addEventListener("click", function (event) {
+  key.addEventListener("touchstart", function (event) {
     event.preventDefault();
     event.stopPropagation();
   });
